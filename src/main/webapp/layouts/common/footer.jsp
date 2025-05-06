@@ -12,11 +12,11 @@
 </footer>
 </div>
 </div>
-<script src="<c:url value="/bootstrap/js/bootstrap.bundle.min.js" />"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-<script src="<c:url value="/js/scripts.js" />"></script>
-<script src="<c:url value="/js/dashboard.js"/>"></script>
+<script src="<c:url value="/resources/js/scripts.js" />"></script>
+<script src="<c:url value="/resources/js/dashboard.js"/>"></script>
 </body>
 
 </html>

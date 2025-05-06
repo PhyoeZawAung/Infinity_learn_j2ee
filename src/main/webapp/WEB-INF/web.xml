@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>infinitylearn</display-name>
+    <listener>
+    	<listener-class>uni.project.infinitylearn.listeners.MyContextListener</listener-class>
+    </listener>
     <servlet>
     	<description>
     	</description>
@@ -15,6 +18,20 @@
     	<servlet-name>SecondController</servlet-name>
     	<servlet-class>uni.project.infinitylearn.controllers.SecondController</servlet-class>
     </servlet>
+    <servlet>
+    	<description>
+    	This is the welcome file for the project</description>
+    	<display-name>IndexController</display-name>
+    	<servlet-name>IndexController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.IndexController</servlet-class>
+    </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>CourseListController</display-name>
+    	<servlet-name>CourseListController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.CourseListController</servlet-class>
+    </servlet>
     <servlet-mapping>
     	<servlet-name>MainController</servlet-name>
     	<url-pattern>/MainController</url-pattern>
@@ -23,13 +40,42 @@
     	<servlet-name>SecondController</servlet-name>
     	<url-pattern>/SecondController</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>IndexController</servlet-name>
+    	<url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>CourseListController</servlet-name>
+    	<url-pattern>/CourseListController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-        </welcome-file-list>
+    
+    <listener>
+    	<description>Listener for the whole application start</description>
+    	<display-name>MyContextListener</display-name>
+    	<listener-class>uni.project.infinitylearn.listeners.MyContextListener</listener-class>
+    </listener>
+    
+    <context-param>
+    	<description>the database name</description>
+    	<param-name>dbName</param-name>
+    	<param-value>testingdb</param-value>
+    </context-param>
+    
+    <context-param>
+    	<description>database user name</description>
+    	<param-name>dbUser</param-name>
+    	<param-value>root</param-value>
+    </context-param>
+    
+    <context-param>
+    	<description>database password</description>
+    	<param-name>dbPassword</param-name>
+    	<param-value></param-value>
+    </context-param>
     </web-app>
 	
