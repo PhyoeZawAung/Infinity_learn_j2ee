@@ -32,6 +32,13 @@
     	<servlet-name>CourseListController</servlet-name>
     	<servlet-class>uni.project.infinitylearn.controllers.CourseListController</servlet-class>
     </servlet>
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>CourseCreateController</display-name>
+    	<servlet-name>CourseCreateController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.CourseCreateController</servlet-class>
+    </servlet>
     <servlet-mapping>
     	<servlet-name>MainController</servlet-name>
     	<url-pattern>/MainController</url-pattern>
@@ -47,6 +54,10 @@
     <servlet-mapping>
     	<servlet-name>CourseListController</servlet-name>
     	<url-pattern>/CourseListController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    	<servlet-name>CourseCreateController</servlet-name>
+    	<url-pattern>/CourseCreateController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

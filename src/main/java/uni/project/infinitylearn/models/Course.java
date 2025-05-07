@@ -8,8 +8,17 @@ public class Course {
 	private String description;
 	private String instructor;
 	private String category;
+	private String banner_image;
 	private String price;
 	private Boolean is_published;
+	
+	public String getBanner_image() {
+		return banner_image;
+	}
+	public void setBanner_image(String banner_image) {
+		this.banner_image = banner_image;
+	}
+	
 	public Long getId() {
 		return id;
 	}

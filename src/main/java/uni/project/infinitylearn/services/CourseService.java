@@ -41,4 +41,11 @@ public class CourseService {
 	}
 	
 	
+	public void createCourse(Course course) {
+		
+		this.courseDao.createCourse(course);
+		
+	}
+	
+	
 }

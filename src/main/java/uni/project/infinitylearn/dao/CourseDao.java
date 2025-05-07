@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import uni.project.infinitylearn.listeners.*;
+import uni.project.infinitylearn.models.Course;
 
 public class CourseDao {
 	private Connection conn;
@@ -22,5 +23,10 @@ public class CourseDao {
 
 		return res;
 
+	}
+	
+	
+	public void createCourse(Course course) {
+		
 	}
 }
