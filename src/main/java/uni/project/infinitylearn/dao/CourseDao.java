@@ -27,6 +27,28 @@ public class CourseDao {
 	
 	
 	public void createCourse(Course course) {
-		
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement("INSERT INTO course (title, description, instructor, is_published, category, price, banner_image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			statement.setString(1, course.getTitle());
+			statement.setString(2, course.getDescription());
+			statement.setString(3, course.getInstructor());
+			statement.setBoolean(4, course.getIs_published());
+			statement.setString(5, course.getCategory());
+			statement.setString(6, course.getPrice());
+			statement.setString(7, course.getBanner_image());
+
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

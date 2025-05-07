@@ -64,15 +64,20 @@ public class CourseCreateController extends HttpServlet {
 		
 		Part banner_image = request.getPart("banner_image");
 		
-		String image = fileUtil.createFile("upload", getServletContext(), banner_image);
+		String image = fileUtil.createFile("course/banners", getServletContext(), banner_image);
 		
-		PrintWriter out = response.getWriter();
+		// PrintWriter out = response.getWriter();
 		
-		out.println("title" + title);
-		out.println("description" + description);
-		out.println("category" + category);
-		out.println("price" + price);
-		out.println("image" + image);
+		// out.println("title" + title);
+		// out.println("description" + description);
+		// out.println("category" + category);
+		// out.println("price" + price);
+		// out.println("image" + image);
+
+		service.createCourse(title, description,"PZA", category, price,true, image);
+
+		response.sendRedirect("/CourseListController");
+
 	}
 	
 	

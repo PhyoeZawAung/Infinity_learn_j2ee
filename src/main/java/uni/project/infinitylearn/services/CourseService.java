@@ -32,7 +32,7 @@ public class CourseService {
 			course.setIs_published(res.getBoolean("is_published"));
 			course.setCategory(res.getString("category"));
 			course.setPrice(res.getString("price"));
-			
+			course.setBanner_image(res.getString("banner_image"));
 			courses.add(course);
 		}
 		
@@ -41,7 +41,16 @@ public class CourseService {
 	}
 	
 	
-	public void createCourse(Course course) {
+	public void createCourse(String title, String description, String instructor, String category, String price, boolean is_published, String banner_image) {
+		Course course = new Course();
+		course.setTitle(title);
+		course.setDescription(description);
+		course.setInstructor(instructor);
+		course.setCategory(category);
+		course.setPrice(price);
+		course.setIs_published(is_published);
+		course.setBanner_image(banner_image);
+		//System.out.println("Course: " + course);
 		
 		this.courseDao.createCourse(course);
 		

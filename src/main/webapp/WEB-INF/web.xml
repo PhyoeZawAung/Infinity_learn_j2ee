@@ -39,6 +39,17 @@
     	<servlet-name>CourseCreateController</servlet-name>
     	<servlet-class>uni.project.infinitylearn.controllers.CourseCreateController</servlet-class>
     </servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>FileController</display-name>
+		<servlet-name>FileController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.FileHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileController</servlet-name>
+		<url-pattern>/FileController/*</url-pattern>
+		</servlet-mapping>
     <servlet-mapping>
     	<servlet-name>MainController</servlet-name>
     	<url-pattern>/MainController</url-pattern>

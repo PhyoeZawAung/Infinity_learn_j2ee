@@ -27,7 +27,7 @@
 				<th scope="col">Category</th>
 				<th scope="col">Price</th>
 				<th scope="col">Is Published</th>
-
+				<th scope="col">Image</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -40,6 +40,10 @@
 					<td>${course.category } </td>
 					<td>${course.price } </td>
 					<td>${course.is_published } </td>
+					<td>
+						<img src="<c:url value="/FileController${course.banner_image}" />" alt="Course Image" width="100"
+							height="100"/>
+					</td>
 				</tr>
 			</c:forEach>
 
