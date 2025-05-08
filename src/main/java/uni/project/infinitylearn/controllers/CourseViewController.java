@@ -24,7 +24,7 @@ public class CourseViewController extends HttpServlet {
     // Example method to handle course view
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Logic to retrieve course details and lessons
-        Long courseId = Long.parseLong(request.getParameter("courseId"));
+        Long courseId = Long.parseLong(request.getParameter("course_id"));
 
         Course course = null;
         try {

@@ -17,8 +17,7 @@ import javax.servlet.http.Part;
 
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 10,
-        maxFileSize = 1024 * 1024 * 50,
-        maxRequestSize = 1024 * 1024 * 100
+        maxFileSize = 1024 * 1024 * 500
 )
 public class CourseLessonVideoCreateController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -61,6 +60,6 @@ public class CourseLessonVideoCreateController extends HttpServlet {
 
         // // Redirect or forward to a success page
         // response.sendRedirect("success.jsp");
-        response.sendRedirect("/CourseViewController?courseId=" + courseId);
+        response.sendRedirect("/CourseViewController?course_id=" + courseId);
     }
 }

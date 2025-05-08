@@ -24,7 +24,7 @@
     <p>Course ID: ${course.id}</p>
     ${course.lessons.size()} lessons available.
     <p>Category: ${course.category}</p>
-    <p>Banner Image: <img src="/FileController${course.banner_image}" alt="Course Banner" /></p>
+    <p>Banner Image: <img src="/FileController${course.banner_image}" alt="Course Banner" width="200" height="150" /></p>
     <a class="btn btn-secondary" href="<c:url value='/CourseEditController?course_id=${course.id}'/>">Edit Course</a>
     <a class="btn btn-primary" href="<c:url value='/CourseLessonCreateController?course_id=${course.id}'/>">Add Lesson</a>
     <table class="table">

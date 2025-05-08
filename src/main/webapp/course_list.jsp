@@ -17,6 +17,8 @@
 	crossorigin="anonymous"></script>
 </head>
 <body class="container">
+	<h1>Course List</h1>
+	<a class="btn btn-primary" href="<c:url value='/CourseCreateController'/>">Add Course</a>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -28,6 +30,7 @@
 				<th scope="col">Price</th>
 				<th scope="col">Is Published</th>
 				<th scope="col">Image</th>
+				<th scope="col">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -44,6 +47,11 @@
 						<img src="<c:url value="/FileController${course.banner_image}" />" alt="Course Image" width="100"
 							height="100"/>
 					</td>
+					<td>
+						
+						<a class="btn btn-primary"
+							href="<c:url value='/CourseViewController?course_id=${course.id}'/>">View</a>
+					
 				</tr>
 			</c:forEach>
 

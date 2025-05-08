@@ -34,7 +34,7 @@ public class CourseLessonCreateController extends HttpServlet {
 
         service.createCourseLesson(title, description, courseId);
         
-        response.sendRedirect("/CourseViewController?courseId=" + courseId);
+        response.sendRedirect("/CourseViewController?course_id=" + courseId);
 }
 
 }
