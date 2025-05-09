@@ -46,8 +46,7 @@ public class CourseCreateController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		RequestDispatcher rd = request.getRequestDispatcher("course_create.jsp");
-		
-		
+	
 		rd.forward(request, response);
 		
 	}

@@ -17,6 +17,14 @@
 	crossorigin="anonymous"></script>
 </head>
 <body class="container">
+	<c:if test="${not empty auth_user}">
+		<div class="alert alert-success" role="alert">
+			Welcome, ${auth_user.firstName} ${auth_user.lastName}
+		</div>
+
+		<a class="btn btn-danger" href="<c:url value='/LogoutController'/>">Logout</a>
+	</c:if>
+
 	<h1>Course List</h1>
 	<a class="btn btn-primary" href="<c:url value='/CourseCreateController'/>">Add Course</a>
 	<table class="table table-striped">

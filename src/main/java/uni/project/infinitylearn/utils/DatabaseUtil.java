@@ -20,7 +20,7 @@ public class DatabaseUtil {
 	
 	public Connection getConnection() throws SQLException {
 		
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbName, dbUser, dbPassword);
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + dbName + "?createDatabaseIfNotExist=true", dbUser, dbPassword);
 		
 		System.out.println("database connection created");
 		
