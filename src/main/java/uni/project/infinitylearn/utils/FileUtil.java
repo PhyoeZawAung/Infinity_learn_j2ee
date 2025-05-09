@@ -12,32 +12,35 @@ import java.io.InputStream;
 
 public class FileUtil {
 	
-	public String createFile(String folder,ServletContext servletContext, Part part) throws IOException {
+	public String createFile(String folder,ServletContext servletContext, Part part) throws IOException, SecurityException {
+		// save in user directory
+		String userDir = System.getProperty("user.dir");
 		
-		String fileLocation = servletContext.getRealPath(File.separator + folder);
+		String fileLocation = userDir + File.separator + "uploads";
 		
-		System.out.println("the file store in" + fileLocation);
-		
-		File uploadDir = new File(fileLocation);
+		// prepare the directory
+		File uploadDir = new File(fileLocation, folder);
 		
 		if(!uploadDir.exists()) {
-			uploadDir.mkdir();
+			// create the directory
+			Boolean success = uploadDir.mkdirs();
+			if(!success) {
+				throw new IOException("Failed to create directory: " + uploadDir.getAbsolutePath());
+			}
 		}
 		
-		String fileName = part.getSubmittedFileName();
-		
-		System.out.println("this is file name" + fileName);
+		String fileName = part.getSubmittedFileName();	
 
-		File savedFile = new File(uploadDir, fileName);
-		
-		System.out.println("saved file" + savedFile.getAbsolutePath());
+		String uniqueFileName = generateUniqueFileName(fileName);
+
+		File savedFile = new File(uploadDir, uniqueFileName);	
 		
 		try(InputStream input = part.getInputStream()){
 			Files.copy(input, savedFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
 		}
 		
 		
-		return folder + File.separator + fileName;
+		return File.separator + folder + File.separator + uniqueFileName;
 	}
 	
 	
@@ -59,6 +62,18 @@ public class FileUtil {
 		}
 		
 		return "";
+	}
+
+	private String generateUniqueFileName(String fileName) {
+		int dotIndex = fileName.lastIndexOf(".");
+		String extension = "";
+		if(dotIndex != -1 && dotIndex < fileName.length()-1) {
+			extension = fileName.substring(dotIndex);
+			fileName = fileName.substring(0, dotIndex);
+		}
+
+		String uuid = java.util.UUID.randomUUID().toString();
+		return uuid + extension;
 	}
 
 }

@@ -39,6 +39,51 @@
     	<servlet-name>CourseCreateController</servlet-name>
     	<servlet-class>uni.project.infinitylearn.controllers.CourseCreateController</servlet-class>
     </servlet>
+
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>CourseLessonCreateController</display-name>
+    	<servlet-name>CourseLessonCreateController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.CourseLessonCreateController</servlet-class>
+    </servlet>
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>CourseLessonVideoCreateController</display-name>
+    	<servlet-name>CourseLessonVideoCreateController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.CourseLessonVideoCreateController</servlet-class>
+    </servlet>
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>CourseViewController</display-name>
+    	<servlet-name>CourseViewController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.CourseViewController</servlet-class>
+    </servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>FileController</display-name>
+		<servlet-name>FileController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.FileHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileController</servlet-name>
+		<url-pattern>/FileController/*</url-pattern>
+		</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CourseLessonCreateController</servlet-name>
+		<url-pattern>/CourseLessonCreateController</url-pattern>
+		</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CourseLessonVideoCreateController</servlet-name>
+		<url-pattern>/CourseLessonVideoCreateController</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CourseViewController</servlet-name>
+		<url-pattern>/CourseViewController</url-pattern>
+	</servlet-mapping>
     <servlet-mapping>
     	<servlet-name>MainController</servlet-name>
     	<url-pattern>/MainController</url-pattern>

@@ -28,6 +28,7 @@ public class Courses extends Migrator {
 				        category VARCHAR(100),
 				        price DECIMAL(10, 2) DEFAULT 0.00,
 				        is_published BOOLEAN DEFAULT FALSE,
+						banner_image VARCHAR(255),
 				        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 				        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 				    );

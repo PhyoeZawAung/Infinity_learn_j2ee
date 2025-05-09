@@ -1,5 +1,7 @@
 package uni.project.infinitylearn.models;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Course {
@@ -11,6 +13,7 @@ public class Course {
 	private String banner_image;
 	private String price;
 	private Boolean is_published;
+	private List<Lesson> lessons = new ArrayList<>();
 	
 	public String getBanner_image() {
 		return banner_image;
@@ -62,4 +65,26 @@ public class Course {
 		this.is_published = is_published;
 	}
 	
+
+    /**
+     * @return Boolean return the is_published
+     */
+    public Boolean isIs_published() {
+        return is_published;
+    }
+
+    /**
+     * @return List<Lesson> return the lessons
+     */
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    /**
+     * @param lessons the lessons to set
+     */
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
+    }
+
 }

@@ -49,8 +49,10 @@ public class MyContextListener implements ServletContextListener {
 			dbConnection = databaseUtil.getConnection();
 			
 			Migrator courseMigrator = new Courses(this.dbConnection);
+			Migrator lessonMigrator = new Lesssons(this.dbConnection);
 			
-			courseMigrator.execute();
+			// courseMigrator.execute();
+			// lessonMigrator.execute();
 
 			sce.getServletContext().setAttribute("dbConnection", dbConnection);
 			
