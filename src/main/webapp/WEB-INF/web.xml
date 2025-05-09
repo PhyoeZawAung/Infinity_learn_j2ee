@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>infinitylearn</display-name>
+    <filter>
+    	<description>
+    	</description>
+    	<display-name>AuthenticationFilter</display-name>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<filter-class>uni.project.infinitylearn.filters.AuthenticationFilter</filter-class>
+    </filter>
+    <filter>
+    	<description>
+    	</description>
+    	<display-name>AuthorizationFilter</display-name>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<filter-class>uni.project.infinitylearn.filters.AuthorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/teacher/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/student/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/reviewer/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<url-pattern>/teacher/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<url-pattern>/student/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<url-pattern>/reviewer/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+    
     <listener>
     	<listener-class>uni.project.infinitylearn.listeners.MyContextListener</listener-class>
     </listener>
@@ -113,15 +160,15 @@
 		</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CourseLessonCreateController</servlet-name>
-		<url-pattern>/CourseLessonCreateController</url-pattern>
+		<url-pattern>/teacher/CourseLessonCreateController</url-pattern>
 		</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CourseLessonVideoCreateController</servlet-name>
-		<url-pattern>/CourseLessonVideoCreateController</url-pattern>
+		<url-pattern>/teacher/CourseLessonVideoCreateController</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CourseViewController</servlet-name>
-		<url-pattern>/CourseViewController</url-pattern>
+		<url-pattern>/teacher/CourseViewController</url-pattern>
 	</servlet-mapping>
     <servlet-mapping>
     	<servlet-name>MainController</servlet-name>
@@ -137,11 +184,11 @@
     </servlet-mapping>
     <servlet-mapping>
     	<servlet-name>CourseListController</servlet-name>
-    	<url-pattern>/CourseListController</url-pattern>
+    	<url-pattern>/teacher/CourseListController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
     	<servlet-name>CourseCreateController</servlet-name>
-    	<url-pattern>/CourseCreateController</url-pattern>
+    	<url-pattern>/teacher/CourseCreateController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
