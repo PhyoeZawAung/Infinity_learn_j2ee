@@ -32,7 +32,7 @@ public class UserRegisterController extends HttpServlet{
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // TODO valudate the input data
+        // TODO validate the input data
 
         try {
             service.registerUser(firstName, lastName, email, password);
@@ -44,6 +44,6 @@ public class UserRegisterController extends HttpServlet{
 
         // Here you would typically save the user to a database
         // For now, just send a response back
-        response.getWriter().write("User registered: " + firstName + " " + lastName);
+        response.sendRedirect("/login");
     }
 }

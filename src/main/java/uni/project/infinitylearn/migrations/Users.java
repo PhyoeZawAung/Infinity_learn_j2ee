@@ -24,7 +24,7 @@ public class Users extends Migrator {
                         email VARCHAR(255) NOT NULL UNIQUE,
                         password VARCHAR(255) NOT NULL,
                         profile_image VARCHAR(255),
-                        role ENUM('admin', 'user', 'teacher', 'reviewer') DEFAULT 'user',
+                        role ENUM('admin', 'student', 'teacher', 'reviewer') DEFAULT 'student',
                         description TEXT
                     );
                 """);
@@ -34,7 +34,7 @@ public class Users extends Migrator {
                     INSERT INTO users (first_name, last_name, email, password, profile_image, role, description)
                     VALUES
                         ('Admin', 'Admin', 'admin@gmail.com', 'admin', 'admin.png', 'admin', 'Admin user'),
-                        ('User', 'User', 'user@gmail.comn', 'user', 'user.png', 'user', 'User'),
+                        ('Student', 'Student', 'student@gmail.comn', 'student', 'student.png', 'student', 'Student'),
                         ('Teacher', 'Teacher', 'teacher@gmail.com', 'teacher', 'teacher.png', 'teacher', 'Teacher'),
                         ('Reviewer', 'Reviewer', 'reviewer@gmail.com', 'reviewer', 'reviewer.png', 'reviewer', 'Reviewer');
                 """);
