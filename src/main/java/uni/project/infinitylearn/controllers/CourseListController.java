@@ -43,7 +43,7 @@ public class CourseListController extends HttpServlet {
 		
 		request.setAttribute("courses", courses);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("course_list.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/course_list.jsp");
 		
 		rd.forward(request, response);
 	}
