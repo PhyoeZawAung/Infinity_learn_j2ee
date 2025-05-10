@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>infinitylearn</display-name>
+    <filter>
+    	<description>
+    	</description>
+    	<display-name>AuthenticationFilter</display-name>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<filter-class>uni.project.infinitylearn.filters.AuthenticationFilter</filter-class>
+    </filter>
+    <filter>
+    	<description>
+    	</description>
+    	<display-name>AuthorizationFilter</display-name>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<filter-class>uni.project.infinitylearn.filters.AuthorizationFilter</filter-class>
+    </filter>
+	<filter>
+    	<description>
+    	</description>
+    	<display-name>GuestFilter</display-name>
+    	<filter-name>GuestFilter</filter-name>
+    	<filter-class>uni.project.infinitylearn.filters.GuestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/teacher/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/student/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/reviewer/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+	<filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/dashboard/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<url-pattern>/teacher/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<url-pattern>/student/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<url-pattern>/reviewer/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+    	<filter-name>AuthorizationFilter</filter-name>
+    	<url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+	<filter-mapping>
+    	<filter-name>GuestFilter</filter-name>
+    	<url-pattern>/login</url-pattern>
+    </filter-mapping>
+	
+	<filter-mapping>
+    	<filter-name>GuestFilter</filter-name>
+    	<url-pattern>/register</url-pattern>
+    </filter-mapping>
+    
     <listener>
     	<listener-class>uni.project.infinitylearn.listeners.MyContextListener</listener-class>
     </listener>
@@ -68,21 +135,117 @@
 		<servlet-name>FileController</servlet-name>
 		<servlet-class>uni.project.infinitylearn.controllers.FileHandler</servlet-class>
 	</servlet>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>UserRegisterController</display-name>
+		<servlet-name>UserRegisterController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.UserRegisterController</servlet-class>
+	</servlet>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>LogoutController</display-name>
+		<servlet-name>LogoutController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.LogoutController</servlet-class>
+	</servlet>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentDashboard</display-name>
+		<servlet-name>StudentDashboard</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.DashboardController</servlet-class>
+	</servlet>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>TeacherDashboard</display-name>
+		<servlet-name>TeacherDashboard</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.DashboardController</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ReviewerDashboard</display-name>
+		<servlet-name>ReviewerDashboard</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.reviewer.DashboardController</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>AdminDashboard</display-name>
+		<servlet-name>AdminDashboard</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.admin.DashboardController</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>DashboardController</display-name>
+		<servlet-name>DashboardController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.DashboardController</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>LoginController</display-name>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.LoginController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>StudentDashboard</servlet-name>
+		<url-pattern>/student/dashboard</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>TeacherDashboard</servlet-name>
+		<url-pattern>/teacher/dashboard</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ReviewerDashboard</servlet-name>
+		<url-pattern>/reviewer/dashboard</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AdminDashboard</servlet-name>
+		<url-pattern>/admin/dashboard</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DashboardController</servlet-name>
+		<url-pattern>/dashboard</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>LogoutController</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>UserRegisterController</servlet-name>
+		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>FileController</servlet-name>
 		<url-pattern>/FileController/*</url-pattern>
 		</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CourseLessonCreateController</servlet-name>
-		<url-pattern>/CourseLessonCreateController</url-pattern>
+		<url-pattern>/teacher/CourseLessonCreateController</url-pattern>
 		</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CourseLessonVideoCreateController</servlet-name>
-		<url-pattern>/CourseLessonVideoCreateController</url-pattern>
+		<url-pattern>/teacher/CourseLessonVideoCreateController</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>CourseViewController</servlet-name>
-		<url-pattern>/CourseViewController</url-pattern>
+		<url-pattern>/teacher/CourseViewController</url-pattern>
 	</servlet-mapping>
     <servlet-mapping>
     	<servlet-name>MainController</servlet-name>
@@ -98,11 +261,11 @@
     </servlet-mapping>
     <servlet-mapping>
     	<servlet-name>CourseListController</servlet-name>
-    	<url-pattern>/CourseListController</url-pattern>
+    	<url-pattern>/teacher/CourseListController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
     	<servlet-name>CourseCreateController</servlet-name>
-    	<url-pattern>/CourseCreateController</url-pattern>
+    	<url-pattern>/teacher/CourseCreateController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -119,7 +282,7 @@
     <context-param>
     	<description>the database name</description>
     	<param-name>dbName</param-name>
-    	<param-value>testingdb</param-value>
+    	<param-value>infinitylearnjavaee</param-value>
     </context-param>
     
     <context-param>
