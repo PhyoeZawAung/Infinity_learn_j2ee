@@ -28,10 +28,10 @@ public class GuestFilter implements Filter {
 
         HttpSession session = req.getSession(false);
 
-        if(session != null) {
+        if(session != null && session.getAttribute("auth_user") != null) {
             res.sendRedirect("/dashboard");
         }
-        
+
         chain.doFilter(request, response); // allow through
     }
 
