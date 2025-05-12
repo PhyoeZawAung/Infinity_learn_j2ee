@@ -294,7 +294,7 @@
     <context-param>
     	<description>database password</description>
     	<param-name>dbPassword</param-name>
-    	<param-value></param-value>
+    	<param-value>maria</param-value>
     </context-param>
     </web-app>
 	

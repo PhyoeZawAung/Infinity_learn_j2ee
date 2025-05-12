@@ -35,7 +35,7 @@ public class CourseViewController extends HttpServlet {
         }
         request.setAttribute("course", course);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("course_view.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/course_view.jsp");
         dispatcher.forward(request, response);
     }
 

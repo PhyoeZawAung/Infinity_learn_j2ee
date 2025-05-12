@@ -42,7 +42,7 @@ public class LoginController extends HttpServlet {
 
            request.getSession().setAttribute("message", "login successful");
         
-            response.sendRedirect("/dashboard");
+            response.sendRedirect("/infinitylearn/dashboard");
 
         } catch (Exception e) {
             e.getMessage();

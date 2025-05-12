@@ -354,7 +354,7 @@ body {
             <p class="mb-0 mt-2 opacity-75 small">Fill out the form below to create your new course</p>
           </div>
           <div class="card-body">
-            <form class="needs-validation" method="post" action="<c:url value="/CourseCreateController"/>" enctype="multipart/form-data" novalidate>
+            <form class="needs-validation" method="post" action="<c:url value="/teacher/CourseCreateController"/>" enctype="multipart/form-data" novalidate>
               
               <!-- Title Field -->
               <div class="mb-4">

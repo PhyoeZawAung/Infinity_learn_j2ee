@@ -51,7 +51,7 @@
 				${error}
 			</div>
 		</c:if>
-            <form method="post" action="/login" >
+			<form method="post" action="<c:url value='/login'/>">
               <div class="form-floating mb-3">
                 <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput">Email address</label>

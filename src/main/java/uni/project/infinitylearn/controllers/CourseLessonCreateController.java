@@ -20,7 +20,7 @@ public class CourseLessonCreateController extends HttpServlet {
     }
 
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("course_lesson_create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/course_lesson_create.jsp");
 
         dispatcher.forward(request, response);
     }
@@ -34,7 +34,7 @@ public class CourseLessonCreateController extends HttpServlet {
 
         service.createCourseLesson(title, description, courseId);
         
-        response.sendRedirect("/CourseViewController?course_id=" + courseId);
+        response.sendRedirect("CourseViewController?course_id=" + courseId);
 }
 
 }
