@@ -41,7 +41,6 @@ public class Dao implements DaoInterface {
             statement = prepareStatement(sql);
             setParameters(statement, params);
             ResultSet rs = statement.executeQuery();
-            // closeStatement(statement);
             T result = handler.handle(rs);
             return result;
         } catch (SQLException e) {
@@ -64,7 +63,6 @@ public class Dao implements DaoInterface {
             statement = prepareStatement(sql);
             setParameters(statement, params);
             ResultSet rs = statement.executeQuery();
-            closeStatement(statement);
             while (rs.next()) {
                 result.add(handler.handle(rs));
             }
