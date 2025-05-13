@@ -178,6 +178,32 @@
 	</servlet-mapping>
 <!-- UserRegisterController -->
 
+<!-- GUEST -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>GuestCourseList</display-name>
+		<servlet-name>GuestCourseList</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.guest.CourseListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GuestCourseList</servlet-name>
+		<url-pattern>/guest/course/list</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>GuestCourseDetail</display-name>
+		<servlet-name>GuestCourseDetail</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.guest.CourseDetailController</servlet-class>
+	</servlet>
+			<servlet-mapping>
+		<servlet-name>GuestCourseDetail</servlet-name>
+		<url-pattern>/guest/course/detail</url-pattern>
+	</servlet-mapping>
+<!-- GUEST -->
+
 <!-- TEACHER -->
 
 	<!-- teacher dashboard controller -->
@@ -273,6 +299,30 @@
 		<servlet-mapping>
 		<servlet-name>StudentDashboard</servlet-name>
 		<url-pattern>/student/dashboard</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentCourseEnrollment</display-name>
+		<servlet-name>StudentCourseEnrollment</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.EnrollCourseController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentCourseEnrollment</servlet-name>
+		<url-pattern>/student/enroll</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentEnrolledCourseList</display-name>
+		<servlet-name>StudentEnrolledCourseList</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.EnrolledCourseListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentEnrolledCourseList</servlet-name>
+		<url-pattern>/student/course/enroll/list</url-pattern>
 	</servlet-mapping>
 <!-- STUDENT -->
 

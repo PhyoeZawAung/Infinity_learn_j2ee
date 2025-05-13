@@ -7,6 +7,7 @@ import java.util.List;
 public class Course {
 	private Long id;
 	private String title;
+	private String shortDescription;
 	private String description;
 	private String instructor;
 	private String category;
@@ -14,7 +15,8 @@ public class Course {
 	private String price;
 	private Boolean is_published;
 	private List<Lesson> lessons = new ArrayList<>();
-	
+	private int progress;
+
 	public String getBanner_image() {
 		return banner_image;
 	}
@@ -85,6 +87,36 @@ public class Course {
      */
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
+    }
+
+
+    /**
+     * @return String return the short_description
+     */
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    /**
+     * @param short_description the short_description to set
+     */
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
+
+    /**
+     * @return int return the progress
+     */
+    public int getProgress() {
+        return progress;
+    }
+
+    /**
+     * @param progress the progress to set
+     */
+    public void setProgress(int progress) {
+        this.progress = progress;
     }
 
 }

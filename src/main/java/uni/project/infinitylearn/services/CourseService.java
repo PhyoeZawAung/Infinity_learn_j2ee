@@ -61,6 +61,7 @@ public class CourseService {
 			course.setId(course_res.getLong("id"));
 			course.setTitle(course_res.getString("title"));
 			course.setDescription(course_res.getString("description"));
+			course.setShortDescription(course_res.getString("short_description"));
 			course.setInstructor(course_res.getString("instructor"));
 			course.setIs_published(course_res.getBoolean("is_published"));
 			course.setCategory(course_res.getString("category"));
@@ -82,6 +83,7 @@ public class CourseService {
 			course.setId(res.getLong("id"));
 			course.setTitle(res.getString("title"));
 			course.setDescription(res.getString("description"));
+			course.setShortDescription(res.getString("short_description"));
 			course.setInstructor(res.getString("instructor"));
 			course.setIs_published(res.getBoolean("is_published"));
 			course.setCategory(res.getString("category"));
@@ -134,6 +136,23 @@ public class CourseService {
 		
 		this.courseDao.createCourseLessonVideo(lessonVideo);
 		
+	}
+
+	public int enrollCourse(Long userId, Long courseId) throws SQLException {
+		return this.courseDao.enrollCourse(userId, courseId);
+	}
+
+	public List<Course> getEnrolledCourses(Long userId) throws SQLException {
+		return this.courseDao.getEnrolledCourses(userId);
+	}
+
+	public boolean isUserEnrolledInCourse(Long userId, Long courseId) {
+		try {
+			return this.courseDao.isUserEnrolledInCourse(userId, courseId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	

@@ -51,6 +51,8 @@ public class MyContextListener implements ServletContextListener {
 			Migrator courseMigrator = new Courses(this.dbConnection);
 			Migrator lessonMigrator = new Lesssons(this.dbConnection);
 			Migrator userMigrator = new Users(this.dbConnection);
+			Migrator courseEnrollmentMigrator = new CourseEnrollment(this.dbConnection);
+			courseEnrollmentMigrator.execute();
 			courseMigrator.execute();
 			lessonMigrator.execute();
 			userMigrator.execute();
