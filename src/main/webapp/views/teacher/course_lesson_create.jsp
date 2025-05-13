@@ -33,7 +33,7 @@
                     </div>
                     
                     <div class="card-body p-4">
-                        <form method="post" action="<c:url value='CourseLessonCreateController'/>">
+                        <form method="post" action="<c:url value='/teacher/course/lesson/create'/>">
                             <input type="hidden" name="course_id" value="${param.course_id}" />
 
                             <div class="row">

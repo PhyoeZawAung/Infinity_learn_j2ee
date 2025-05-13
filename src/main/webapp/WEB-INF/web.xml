@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>infinitylearn</display-name>
+	<session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <listener>
+    	<description>Listener for the whole application start</description>
+    	<display-name>MyContextListener</display-name>
+    	<listener-class>uni.project.infinitylearn.listeners.MyContextListener</listener-class>
+    </listener>
+<!-- DATABASE -->
+    <!-- The context parameters are used to configure the database connection -->
+    <context-param>
+    	<description>the database name</description>
+    	<param-name>dbName</param-name>
+		<!-- this is the name of the database -->
+		<!-- Do not upload this file to the repository. -->
+    	<param-value>infinitylearnjavaee</param-value>
+    </context-param>
+    
+    <context-param>
+    	<description>database user name</description>
+    	<param-name>dbUser</param-name>
+		<!-- this is the user of the database -->
+		<!-- Do not upload this file to the repository. -->
+    	<param-value>root</param-value>
+    </context-param>
+    
+    <context-param>
+    	<description>database password</description>
+    	<param-name>dbPassword</param-name>
+		<!-- this is the name of the database -->
+		<!-- Do not upload this file to the repository. -->
+    	<param-value></param-value>
+    </context-param>
+<!-- DATABASE -->
+<!-- filters -->
     <filter>
     	<description>
     	</description>
@@ -67,127 +104,39 @@
     	<filter-name>GuestFilter</filter-name>
     	<url-pattern>/register</url-pattern>
     </filter-mapping>
-    
-    <listener>
-    	<listener-class>uni.project.infinitylearn.listeners.MyContextListener</listener-class>
-    </listener>
-    <servlet>
-    	<description>
-    	</description>
-    	<display-name>MainController</display-name>
-    	<servlet-name>MainController</servlet-name>
-    	<servlet-class>uni.project.infinitylearn.controllers.MainController</servlet-class>
-    </servlet>
-    <servlet>
-    	<description>
-    	</description>
-    	<display-name>SecondController</display-name>
-    	<servlet-name>SecondController</servlet-name>
-    	<servlet-class>uni.project.infinitylearn.controllers.SecondController</servlet-class>
-    </servlet>
-    <servlet>
-    	<description>
-    	This is the welcome file for the project</description>
-    	<display-name>IndexController</display-name>
-    	<servlet-name>IndexController</servlet-name>
-    	<servlet-class>uni.project.infinitylearn.controllers.IndexController</servlet-class>
-    </servlet>
-    <servlet>
-    	<description>
-    	</description>
-    	<display-name>CourseListController</display-name>
-    	<servlet-name>CourseListController</servlet-name>
-    	<servlet-class>uni.project.infinitylearn.controllers.CourseListController</servlet-class>
-    </servlet>
-    <servlet>
-    	<description>
-    	</description>
-    	<display-name>CourseCreateController</display-name>
-    	<servlet-name>CourseCreateController</servlet-name>
-    	<servlet-class>uni.project.infinitylearn.controllers.CourseCreateController</servlet-class>
-    </servlet>
+<!-- filters -->
 
-	<servlet>
-    	<description>
-    	</description>
-    	<display-name>CourseLessonCreateController</display-name>
-    	<servlet-name>CourseLessonCreateController</servlet-name>
-    	<servlet-class>uni.project.infinitylearn.controllers.CourseLessonCreateController</servlet-class>
-    </servlet>
-	<servlet>
-    	<description>
-    	</description>
-    	<display-name>CourseLessonVideoCreateController</display-name>
-    	<servlet-name>CourseLessonVideoCreateController</servlet-name>
-    	<servlet-class>uni.project.infinitylearn.controllers.CourseLessonVideoCreateController</servlet-class>
-    </servlet>
-	<servlet>
-    	<description>
-    	</description>
-    	<display-name>CourseViewController</display-name>
-    	<servlet-name>CourseViewController</servlet-name>
-    	<servlet-class>uni.project.infinitylearn.controllers.CourseViewController</servlet-class>
-    </servlet>
-	<servlet>
-		<description>
-		</description>
-		<display-name>FileController</display-name>
-		<servlet-name>FileController</servlet-name>
-		<servlet-class>uni.project.infinitylearn.controllers.FileHandler</servlet-class>
-	</servlet>
 
-	<servlet>
-		<description>
-		</description>
-		<display-name>UserRegisterController</display-name>
-		<servlet-name>UserRegisterController</servlet-name>
-		<servlet-class>uni.project.infinitylearn.controllers.UserRegisterController</servlet-class>
-	</servlet>
+<!-- GENERAL CONTROLLERS -->
+	<!-- FileController -->
+		<servlet>
+			<description>
+			</description>
+			<display-name>FileController</display-name>
+			<servlet-name>FileController</servlet-name>
+			<servlet-class>uni.project.infinitylearn.controllers.FileHandler</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>FileController</servlet-name>
+			<url-pattern>/FileController/*</url-pattern>
+		</servlet-mapping>
+	<!-- FileController -->
+	<!-- DashboardController -->
+		<servlet>
+			<description>
+			</description>
+			<display-name>DashboardController</display-name>
+			<servlet-name>DashboardController</servlet-name>
+			<servlet-class>uni.project.infinitylearn.controllers.DashboardController</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>DashboardController</servlet-name>
+			<url-pattern>/dashboard</url-pattern>
+		</servlet-mapping>
+	<!-- DashboardController -->
+<!-- GENERAL CONTROLLERS -->
 
-	<servlet>
-		<description>
-		</description>
-		<display-name>LogoutController</display-name>
-		<servlet-name>LogoutController</servlet-name>
-		<servlet-class>uni.project.infinitylearn.controllers.LogoutController</servlet-class>
-	</servlet>
-
-	<servlet>
-		<description>
-		</description>
-		<display-name>StudentDashboard</display-name>
-		<servlet-name>StudentDashboard</servlet-name>
-		<servlet-class>uni.project.infinitylearn.controllers.student.DashboardController</servlet-class>
-	</servlet>
-
-	<servlet>
-		<description>
-		</description>
-		<display-name>TeacherDashboard</display-name>
-		<servlet-name>TeacherDashboard</servlet-name>
-		<servlet-class>uni.project.infinitylearn.controllers.teacher.DashboardController</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
-		</description>
-		<display-name>ReviewerDashboard</display-name>
-		<servlet-name>ReviewerDashboard</servlet-name>
-		<servlet-class>uni.project.infinitylearn.controllers.reviewer.DashboardController</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
-		</description>
-		<display-name>AdminDashboard</display-name>
-		<servlet-name>AdminDashboard</servlet-name>
-		<servlet-class>uni.project.infinitylearn.controllers.admin.DashboardController</servlet-class>
-	</servlet>
-	<servlet>
-		<description>
-		</description>
-		<display-name>DashboardController</display-name>
-		<servlet-name>DashboardController</servlet-name>
-		<servlet-class>uni.project.infinitylearn.controllers.DashboardController</servlet-class>
-	</servlet>
+<!-- LoginController -->
 	<servlet>
 		<description>
 		</description>
@@ -195,106 +144,164 @@
 		<servlet-name>LoginController</servlet-name>
 		<servlet-class>uni.project.infinitylearn.controllers.LoginController</servlet-class>
 	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>StudentDashboard</servlet-name>
-		<url-pattern>/student/dashboard</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>TeacherDashboard</servlet-name>
-		<url-pattern>/teacher/dashboard</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>ReviewerDashboard</servlet-name>
-		<url-pattern>/reviewer/dashboard</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>AdminDashboard</servlet-name>
-		<url-pattern>/admin/dashboard</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DashboardController</servlet-name>
-		<url-pattern>/dashboard</url-pattern>
-	</servlet-mapping>
-
 	<servlet-mapping>
 		<servlet-name>LoginController</servlet-name>
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
+<!-- LoginController -->
 
+<!-- LogoutController -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>LogoutController</display-name>
+		<servlet-name>LogoutController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.LogoutController</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>LogoutController</servlet-name>
 		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
+<!-- LogoutController -->
 
+<!-- UserRegisterController -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>UserRegisterController</display-name>
+		<servlet-name>UserRegisterController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.UserRegisterController</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>UserRegisterController</servlet-name>
 		<url-pattern>/register</url-pattern>
 	</servlet-mapping>
+<!-- UserRegisterController -->
+
+<!-- TEACHER -->
+
+	<!-- teacher dashboard controller -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>TeacherDashboard</display-name>
+		<servlet-name>TeacherDashboard</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.DashboardController</servlet-class>
+	</servlet>
 	<servlet-mapping>
-		<servlet-name>FileController</servlet-name>
-		<url-pattern>/FileController/*</url-pattern>
-		</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>CourseLessonCreateController</servlet-name>
-		<url-pattern>/teacher/CourseLessonCreateController</url-pattern>
-		</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>CourseLessonVideoCreateController</servlet-name>
-		<url-pattern>/teacher/CourseLessonVideoCreateController</url-pattern>
+		<servlet-name>TeacherDashboard</servlet-name>
+		<url-pattern>/teacher/dashboard</url-pattern>
 	</servlet-mapping>
+
+	<!-- course list controller -->
+    <servlet>
+    	<description>
+			
+    	</description>
+    	<display-name>TeacherCourseListController</display-name>
+    	<servlet-name>TeacherCourseListController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseListController</servlet-class>
+    </servlet>
+	 <servlet-mapping>
+    	<servlet-name>TeacherCourseListController</servlet-name>
+    	<url-pattern>/teacher/course/list</url-pattern>
+    </servlet-mapping>
+
+	<!-- // course view controller -->
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>TeacherCourseViewController</display-name>
+    	<servlet-name>TeacherCourseViewController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseViewController</servlet-class>
+    </servlet>
 	<servlet-mapping>
-		<servlet-name>CourseViewController</servlet-name>
-		<url-pattern>/teacher/CourseViewController</url-pattern>
+		<servlet-name>TeacherCourseViewController</servlet-name>
+		<url-pattern>/teacher/course/detail</url-pattern>
 	</servlet-mapping>
-    <servlet-mapping>
-    	<servlet-name>MainController</servlet-name>
-    	<url-pattern>/MainController</url-pattern>
+
+	<!-- course create controller -->
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>TeacherCourseCreateController</display-name>
+    	<servlet-name>TeacherCourseCreateController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseCreateController</servlet-class>
+    </servlet>
+	<servlet-mapping>
+    	<servlet-name>TeacherCourseCreateController</servlet-name>
+    	<url-pattern>/teacher/course/create</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-    	<servlet-name>SecondController</servlet-name>
-    	<url-pattern>/SecondController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-    	<servlet-name>IndexController</servlet-name>
-    	<url-pattern>/</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-    	<servlet-name>CourseListController</servlet-name>
-    	<url-pattern>/teacher/CourseListController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-    	<servlet-name>CourseCreateController</servlet-name>
-    	<url-pattern>/teacher/CourseCreateController</url-pattern>
-    </servlet-mapping>
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
-    
-    <listener>
-    	<description>Listener for the whole application start</description>
-    	<display-name>MyContextListener</display-name>
-    	<listener-class>uni.project.infinitylearn.listeners.MyContextListener</listener-class>
-    </listener>
-    
-    <context-param>
-    	<description>the database name</description>
-    	<param-name>dbName</param-name>
-    	<param-value>infinitylearnjavaee</param-value>
-    </context-param>
-    
-    <context-param>
-    	<description>database user name</description>
-    	<param-name>dbUser</param-name>
-    	<param-value>root</param-value>
-    </context-param>
-    
-    <context-param>
-    	<description>database password</description>
-    	<param-name>dbPassword</param-name>
-    	<param-value>maria</param-value>
-    </context-param>
-    </web-app>
+
+	<!-- course lesson create controller -->
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>TeacherCourseLessonCreateController</display-name>
+    	<servlet-name>TeacherCourseLessonCreateController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonCreateController</servlet-class>
+    </servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonCreateController</servlet-name>
+		<url-pattern>/teacher/course/lesson/create</url-pattern>
+	</servlet-mapping>
+
+	<!-- course lesson video create controller -->
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>TeacherCourseLessonVideoCreateController</display-name>
+    	<servlet-name>TeacherCourseLessonVideoCreateController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonVideoCreateController</servlet-class>
+    </servlet>
+
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonVideoCreateController</servlet-name>
+		<url-pattern>/teacher/course/lesson/lesson-video/create</url-pattern>
+	</servlet-mapping>
+
+<!-- TEACHER -->
+
+<!-- STUDENT -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentDashboard</display-name>
+		<servlet-name>StudentDashboard</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.DashboardController</servlet-class>
+	</servlet>
+		<servlet-mapping>
+		<servlet-name>StudentDashboard</servlet-name>
+		<url-pattern>/student/dashboard</url-pattern>
+	</servlet-mapping>
+<!-- STUDENT -->
+
+<!-- ADMIN -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>AdminDashboard</display-name>
+		<servlet-name>AdminDashboard</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.admin.DashboardController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminDashboard</servlet-name>
+		<url-pattern>/admin/dashboard</url-pattern>
+	</servlet-mapping>
+<!-- ADMIN -->
+
+<!-- REVIEWER -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>ReviewerDashboard</display-name>
+		<servlet-name>ReviewerDashboard</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.reviewer.DashboardController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReviewerDashboard</servlet-name>
+		<url-pattern>/reviewer/dashboard</url-pattern>
+	</servlet-mapping>
+<!-- REVIEWER -->
+</web-app>
 	

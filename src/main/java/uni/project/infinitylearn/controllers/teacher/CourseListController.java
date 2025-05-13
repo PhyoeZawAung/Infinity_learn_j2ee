@@ -1,4 +1,4 @@
-package uni.project.infinitylearn.controllers;
+package uni.project.infinitylearn.controllers.teacher;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -43,7 +43,7 @@ public class CourseListController extends HttpServlet {
 		
 		request.setAttribute("courses", courses);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/course_list.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/views/teacher/course_list.jsp");
 		
 		rd.forward(request, response);
 	}

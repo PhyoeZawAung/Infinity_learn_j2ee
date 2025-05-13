@@ -119,7 +119,7 @@
         <div class="card shadow-lg border-0 mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="mb-0">📚 Course View</h3>
-                <a href="<c:url value='CourseEditController?course_id=${course.id}'/>" class="btn btn-custom btn-sm">
+                <a href="<c:url value='/teacher/course/edit?course_id=${course.id}'/>" class="btn btn-custom btn-sm">
                     Edit Course
                 </a>
             </div>
@@ -136,7 +136,7 @@
                         <img src="<c:url value='/FileController${course.banner_image}'/>" alt="Course Banner" class="course-banner">
                     </div>
                 </div>
-                <a href="<c:url value='CourseLessonCreateController?course_id=${course.id}'/>" class="btn btn-outline-success mb-4">
+                <a href="<c:url value='/teacher/course/lesson/create?course_id=${course.id}'/>" class="btn btn-outline-success mb-4">
                     ➕ Add Lesson
                 </a>
 
@@ -168,7 +168,7 @@
                         </c:choose>
 
                         <div class="lesson-footer text-end">
-                            <a href="<c:url value='CourseLessonVideoCreateController?course_id=${course.id}&lesson_id=${lesson.id}'/>"
+                            <a href="<c:url value='/teacher/course/lesson/lesson-video/create?course_id=${course.id}&lesson_id=${lesson.id}'/>"
                                 class="btn btn-sm btn-outline-success">➕ Add Video</a>
                         </div>
                     </div>
