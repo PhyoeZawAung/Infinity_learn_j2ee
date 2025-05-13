@@ -42,7 +42,7 @@
 		<div class="card shadow-lg border-0">
 			<div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color:#6366f1;">
 				<h3 class="mb-0 fw-semibold">📚 Course Management</h3>
-				<a href="<c:url value='/teacher/CourseCreateController'/>" class="btn btn-outline-light">
+				<a href="<c:url value='/teacher/course/create'/>" class="btn btn-outline-light">
 					➕ Add Course
 				</a>
 			</div>
@@ -87,7 +87,7 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-center gap-2">
-											<a href="<c:url value='CourseViewController?course_id=${course.id}'/>" class="btn btn-sm btn-outline-primary">
+											<a href="<c:url value='/teacher/course/detail?course_id=${course.id}'/>" class="btn btn-sm btn-outline-primary">
 												View
 											</a>
 											<!-- Future buttons -->

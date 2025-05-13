@@ -21,7 +21,7 @@
         <h1>Teacher Dashboard</h1>
         <ul>
             <li><a href="<c:url value='/logout'/>" >Logout</a></li>
-            <li><a href="<c:url value='/teacher/CourseListController'/>">View Course List</a></li>
+            <li><a href="<c:url value='/teacher/course/list'/>">View Course List</a></li>
         </ul>
 
 	</div>

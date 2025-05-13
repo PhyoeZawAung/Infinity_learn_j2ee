@@ -1,4 +1,4 @@
-package uni.project.infinitylearn.controllers;
+package uni.project.infinitylearn.controllers.teacher;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class CourseLessonVideoCreateController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Handle GET request for video creation
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/course_lesson_video_create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/teacher/course_lesson_video_create.jsp");
         dispatcher.forward(request, response);
     }
     
@@ -60,6 +60,6 @@ public class CourseLessonVideoCreateController extends HttpServlet {
 
         // // Redirect or forward to a success page
         // response.sendRedirect("success.jsp");
-        response.sendRedirect("CourseViewController?course_id=" + courseId);
+        response.sendRedirect("/teacher/course/detail?course_id=" + courseId);
     }
 }

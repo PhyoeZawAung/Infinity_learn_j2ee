@@ -57,7 +57,7 @@
                 <p class="text-muted mb-0">Provide details and upload a video to create a new lesson</p>
             </div>
             <div class="card-body">
-                <form class="row g-3" method="post" action="<c:url value='CourseLessonVideoCreateController'/>" enctype="multipart/form-data">
+                <form class="row g-3" method="post" action="<c:url value='/teacher/course/lesson/lesson-video/create'/>" enctype="multipart/form-data">
                     <input type="hidden" name="course_id" value="${param.course_id}" />
                     <input type="hidden" name="lesson_id" value="${param.lesson_id}" />
 
@@ -140,7 +140,7 @@
                 console.log("Upload success");
                 uploadProgressEle.innerHTML = 'Upload Complete!';
                 setTimeout(() => {
-                    window.location.href = '<c:url value="CourseViewController"/>?course_id=' + formData.get('course_id');
+                    window.location.href = '<c:url value="/teacher/course/detail"/>?course_id=' + formData.get('course_id');
                 }, 1500); // 1.5 second delay to show the progress bar update
             } else {
                 console.error('Upload failed with status', xhr.status);
