@@ -28,8 +28,8 @@ public class FileHandler extends HttpServlet {
         super();
         this.fileUtil = new FileUtil();
     }
+
     @Override
-    
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String pathInfo = request.getPathInfo();
@@ -42,12 +42,12 @@ public class FileHandler extends HttpServlet {
         File file = new File(filePath);
         String filename = file.getName();
 
-        if(file.exists()) {
+        if (file.exists()) {
             response.setContentType("application/octet-stream");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
             response.setContentLength((int) file.length());
             try (InputStream in = new FileInputStream(file);
-                 ServletOutputStream out = response.getOutputStream()) {
+                    ServletOutputStream out = response.getOutputStream()) {
                 byte[] buffer = new byte[1024];
                 int bytesRead;
                 while ((bytesRead = in.read(buffer)) != -1) {
@@ -58,5 +58,5 @@ public class FileHandler extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "File not found");
         }
 
-    }   
+    }
 }

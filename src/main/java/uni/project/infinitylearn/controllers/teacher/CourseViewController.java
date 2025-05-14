@@ -1,4 +1,4 @@
-package uni.project.infinitylearn.controllers;
+package uni.project.infinitylearn.controllers.teacher;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ public class CourseViewController extends HttpServlet {
         }
         request.setAttribute("course", course);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("course_view.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/teacher/course_view.jsp");
         dispatcher.forward(request, response);
     }
 

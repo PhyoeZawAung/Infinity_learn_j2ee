@@ -1,8 +1,6 @@
-package uni.project.infinitylearn.controllers;
+package uni.project.infinitylearn.controllers.teacher;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -45,9 +43,8 @@ public class CourseCreateController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		RequestDispatcher rd = request.getRequestDispatcher("course_create.jsp");
-		
-		
+		RequestDispatcher rd = request.getRequestDispatcher("/views/teacher/course_create.jsp");
+	
 		rd.forward(request, response);
 		
 	}
@@ -76,7 +73,7 @@ public class CourseCreateController extends HttpServlet {
 
 		service.createCourse(title, description,"PZA", category, price,true, image);
 
-		response.sendRedirect("/CourseListController");
+		response.sendRedirect("/teacher/course/list");
 
 	}
 	
