@@ -4,6 +4,7 @@ import uni.project.infinitylearn.dao.CourseDao;
 import uni.project.infinitylearn.listeners.MyContextListener;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
+import uni.project.infinitylearn.models.LessonAssignment;
 import uni.project.infinitylearn.models.LessonVideo;
 
 import java.sql.ResultSet;
@@ -135,6 +136,14 @@ public class CourseService {
 		this.courseDao.createCourseLessonVideo(lessonVideo);
 		
 	}
-	
+	public void createCourseLessonAssignment(String title, String description,String assignment_url, Long lesson_id){
+		LessonAssignment lessonAssignment = new LessonAssignment();
+		lessonAssignment.setTitle(title);
+		lessonAssignment.setDescription(description);
+		lessonAssignment.setAssignmentUrl(assignment_url);
+		lessonAssignment.setLessonId(lesson_id);
+
+		this.courseDao.createLessonAssignments(lessonAssignment);
+	}
 	
 }

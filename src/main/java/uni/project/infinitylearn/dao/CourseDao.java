@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import uni.project.infinitylearn.listeners.*;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
+import uni.project.infinitylearn.models.LessonAssignment;
 import uni.project.infinitylearn.models.LessonVideo;
+
 public class CourseDao {
 	private Connection conn;
 
@@ -44,7 +46,8 @@ public class CourseDao {
 	// get all course lesson videos
 	public ResultSet getCourseLessonVideos(Long courseId, Long lessonId) throws SQLException {
 
-		PreparedStatement statement = conn.prepareStatement("SELECT * FROM lesson_videos WHERE course_id = ? and lesson_id = ?");
+		PreparedStatement statement = conn
+				.prepareStatement("SELECT * FROM lesson_videos WHERE course_id = ? and lesson_id = ?");
 		statement.setLong(1, courseId);
 		statement.setLong(2, lessonId);
 
@@ -62,12 +65,12 @@ public class CourseDao {
 		return res;
 
 	}
-	
-	
+
 	public void createCourse(Course course) {
 		PreparedStatement statement = null;
 		try {
-			statement = conn.prepareStatement("INSERT INTO course (title, description, instructor, is_published, category, price, banner_image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			statement = conn.prepareStatement(
+					"INSERT INTO course (title, description, instructor, is_published, category, price, banner_image) VALUES (?, ?, ?, ?, ?, ?, ?)");
 			statement.setString(1, course.getTitle());
 			statement.setString(2, course.getDescription());
 			statement.setString(3, course.getInstructor());
@@ -115,13 +118,38 @@ public class CourseDao {
 	public void createCourseLessonVideo(LessonVideo lessonVideo) {
 		PreparedStatement statement = null;
 		try {
-			statement = conn.prepareStatement("INSERT INTO lesson_videos (title, description, video_url, thumbnail, lesson_id, course_id) VALUES (?, ?, ?,?, ?, ?)");
+			statement = conn.prepareStatement(
+					"INSERT INTO lesson_videos (title, description, video_url, thumbnail, lesson_id, course_id) VALUES (?, ?, ?,?, ?, ?)");
 			statement.setString(1, lessonVideo.getTitle());
 			statement.setString(2, lessonVideo.getDescription());
 			statement.setString(3, lessonVideo.getVideoUrl());
 			statement.setString(4, lessonVideo.getThumbnail());
 			statement.setLong(5, lessonVideo.getLessonId());
 			statement.setLong(6, lessonVideo.getCourseId());
+
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void createLessonAssignments(LessonAssignment lessonAssignment) {
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(
+					"INSERT INTO lesson_assignment (title, description, assignment_url, lesson_id) VALUES (?, ?, ?, ?)");
+			statement.setString(1, lessonAssignment.getTitle());
+			statement.setString(2, lessonAssignment.getDescription());
+			statement.setString(3, lessonAssignment.getAssignmentUrl());
+			statement.setLong(5, lessonAssignment.getLessonId());
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
