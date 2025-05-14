@@ -104,7 +104,7 @@
         </div>
     </div>
 
-    <<script>
+    <script>
 	    let editorInstance; // Define it outside
 	
 	    ClassicEditor

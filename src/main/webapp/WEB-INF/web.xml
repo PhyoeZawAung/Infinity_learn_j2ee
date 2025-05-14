@@ -34,7 +34,7 @@
     	<param-name>dbPassword</param-name>
 		<!-- this is the name of the database -->
 		<!-- Do not upload this file to the repository. -->
-    	<param-value></param-value>
+    	<param-value>maria</param-value>
     </context-param>
 <!-- DATABASE -->
 <!-- filters -->
@@ -232,6 +232,18 @@
     	<servlet-name>TeacherCourseCreateController</servlet-name>
     	<url-pattern>/teacher/course/create</url-pattern>
     </servlet-mapping>
+
+	<!-- course edit controller -->
+	<servlet>
+		<description>Handles editing of courses</description>
+		<display-name>TeacherCourseEditController</display-name>
+		<servlet-name>TeacherCourseEditController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseEditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseEditController</servlet-name>
+		<url-pattern>/teacher/course/edit</url-pattern>
+	</servlet-mapping>
 
 	<!-- course lesson create controller -->
 	<servlet>

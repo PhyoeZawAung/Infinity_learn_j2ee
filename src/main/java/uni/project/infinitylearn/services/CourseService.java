@@ -104,10 +104,13 @@ public class CourseService {
 		course.setPrice(price);
 		course.setIs_published(is_published);
 		course.setBanner_image(banner_image);
-		//System.out.println("Course: " + course);
 		
 		this.courseDao.createCourse(course);
 		
+	}
+
+	public boolean updateCourse(Course course) {
+	    return this.courseDao.updateCourse(course);
 	}
 
 	public void createCourseLesson(String title, String description, Long courseId) {

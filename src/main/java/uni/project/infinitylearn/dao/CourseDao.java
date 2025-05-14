@@ -90,6 +90,37 @@ public class CourseDao {
 		}
 	}
 
+
+	public boolean updateCourse(Course course) {
+		PreparedStatement statement = null;
+		try {
+			String sql = "UPDATE course SET title = ?, description = ?, instructor = ?, is_published = ?, category = ?, price = ?, banner_image = ? WHERE id = ?";
+			statement = conn.prepareStatement(sql);
+			statement.setString(1, course.getTitle());
+			statement.setString(2, course.getDescription());
+			statement.setString(3, course.getInstructor());
+			statement.setBoolean(4, course.getIs_published());
+			statement.setString(5, course.getCategory());
+			statement.setString(6, course.getPrice());
+			statement.setString(7, course.getBanner_image());
+			statement.setLong(8, course.getId());
+
+			int rowsUpdated = statement.executeUpdate();
+			return rowsUpdated > 0; // Return true if at least one row was updated
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public void createCourseLesson(Lesson lesson) {
 		PreparedStatement statement = null;
 		try {
