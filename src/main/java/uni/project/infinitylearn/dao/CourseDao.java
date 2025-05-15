@@ -9,7 +9,7 @@ import uni.project.infinitylearn.listeners.*;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
 import uni.project.infinitylearn.models.LessonVideo;
-public class CourseDao {
+public class CourseDao extends Dao {
 	private Connection conn;
 
 	public CourseDao() {
@@ -90,35 +90,10 @@ public class CourseDao {
 		}
 	}
 
-
-	public boolean updateCourse(Course course) {
-		PreparedStatement statement = null;
-		try {
-			String sql = "UPDATE course SET title = ?, description = ?, instructor = ?, is_published = ?, category = ?, price = ?, banner_image = ? WHERE id = ?";
-			statement = conn.prepareStatement(sql);
-			statement.setString(1, course.getTitle());
-			statement.setString(2, course.getDescription());
-			statement.setString(3, course.getInstructor());
-			statement.setBoolean(4, course.getIs_published());
-			statement.setString(5, course.getCategory());
-			statement.setString(6, course.getPrice());
-			statement.setString(7, course.getBanner_image());
-			statement.setLong(8, course.getId());
-
-			int rowsUpdated = statement.executeUpdate();
-			return rowsUpdated > 0; // Return true if at least one row was updated
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	public boolean updateCourse(Long courseId, String title, String description, String instructor, String category, double price, String bannerImage) throws SQLException {
+		String sql = "UPDATE course SET title = ?, description = ?, instructor = ?, category = ?, price = ?, banner_image = ? WHERE id = ?";
+		int rowsUpdated = executeUpdate(sql, title, description, instructor, category, price, bannerImage, courseId);
+		return rowsUpdated > 0; // Return true if at least one row was updated
 	}
 
 	public void createCourseLesson(Lesson lesson) {

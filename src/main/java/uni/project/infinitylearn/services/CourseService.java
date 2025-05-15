@@ -109,9 +109,17 @@ public class CourseService {
 		
 	}
 
-	public boolean updateCourse(Course course) {
-	    return this.courseDao.updateCourse(course);
-	}
+	public boolean updateCourse(Course course) throws SQLException {
+    return this.courseDao.updateCourse(
+        course.getId(),
+        course.getTitle(),
+        course.getDescription(),
+        course.getInstructor(),
+        course.getCategory(),
+        Double.parseDouble(course.getPrice()),
+        course.getBanner_image()
+    );
+}
 
 	public void createCourseLesson(String title, String description, Long courseId) {
 		

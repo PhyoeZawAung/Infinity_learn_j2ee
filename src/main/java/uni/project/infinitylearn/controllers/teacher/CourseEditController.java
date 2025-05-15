@@ -64,7 +64,6 @@ public class CourseEditController extends HttpServlet {
         String instructor = request.getParameter("instructor");
         String category = request.getParameter("category");
         String priceParam = request.getParameter("price");
-        String isPublishedParam = request.getParameter("isPublished");
         String existingBannerImage = request.getParameter("existingBannerImage");
         Part bannerImagePart = request.getPart("banner_image");
 
@@ -78,8 +77,6 @@ public class CourseEditController extends HttpServlet {
                 throw new NumberFormatException("Price is missing or invalid.");
             }
             double price = Double.parseDouble(priceParam);
-
-            boolean isPublished = "on".equals(isPublishedParam);
 
             // Handle banner image upload using FileUtil
             String bannerImage = existingBannerImage; // Default to the existing banner image
@@ -98,7 +95,6 @@ public class CourseEditController extends HttpServlet {
             course.setInstructor(instructor);
             course.setCategory(category);
             course.setPrice(String.valueOf(price));
-            course.setIs_published(isPublished);
             course.setBanner_image(bannerImage);
 
             System.out.println("Course object before update: " + course);
