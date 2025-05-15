@@ -28,7 +28,7 @@
   	<c:forEach var="course" items="${ courses }">
 		<div class="col-lg-4 col-sm-6 mb-4">
 			<div class="card h-100">
-				<a href="<c:url value='/guest/course/detail?id=${course.id}' />">
+				<a href="<c:url value='/student/course/enroll/detail?course_id=${course.id}' />">
 					<c:if test="${not empty course.banner_image}">
 						<img class="card-img-top" src="<c:url value='/FileController${course.banner_image}' />" alt="">
 					</c:if>
@@ -38,7 +38,7 @@
 				</a>
 				<div class="card-body">
 					<h4 class="card-title">
-						<a href="<c:url value='/guest/course/detail?id=${course.id}' />">${course.title}</a>
+						<a href="<c:url value='/student/course/enroll/detail?course_id=${course.id}' />">${course.title}</a>
 					</h4>
 					<p class="card-text">${course.shortDescription}</p>
 					<div class="d-flex align-items-center gap-3 mb-3">

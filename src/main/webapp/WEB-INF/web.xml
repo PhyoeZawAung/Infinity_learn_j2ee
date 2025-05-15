@@ -324,6 +324,18 @@
 		<servlet-name>StudentEnrolledCourseList</servlet-name>
 		<url-pattern>/student/course/enroll/list</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentEnrolledCourseDetail</display-name>
+		<servlet-name>StudentEnrolledCourseDetail</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.EnrolledCourseDetailController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentEnrolledCourseDetail</servlet-name>
+		<url-pattern>/student/course/enroll/detail</url-pattern>
+	</servlet-mapping>
 <!-- STUDENT -->
 
 <!-- ADMIN -->

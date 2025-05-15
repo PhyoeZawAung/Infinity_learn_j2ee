@@ -138,6 +138,10 @@ public class CourseService {
 		
 	}
 
+	public Course getEnrolledCourse(Long userId, Long courseId) throws SQLException {
+		return this.courseDao.getEnrolledCourse(userId, courseId);
+	}
+
 	public int enrollCourse(Long userId, Long courseId) throws SQLException {
 		return this.courseDao.enrollCourse(userId, courseId);
 	}

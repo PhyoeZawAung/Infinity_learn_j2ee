@@ -158,6 +158,26 @@ public class CourseDao extends Dao {
 		
 	}
 
+	public Course getEnrolledCourse(Long userId, Long courseId) {
+		String sql = """
+				select * from course
+				join course_enrollment on course.id = course_enrollment.course_id
+				where course_enrollment.user_id = ?
+				and course_enrollment.course_id = ?
+				""";
+		System.out.println("getEnrolledCourse :: sql :: " + sql);
+		System.out.println("getEnrolledCourse :: userId :: " + userId);
+		System.out.println("getEnrolledCourse :: courseId :: " + courseId);
+		return executeQuery(sql, rs -> {
+			Course course = null;
+			if(rs.next()){
+				course = CourseMapper.mapCourseWithLesson(rs);
+			}
+			return course;
+		}
+		, userId, courseId);
+	}
+
 	// get all enrolled courses for a student 
 	public List<Course> getEnrolledCourses(Long userId) throws SQLException {
 		String sql = """

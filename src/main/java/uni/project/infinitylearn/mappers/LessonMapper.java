@@ -3,6 +3,7 @@ package uni.project.infinitylearn.mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import uni.project.infinitylearn.dao.LessonVideoDao;
 import uni.project.infinitylearn.models.Lesson;
 import uni.project.infinitylearn.models.LessonVideo;
 
@@ -10,10 +11,14 @@ public class LessonMapper {
     
     public static Lesson mapLesson(ResultSet rs) throws SQLException {
         Lesson lesson = new Lesson();
+        
         lesson.setId(rs.getLong("id"));
         lesson.setTitle(rs.getString("title"));
         lesson.setDescription(rs.getString("description"));
         lesson.setCourseId(rs.getLong("course_id"));
+        LessonVideoDao lessonVideoDao = new LessonVideoDao();
+        lesson.setLessonVideos(lessonVideoDao.getLessonVideoByCourseIdAndLessonId(lesson.getCourseId(), lesson.getId()));
+        
         return lesson;
     }
     

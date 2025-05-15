@@ -37,7 +37,7 @@ public class EnrolledCourseListController extends HttpServlet {
             e.printStackTrace();
         }
         request.setAttribute("courses", enrolledCourses);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/student/enroll_course.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/student/enroll_course_list.jsp");
         dispatcher.forward(request, response);
     }
 
