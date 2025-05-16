@@ -121,6 +121,19 @@
 			<url-pattern>/FileController/*</url-pattern>
 		</servlet-mapping>
 	<!-- FileController -->
+	<!-- Video Streaming -->
+		<servlet>
+			<description>
+			</description>
+			<display-name>VideoStream</display-name>
+			<servlet-name>VideoStream</servlet-name>
+			<servlet-class>uni.project.infinitylearn.controllers.VideoStream</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>VideoStream</servlet-name>
+			<url-pattern>/video/stream</url-pattern>
+		</servlet-mapping>
+	<!-- Video Streaming -->
 	<!-- DashboardController -->
 		<servlet>
 			<description>
@@ -335,6 +348,30 @@
 	<servlet-mapping>
 		<servlet-name>StudentEnrolledCourseDetail</servlet-name>
 		<url-pattern>/student/course/enroll/detail</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentVideoWatchController</display-name>
+		<servlet-name>StudentVideoWatchController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.VideoWatchController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentVideoWatchController</servlet-name>
+		<url-pattern>student/course/enroll/watch</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentVideoProgressController</display-name>
+		<servlet-name>StudentVideoProgressController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.VideoProgressController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentVideoProgressController</servlet-name>
+		<url-pattern>student/course/enroll/update_progress</url-pattern>
 	</servlet-mapping>
 <!-- STUDENT -->
 

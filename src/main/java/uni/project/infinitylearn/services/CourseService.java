@@ -1,6 +1,7 @@
 package uni.project.infinitylearn.services;
 
 import uni.project.infinitylearn.dao.CourseDao;
+import uni.project.infinitylearn.dao.LessonVideoDao;
 import uni.project.infinitylearn.listeners.MyContextListener;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
@@ -142,8 +143,27 @@ public class CourseService {
 		return this.courseDao.getEnrolledCourse(userId, courseId);
 	}
 
+	public Course getEnrolledCourseWithWatchHistory(Long userId, Long courseId) throws SQLException {
+		return this.courseDao.getEnrolledCourseWithWatchHistory(userId, courseId);
+	}
+
 	public int enrollCourse(Long userId, Long courseId) throws SQLException {
-		return this.courseDao.enrollCourse(userId, courseId);
+		// crete a video progress entry for the user
+		int enroll_status = this.courseDao.enrollCourse(userId, courseId);
+		if(enroll_status > 0) {
+
+			Course course = this.getEnrolledCourse(userId, courseId);
+
+			for (Lesson lesson : course.getLessons()) {
+				for(LessonVideo lessonVideo : lesson.getLessonVideos()) {
+					this.courseDao.createVideoProgressEntry(userId, courseId, lesson.getId(), lessonVideo.getId());
+				}
+				
+			}
+
+			return enroll_status;
+		}
+		return 0;
 	}
 
 	public List<Course> getEnrolledCourses(Long userId) throws SQLException {
@@ -157,6 +177,25 @@ public class CourseService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public LessonVideo getVideo(Long videoId, Long userId) {
+		try {
+			return this.courseDao.getVideo(videoId, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public List<LessonVideo> getLessonVideos(Long courseId, Long lessonId, Long userId) {
+		
+			return new LessonVideoDao().getLessonVideoByCourseIdAndLessonIdAndUserId(courseId, lessonId, userId);
+		 
+	}
+
+	public int updateVideoProgress(Long userId, Long courseId, Long lessonId, Long videoId, int progress, boolean isCompleted) throws SQLException {
+		return this.courseDao.updateVideoProgress(userId, courseId, lessonId, videoId, progress, isCompleted);
 	}
 	
 	

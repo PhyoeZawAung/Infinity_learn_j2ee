@@ -13,7 +13,16 @@ public class LessonDao extends Dao {
                 """;
         System.out.println("getLessonsByCourseId :: sql :: " + sql);
         System.out.println("getLessonsByCourseId :: courseId :: " + courseId);
-       return executeQueryList(sql, rs -> LessonMapper.mapLesson(rs), courseId);
+        return executeQueryList(sql, rs -> LessonMapper.mapLesson(rs), courseId);
+    }
+
+    public List<Lesson> getLessonsByCourseIdAndUserId(Long courseId, Long userId) {
+        String sql = """
+                select * from lessons where course_id=?
+                """;
+        System.out.println("getLessonsByCourseId :: sql :: " + sql);
+        System.out.println("getLessonsByCourseId :: courseId :: " + courseId);
+       return executeQueryList(sql, rs -> LessonMapper.mapLessonWithProgress(rs, userId), courseId);
     }
     
 }

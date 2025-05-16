@@ -11,14 +11,23 @@ public class LessonMapper {
     
     public static Lesson mapLesson(ResultSet rs) throws SQLException {
         Lesson lesson = new Lesson();
+        lesson.setId(rs.getLong("id"));
+        lesson.setTitle(rs.getString("title"));
+        lesson.setDescription(rs.getString("description"));
+        lesson.setCourseId(rs.getLong("course_id"));
+        lesson.setLessonVideos(new LessonVideoDao().getLessonVideoByCourseIdAndLessonId(lesson.getCourseId(), lesson.getId()));
+        return lesson;
+    }
+
+    public static Lesson mapLessonWithProgress(ResultSet rs, Long userId) throws SQLException {
+        Lesson lesson = new Lesson();
         
         lesson.setId(rs.getLong("id"));
         lesson.setTitle(rs.getString("title"));
         lesson.setDescription(rs.getString("description"));
         lesson.setCourseId(rs.getLong("course_id"));
         LessonVideoDao lessonVideoDao = new LessonVideoDao();
-        lesson.setLessonVideos(lessonVideoDao.getLessonVideoByCourseIdAndLessonId(lesson.getCourseId(), lesson.getId()));
-        
+        lesson.setLessonVideos(lessonVideoDao.getLessonVideoByCourseIdAndLessonIdAndUserId(lesson.getCourseId(), lesson.getId(), userId)); 
         return lesson;
     }
     

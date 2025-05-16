@@ -52,10 +52,13 @@ public class MyContextListener implements ServletContextListener {
 			Migrator lessonMigrator = new Lesssons(this.dbConnection);
 			Migrator userMigrator = new Users(this.dbConnection);
 			Migrator courseEnrollmentMigrator = new CourseEnrollment(this.dbConnection);
-			courseEnrollmentMigrator.execute();
-			courseMigrator.execute();
-			lessonMigrator.execute();
-			userMigrator.execute();
+			Migrator videoProgressMigrator = new VideoProgress(this.dbConnection);
+
+			// courseEnrollmentMigrator.execute();
+			// courseMigrator.execute();
+			// lessonMigrator.execute();
+			// userMigrator.execute();
+			// videoProgressMigrator.execute();
 			sce.getServletContext().setAttribute("dbConnection", dbConnection);
 			
 		} catch (ClassNotFoundException | SQLException e) {

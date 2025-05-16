@@ -149,7 +149,18 @@
                                             </c:if>
                                             <div class="video-title">${video.title}</div>
                                             <c:if test="${not empty video.videoUrl}">
-                                                <a href="<c:url value='/FileController${video.videoUrl}'/>" target="_blank" class="btn-watch">▶ Watch</a>
+                                                <c:if test="${video.isCompleted}">
+                                                    <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-danger">Watched</a>
+                                                </c:if>
+                                                <c:if test="${not video.isCompleted}">
+                                                    <c:if test="${video.progress == 0}">
+                                                        <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-success">▶ Watch</a>
+                                                    </c:if>
+                                                    <c:if test="${video.progress > 0}">
+                                                        <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-primary">▶ Continue</a>
+                                                    </c:if>
+                                                    
+                                                </c:if> 
                                             </c:if>
                                         </div>
                                     </c:forEach>
