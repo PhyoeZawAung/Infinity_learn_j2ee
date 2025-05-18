@@ -258,6 +258,18 @@
 		<url-pattern>/teacher/course/lesson/create</url-pattern>
 	</servlet-mapping>
 
+	<!-- course lesson edit controller -->
+	<servlet>
+		<description>Handles editing of lessons</description>
+		<display-name>TeacherCourseLessonEditController</display-name>
+		<servlet-name>TeacherCourseLessonEditController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonEditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonEditController</servlet-name>
+		<url-pattern>/teacher/course/lesson/edit</url-pattern>
+	</servlet-mapping>
+
 	<!-- course lesson video create controller -->
 	<servlet>
     	<description>
@@ -270,6 +282,18 @@
 	<servlet-mapping>
 		<servlet-name>TeacherCourseLessonVideoCreateController</servlet-name>
 		<url-pattern>/teacher/course/lesson/lesson-video/create</url-pattern>
+	</servlet-mapping>
+
+	<!-- course lesson video edit controller -->
+	<servlet>
+		<description>Handles editing of lesson videos</description>
+		<display-name>TeacherCourseLessonVideoEditController</display-name>
+		<servlet-name>TeacherCourseLessonVideoEditController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonVideoEditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonVideoEditController</servlet-name>
+		<url-pattern>/teacher/course/lesson/lesson-video/edit</url-pattern>
 	</servlet-mapping>
 
 <!-- TEACHER -->
