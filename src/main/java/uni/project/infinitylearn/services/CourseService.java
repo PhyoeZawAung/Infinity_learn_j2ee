@@ -93,7 +93,12 @@ public class CourseService {
 		return courses;
 		
 	}
-	
+
+	//get courses by instructor name that teachers only see their own courses
+	public List<Course> getCoursesByInstructorName(String instructorName) throws SQLException {
+		return courseDao.getCoursesByInstructorName(instructorName);
+	}
+		
 	
 	public void createCourse(String title, String description, String instructor, String category, String price, boolean is_published, String banner_image) {
 		Course course = new Course();

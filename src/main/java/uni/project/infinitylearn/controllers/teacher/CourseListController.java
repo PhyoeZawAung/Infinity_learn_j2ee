@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import uni.project.infinitylearn.models.Course;
+import uni.project.infinitylearn.models.User;
 import uni.project.infinitylearn.services.CourseService;
 
 /**
@@ -32,20 +33,26 @@ public class CourseListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CourseService service = new CourseService();
-		
+	
 		List<Course> courses = null;
+	
+		User loginUser = (User) request.getSession().getAttribute("auth_user");
+		if (loginUser == null) {
+			response.sendRedirect(request.getContextPath() + "/login");
+			return;
+		}
+	
 		try {
-			courses = service.getAllCourses();
+			String instructorName = loginUser.getFirstName() + " " + loginUser.getLastName();
+			courses = service.getCoursesByInstructorName(instructorName);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	
 		request.setAttribute("courses", courses);
-		
+	
 		RequestDispatcher rd = request.getRequestDispatcher("/views/teacher/course_list.jsp");
-		
 		rd.forward(request, response);
-	}
+	}	
 
 }

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import uni.project.infinitylearn.listeners.*;
 import uni.project.infinitylearn.models.Course;
@@ -63,7 +65,34 @@ public class CourseDao extends Dao {
 		return res;
 
 	}
+
+	// get course by instructor name that teachers only see their own courses
+	public List<Course> getCoursesByInstructorName(String instructorName) throws SQLException {
+		List<Course> courses = new ArrayList<>();
+		String sql = "SELECT * FROM course WHERE instructor = ?";
 	
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setString(1, instructorName);
+		ResultSet rs = statement.executeQuery();
+	
+		while (rs.next()) {
+			Course course = new Course();
+			course.setId(rs.getLong("id"));
+			course.setTitle(rs.getString("title"));
+			course.setDescription(rs.getString("description"));
+			course.setInstructor(rs.getString("instructor"));
+			course.setCategory(rs.getString("category"));
+			course.setPrice(rs.getString("price"));
+			course.setIs_published(rs.getBoolean("is_published"));
+			course.setBanner_image(rs.getString("banner_image"));
+			courses.add(course);
+		}
+	
+		rs.close();
+		statement.close();
+	
+		return courses;
+	}	
 	
 	public void createCourse(Course course) {
 		PreparedStatement statement = null;

@@ -2,33 +2,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<title>Course List</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+		integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
+	</script>
 	<style>
 		.desc-cell {
 			max-width: 200px;
 			padding: 0.5rem;
 			vertical-align: middle;
 		}
-	
-		.desc-wrapper {
-			overflow: hidden;
-			max-height: 1.5em;
-			transition: max-height 0.6s ease;
-		}
-	
+
 		.desc-text {
-			text-align: left;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			transition: all 0.3s ease;
+		}
+
+		.desc-text.collapsed {
+			-webkit-line-clamp: 1;
+			/* show 1 line with ellipsis */
+		}
+
+		.desc-text.expanded {
+			-webkit-line-clamp: unset;
+			/* remove line limit */
 			white-space: normal;
-			line-height: 1.5;
+		}
+		.clickable-row {
+			cursor: pointer;
 		}
 	</style>
 </head>
+
 <body class="bg-body-tertiary">
 	<c:if test="${not empty auth_user}">
 		<div class="alert alert-success" role="alert">
@@ -40,7 +52,8 @@
 
 	<div class="container py-5">
 		<div class="card shadow-lg border-0">
-			<div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color:#6366f1;">
+			<div class="card-header text-white d-flex justify-content-between align-items-center"
+				style="background-color:#6366f1;">
 				<h3 class="mb-0 fw-semibold">📚 Course Management</h3>
 				<a href="<c:url value='/teacher/course/create'/>" class="btn btn-outline-light">
 					➕ Add Course
@@ -64,30 +77,33 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="course" items="${courses}">
-								<tr class="text-center">
-									<td>${course.id}</td>
+							<c:forEach var="course" items="${courses}" varStatus="status">
+								<tr class="text-center clickable-row" title="Click to expand/collapse">
+									<td>${status.index + 1}</td>
 									<td class="text-start">${course.title}</td>
 									<td class="desc-cell text-start">
 										<div class="desc-wrapper">
-											<div class="desc-text">${course.description}</div>
+											<div class="desc-text collapsed">${course.description}</div>
 										</div>
 									</td>
 									<td>${course.instructor}</td>
 									<td>${course.category}</td>
 									<td><span class="fw-semibold text-success">$${course.price}</span></td>
 									<td>
-										<span class="badge rounded-pill ${course.is_published ? 'bg-success' : 'bg-warning text-dark'}">
+										<span
+											class="badge rounded-pill ${course.is_published ? 'bg-success' : 'bg-warning text-dark'}">
 											${course.is_published ? 'Published' : 'Draft'}
 										</span>
 									</td>
 									<td>
 										<img src="<c:url value='/FileController${course.banner_image}'/>"
-											alt="Course Image" class="rounded" style="width: 80px; height: 80px; object-fit: cover;">
+											alt="Course Image" class="rounded"
+											style="width: 80px; height: 80px; object-fit: cover;">
 									</td>
 									<td>
 										<div class="d-flex justify-content-center gap-2">
-											<a href="<c:url value='/teacher/course/detail?course_id=${course.id}'/>" class="btn btn-sm btn-outline-primary">
+											<a href="<c:url value='/teacher/course/detail?course_id=${course.id}'/>"
+												class="btn btn-sm btn-outline-primary">
 												View
 											</a>
 											<!-- Future buttons -->
@@ -108,29 +124,19 @@
 		</div>
 	</div>
 
-	<!-- This script enables smooth expansion of description texts when hovering over rows -->
+	<!-- This script enables smooth expansion of description texts when clicking over rows -->
 	<script>
-		document.querySelectorAll("tr").forEach(row => {
-			const wrapper = row.querySelector(".desc-wrapper");
-			if (!wrapper) return;
+		document.querySelectorAll(".clickable-row").forEach(row => {
+			const descText = row.querySelector(".desc-text");
 	
-			row.addEventListener("mouseenter", () => {
-				// Force collapse first
-				wrapper.style.maxHeight = "1.5em";
+			if (!descText) return;
 	
-				// After small delay, expand smoothly
-				setTimeout(() => {
-					const fullHeight = wrapper.scrollHeight;
-					wrapper.style.maxHeight = fullHeight + "px";
-				}, 100); // delay before expanding
-			});
-	
-			row.addEventListener("mouseleave", () => {
-				// Collapse smoothly
-				wrapper.style.maxHeight = "1.5em";
+			row.addEventListener("click", () => {
+				descText.classList.toggle("collapsed");
+				descText.classList.toggle("expanded");
 			});
 		});
 	</script>
-
 </body>
+
 </html>
