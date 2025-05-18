@@ -202,4 +202,24 @@ public class CourseService {
 		}
 	}
 	
+	/**
+	 * Deletes a course and all its lessons and videos.
+	 */
+	public boolean deleteCourse(Long courseId) throws SQLException {
+		return courseDao.deleteCourseCascade(courseId);
+	}
+
+	/**
+	 * Deletes a lesson and all its videos.
+	 */
+	public boolean deleteLesson(Long lessonId) throws SQLException {
+		return courseDao.deleteLessonCascade(lessonId);
+	}
+
+	/**
+	 * Deletes a lesson video by its ID.
+	 */
+	public boolean deleteLessonVideo(Long videoId) throws SQLException {
+		return courseDao.deleteLessonVideo(videoId) > 0;
+	}	
 }
