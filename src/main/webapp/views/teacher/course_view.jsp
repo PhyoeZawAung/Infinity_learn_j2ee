@@ -169,9 +169,15 @@
         <div class="card shadow-lg border-0 mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="mb-0">📚 Course View</h3>
-                <a href="<c:url value='/teacher/course/edit?course_id=${course.id}'/>" class="btn btn-custom btn-sm">
-                    Edit Course
-                </a>
+                <div class="d-flex gap-2">
+                    <a href="<c:url value='/teacher/course/edit?course_id=${course.id}'/>" class="btn btn-custom btn-sm">
+                        ✏ Edit Course
+                    </a>
+                    <a href="<c:url value='/teacher/course/delete?course_id=${course.id}'/>" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Are you sure you want to delete this course and all its lessons and videos?');">
+                        🗑 Delete Course
+                    </a>
+                </div>
             </div>
             <div class="card-body bg-white">
                 <h2>${course.title}</h2>
@@ -183,10 +189,12 @@
                     </div>
                     <div class="col-md-6 text-center">
                         <p><strong>Lessons Available:</strong> ${course.lessons.size()}</p>
-                        <img src="<c:url value='/FileController${course.banner_image}'/>" alt="Course Banner" class="course-banner">
+                        <img src="<c:url value='/FileController${course.banner_image}'/>" alt="Course Banner"
+                            class="course-banner">
                     </div>
                 </div>
-                <a href="<c:url value='/teacher/course/lesson/create?course_id=${course.id}'/>" class="btn btn-outline-success mb-4">
+                <a href="<c:url value='/teacher/course/lesson/create?course_id=${course.id}'/>"
+                    class="btn btn-outline-success mb-4">
                     ➕ Add Lesson
                 </a>
 
@@ -203,22 +211,28 @@
                                         <div class="video-card position-relative">
                                             <!-- Video Thumbnail -->
                                             <c:if test="${not empty video.thumbnail}">
-                                                <img src="<c:url value='/FileController${video.thumbnail}'/>" class="lesson-video-thumbnail" alt="Video Thumbnail">
+                                                <img src="<c:url value='/FileController${video.thumbnail}'/>"
+                                                    class="lesson-video-thumbnail" alt="Video Thumbnail">
                                             </c:if>
 
                                             <!-- Dropdown Menu for Actions -->
                                             <div class="dropdown video-actions position-absolute top-0 end-0 m-2">
-                                                <button class="btn btn-sm btn-light dropdown-toggle shadow" type="button" id="videoActions${video.id}" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button class="btn btn-sm btn-light dropdown-toggle shadow"
+                                                    type="button" id="videoActions${video.id}" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
                                                     Actions
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="videoActions${video.id}">
                                                     <li>
-                                                        <a class="dropdown-item" href="<c:url value='/teacher/course/lesson/lesson-video/edit?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>">
+                                                        <a class="dropdown-item"
+                                                            href="<c:url value='/teacher/course/lesson/lesson-video/edit?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>">
                                                             ✏ Edit Video
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item text-danger" href="<c:url value='/teacher/course/lesson/lesson-video/delete?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>">
+                                                        <a class="dropdown-item text-danger"
+                                                            href="<c:url value='/teacher/course/lesson/lesson-video/delete?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>"
+                                                            onclick="return confirm('Delete this video?');">
                                                             🗑 Delete Video
                                                         </a>
                                                     </li>
@@ -230,7 +244,8 @@
 
                                             <!-- Watch Button -->
                                             <c:if test="${not empty video.videoUrl}">
-                                                <a href="<c:url value='/FileController${video.videoUrl}'/>" target="_blank" class="btn-watch">▶ Watch</a>
+                                                <a href="<c:url value='/FileController${video.videoUrl}'/>"
+                                                    target="_blank" class="btn-watch">▶ Watch</a>
                                             </c:if>
                                         </div>
                                     </c:forEach>
@@ -247,6 +262,11 @@
                             <!-- Edit Button -->
                             <a href="<c:url value='/teacher/course/lesson/edit?course_id=${course.id}&lesson_id=${lesson.id}'/>"
                                 class="btn btn-sm btn-outline-success">✏ Edit Lesson</a>
+                            <a href="<c:url value='/teacher/course/lesson/delete?course_id=${course.id}&lesson_id=${lesson.id}'/>"
+                                class="btn btn-sm btn-outline-danger"
+                                onclick="return confirm('Are you sure you want to delete this lesson and all its videos?');">
+                                🗑 Delete Lesson
+                            </a>
                         </div>
                     </div>
                 </c:forEach>

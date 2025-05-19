@@ -245,6 +245,18 @@
 		<url-pattern>/teacher/course/edit</url-pattern>
 	</servlet-mapping>
 
+	<!-- course delete controller -->
+	<servlet>
+		<description>Handles deletion of courses and related lessons and videos</description>
+		<display-name>TeacherCourseDeleteController</display-name>
+		<servlet-name>TeacherCourseDeleteController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseDeleteController</servlet-name>
+		<url-pattern>/teacher/course/delete</url-pattern>
+	</servlet-mapping>
+
 	<!-- course lesson create controller -->
 	<servlet>
     	<description>
@@ -268,6 +280,18 @@
 	<servlet-mapping>
 		<servlet-name>TeacherCourseLessonEditController</servlet-name>
 		<url-pattern>/teacher/course/lesson/edit</url-pattern>
+	</servlet-mapping>
+
+	<!-- course lesson delete controller -->
+	<servlet>
+		<description>Handles deletion of a lesson and its videos</description>
+		<display-name>TeacherCourseLessonDeleteController</display-name>
+		<servlet-name>TeacherCourseLessonDeleteController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonDeleteController</servlet-name>
+		<url-pattern>/teacher/course/lesson/delete</url-pattern>
 	</servlet-mapping>
 
 	<!-- course lesson video create controller -->
@@ -294,6 +318,18 @@
 	<servlet-mapping>
 		<servlet-name>TeacherCourseLessonVideoEditController</servlet-name>
 		<url-pattern>/teacher/course/lesson/lesson-video/edit</url-pattern>
+	</servlet-mapping>
+
+	<!-- course lesson video delete controller -->
+	<servlet>
+		<description>Handles deletion of a single lesson video</description>
+		<display-name>TeacherCourseLessonVideoDeleteController</display-name>
+		<servlet-name>TeacherCourseLessonVideoDeleteController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonVideoDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonVideoDeleteController</servlet-name>
+		<url-pattern>/teacher/course/lesson/lesson-video/delete</url-pattern>
 	</servlet-mapping>
 
 <!-- TEACHER -->
