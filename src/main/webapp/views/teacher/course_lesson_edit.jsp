@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Create Lesson</title>
+    <title>Edit Lesson</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -24,16 +24,17 @@
                 <!-- Card Layout with Shadow -->
                 <div class="card border-0 shadow-lg">
                     <div class="card-header bg-white py-3">
-                        <h1 class="h4 fw-bold mb-0 text-primary border-start border-4 border-primary ps-3">
-                            Create a New Lesson
+                        <h1 class="h4 fw-bold mb-0 text-warning border-start border-4 border-warning ps-3">
+                            Edit Lesson
                         </h1>
                         <p class="text-muted mb-0 mt-2">
-                            Provide the necessary details below to create an engaging lesson.
+                            Update the necessary details below to edit the lesson.
                         </p>
                     </div>
                     
                     <div class="card-body p-4">
-                        <form method="post" action="<c:url value='/teacher/course/lesson/create'/>">
+                        <form method="post" action="<c:url value='/teacher/course/lesson/edit'/>">
+                            <input type="hidden" name="lesson_id" value="${param.lesson_id}" />
                             <input type="hidden" name="course_id" value="${param.course_id}" />
 
                             <div class="row">
@@ -45,25 +46,25 @@
                                     <div class="mb-4">
                                         <label for="title" class="form-label fw-medium">Title</label>
                                         <input type="text" name="title" id="title" class="form-control form-control-lg" 
-                                               placeholder="Enter lesson title" required>
+                                               placeholder="Enter lesson title" value="${lesson.title}" required>
                                     </div>
 
                                     <!-- CKEditor Textarea -->
                                     <div class="mb-4">
                                         <label for="description" class="form-label fw-medium">Description</label>
                                         <textarea name="description" id="description" class="form-control" 
-                                                  rows="10" placeholder="Describe the lesson..."></textarea>
+                                                  rows="10" placeholder="Describe the lesson...">${lesson.description}</textarea>
                                     </div>
 
                                     <!-- Submit Button -->
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
-                                        <button type="submit" class="btn btn-primary px-4 py-2 fw-medium rounded-1">
-                                            <i class="bi bi-save me-2"></i> Create Lesson
+                                        <button type="submit" class="btn btn-warning px-4 py-2 fw-medium rounded-1">
+                                            <i class="bi bi-save me-2"></i> Save Changes
                                         </button>
                                         <a href="<c:url value='/teacher/course/detail?course_id=${param.course_id}'/>" 
-                                        	 class="btn btn-outline-primary px-4 py-2 fw-medium rounded-1 d-flex align-items-center">
-									        <i class="bi bi-arrow-left me-2"></i> Back to Course
-									    </a>
+                                             class="btn btn-outline-warning px-4 py-2 fw-medium rounded-1 d-flex align-items-center">
+                                            <i class="bi bi-arrow-left me-2"></i> Back to Course
+                                        </a>
                                     </div>
                                 </div>
 
@@ -74,7 +75,7 @@
                                         <!-- Tip Card 1 -->
                                         <div class="card border-0 mb-3 bg-light">
                                             <div class="card-body">
-                                                <h3 class="h6 card-title text-primary fw-bold">Make it engaging:</h3>
+                                                <h3 class="h6 card-title text-warning fw-bold">Make it engaging:</h3>
                                                 <ul class="list-unstyled mb-0">
                                                     <li class="mb-1"><small>• Use simple, clear language.</small></li>
                                                     <li class="mb-1"><small>• Structure with headers.</small></li>
@@ -86,7 +87,7 @@
                                         <!-- Tip Card 2 -->
                                         <div class="card border-0 bg-light">
                                             <div class="card-body">
-                                                <h3 class="h6 card-title text-primary fw-bold">Formatting Tips:</h3>
+                                                <h3 class="h6 card-title text-warning fw-bold">Formatting Tips:</h3>
                                                 <ul class="list-unstyled mb-0">
                                                     <li class="mb-1"><small>• Use headings properly.</small></li>
                                                     <li class="mb-1"><small>• Short paragraphs.</small></li>
@@ -105,36 +106,36 @@
     </div>
 
     <script>
-	    let editorInstance; // Define it outside
-	
-	    ClassicEditor
-	        .create(document.querySelector('#description'), {
-	            toolbar: [
-	                'heading', '|',
-	                'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
-	                'blockQuote', 'insertTable', 'undo', 'redo'
-	            ]
-	        })
-	        .then(editor => {
-	            editorInstance = editor; // Correct: Assign the editor instance
-	        })
-	        .catch(error => {
-	            console.error('CKEditor Error:', error);
-	        });
-	
-	    // Add form submit validation
-	    document.querySelector('form').addEventListener('submit', function (e) {
-	        // Wait for editorInstance to be defined
-	        if (!editorInstance) return;
-	
-	        const data = editorInstance.getData().trim();
-	        if (data === '') {
-	            e.preventDefault();
-	            alert('Description is required.');
-	            editorInstance.editing.view.focus();
-	        }
-	    });
-	</script>
+        let editorInstance; // Define it outside
+    
+        ClassicEditor
+            .create(document.querySelector('#description'), {
+                toolbar: [
+                    'heading', '|',
+                    'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
+                    'blockQuote', 'insertTable', 'undo', 'redo'
+                ]
+            })
+            .then(editor => {
+                editorInstance = editor; // Correct: Assign the editor instance
+            })
+            .catch(error => {
+                console.error('CKEditor Error:', error);
+            });
+    
+        // Add form submit validation
+        document.querySelector('form').addEventListener('submit', function (e) {
+            // Wait for editorInstance to be defined
+            if (!editorInstance) return;
+    
+            const data = editorInstance.getData().trim();
+            if (data === '') {
+                e.preventDefault();
+                alert('Description is required.');
+                editorInstance.editing.view.focus();
+            }
+        });
+    </script>
 
 </body>
 </html>

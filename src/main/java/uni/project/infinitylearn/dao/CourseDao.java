@@ -9,7 +9,8 @@ import uni.project.infinitylearn.listeners.*;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
 import uni.project.infinitylearn.models.LessonVideo;
-public class CourseDao {
+
+public class CourseDao extends Dao {
 	private Connection conn;
 
 	public CourseDao() {
@@ -135,5 +136,58 @@ public class CourseDao {
 				e.printStackTrace();
 			}
 		}
+	}
+
+
+	public boolean updateCourse(Long courseId, String title, String description, String instructor, String category, double price, String bannerImage) throws SQLException {
+		String sql = "UPDATE course SET title = ?, description = ?, instructor = ?, category = ?, price = ?, banner_image = ? WHERE id = ?";
+		int rowsUpdated = executeUpdate(sql, title, description, instructor, category, price, bannerImage, courseId);
+		return rowsUpdated > 0; // Return true if at least one row was updated
+	}
+
+	public Lesson getLessonById(Long lessonId) throws Exception {
+		String sql = "SELECT * FROM lessons WHERE id = ?";
+		return executeQuery(sql, rs -> {
+			if (rs.next()) {
+				Lesson lesson = new Lesson();
+				lesson.setId(rs.getLong("id"));
+				lesson.setTitle(rs.getString("title"));
+				lesson.setDescription(rs.getString("description"));
+				lesson.setCourseId(rs.getLong("course_id"));
+				return lesson;
+			}
+			return null;
+		}, lessonId);
+	}
+
+	public int updateLesson(Long lessonId, String title, String description) throws Exception {
+		String sql = "UPDATE lessons SET title = ?, description = ? WHERE id = ?";
+		return executeUpdate(sql, title, description, lessonId);
+	}
+
+	public LessonVideo getLessonVideoById(Long videoId) throws Exception {
+		String sql = "SELECT * FROM lesson_videos WHERE id = ?"; // Use 'id' instead of 'video_id'
+		return executeQuery(sql, rs -> {
+			if (rs.next()) {
+				LessonVideo video = new LessonVideo();
+				video.setId(rs.getLong("id")); // Correct column name
+				video.setTitle(rs.getString("title"));
+				video.setDescription(rs.getString("description"));
+				video.setVideoUrl(rs.getString("video_url"));
+				video.setThumbnail(rs.getString("thumbnail"));
+				video.setLessonId(rs.getLong("lesson_id"));
+				video.setCourseId(rs.getLong("course_id"));
+				return video;
+			}
+			return null;
+		}, videoId);
+	}
+	
+	public int updateLessonVideo(Long videoId, String title, String description, String videoUrl, String thumbnail) throws Exception {
+		String sql = "UPDATE lesson_videos SET title = ?, description = ?, video_url = ?, thumbnail = ? WHERE id = ?";
+		System.out.println("DAO - SQL: " + sql);
+		System.out.println("DAO - Parameters: " + title + ", " + description + ", " + videoUrl + ", " + thumbnail + ", " + videoId);
+
+		return executeUpdate(sql, title, description, videoUrl, thumbnail, videoId);
 	}
 }
