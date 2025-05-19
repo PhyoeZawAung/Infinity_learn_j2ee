@@ -1,6 +1,7 @@
 package uni.project.infinitylearn.services;
 
 import uni.project.infinitylearn.dao.CourseDao;
+import uni.project.infinitylearn.dao.LessonVideoDao;
 import uni.project.infinitylearn.listeners.MyContextListener;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
@@ -61,6 +62,7 @@ public class CourseService {
 			course.setId(course_res.getLong("id"));
 			course.setTitle(course_res.getString("title"));
 			course.setDescription(course_res.getString("description"));
+			course.setShortDescription(course_res.getString("short_description"));
 			course.setInstructor(course_res.getString("instructor"));
 			course.setIs_published(course_res.getBoolean("is_published"));
 			course.setCategory(course_res.getString("category"));
@@ -82,6 +84,7 @@ public class CourseService {
 			course.setId(res.getLong("id"));
 			course.setTitle(res.getString("title"));
 			course.setDescription(res.getString("description"));
+			course.setShortDescription(res.getString("short_description"));
 			course.setInstructor(res.getString("instructor"));
 			course.setIs_published(res.getBoolean("is_published"));
 			course.setCategory(res.getString("category"));
@@ -140,6 +143,64 @@ public class CourseService {
 		
 	}
 
+	public Course getEnrolledCourse(Long userId, Long courseId) throws SQLException {
+		return this.courseDao.getEnrolledCourse(userId, courseId);
+	}
+
+	public Course getEnrolledCourseWithWatchHistory(Long userId, Long courseId) throws SQLException {
+		return this.courseDao.getEnrolledCourseWithWatchHistory(userId, courseId);
+	}
+
+	public int enrollCourse(Long userId, Long courseId) throws SQLException {
+		// crete a video progress entry for the user
+		int enroll_status = this.courseDao.enrollCourse(userId, courseId);
+		if(enroll_status > 0) {
+
+			Course course = this.getEnrolledCourse(userId, courseId);
+
+			for (Lesson lesson : course.getLessons()) {
+				for(LessonVideo lessonVideo : lesson.getLessonVideos()) {
+					this.courseDao.createVideoProgressEntry(userId, courseId, lesson.getId(), lessonVideo.getId());
+				}
+				
+			}
+
+			return enroll_status;
+		}
+		return 0;
+	}
+
+	public List<Course> getEnrolledCourses(Long userId) throws SQLException {
+		return this.courseDao.getEnrolledCourses(userId);
+	}
+
+	public boolean isUserEnrolledInCourse(Long userId, Long courseId) {
+		try {
+			return this.courseDao.isUserEnrolledInCourse(userId, courseId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public LessonVideo getVideo(Long videoId, Long userId) {
+		try {
+			return this.courseDao.getVideo(videoId, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public List<LessonVideo> getLessonVideos(Long courseId, Long lessonId, Long userId) {
+		
+			return new LessonVideoDao().getLessonVideoByCourseIdAndLessonIdAndUserId(courseId, lessonId, userId);
+		 
+	}
+
+	public int updateVideoProgress(Long userId, Long courseId, Long lessonId, Long videoId, int progress, boolean isCompleted) throws SQLException {
+		return this.courseDao.updateVideoProgress(userId, courseId, lessonId, videoId, progress, isCompleted);
+	}
 
 	public boolean updateCourse(Course course) throws SQLException {
 		return this.courseDao.updateCourse(

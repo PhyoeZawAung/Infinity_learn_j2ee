@@ -8,6 +8,8 @@ public class LessonVideo {
     private String thumbnail;
     private Long lessonId;
     private Long courseId;
+    private int progress;
+    private boolean isCompleted;
     private String createdAt;
     private String updatedAt;
 
@@ -137,6 +139,36 @@ public class LessonVideo {
      */
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+
+    /**
+     * @return int return the progress
+     */
+    public int getProgress() {
+        return progress;
+    }
+
+    /**
+     * @param progress the progress to set
+     */
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+
+    /**
+     * @return boolean return the isCompleted
+     */
+    public boolean isIsCompleted() {
+        return isCompleted;
+    }
+
+    /**
+     * @param isCompleted the isCompleted to set
+     */
+    public void setIsCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
 }

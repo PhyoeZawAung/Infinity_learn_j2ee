@@ -83,7 +83,7 @@
 									<td class="text-start">${course.title}</td>
 									<td class="desc-cell text-start">
 										<div class="desc-wrapper">
-											<div class="desc-text collapsed">${course.description}</div>
+											<div class="desc-text">${course.shortDescription}</div>
 										</div>
 									</td>
 									<td>${course.instructor}</td>
