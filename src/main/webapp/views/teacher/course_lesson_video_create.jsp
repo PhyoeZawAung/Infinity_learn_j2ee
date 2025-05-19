@@ -70,7 +70,7 @@
                     <!-- Description -->
                     <div class="col-12">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Describe the lesson..."></textarea>
+                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Describe the lesson video..."></textarea>
                     </div>
 
                     <!-- Video Upload -->
@@ -110,6 +110,11 @@
     function uploadVideo() {
         const form = document.querySelector('form');
 
+        // Ensure CKEditor content is synced with the textarea
+        if (editorInstance) {
+            document.querySelector('#description').value = editorInstance.getData();
+        }
+        
         // DEBUG: log validation
         if (!form.checkValidity()) {
             console.log("Form is invalid");

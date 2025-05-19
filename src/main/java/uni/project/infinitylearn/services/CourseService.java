@@ -107,7 +107,6 @@ public class CourseService {
 		course.setPrice(price);
 		course.setIs_published(is_published);
 		course.setBanner_image(banner_image);
-		//System.out.println("Course: " + course);
 		
 		this.courseDao.createCourse(course);
 		
@@ -197,6 +196,91 @@ public class CourseService {
 	public int updateVideoProgress(Long userId, Long courseId, Long lessonId, Long videoId, int progress, boolean isCompleted) throws SQLException {
 		return this.courseDao.updateVideoProgress(userId, courseId, lessonId, videoId, progress, isCompleted);
 	}
+
+	public boolean updateCourse(Course course) throws SQLException {
+		return this.courseDao.updateCourse(
+			course.getId(),
+			course.getTitle(),
+			course.getDescription(),
+			course.getInstructor(),
+			course.getCategory(),
+			Double.parseDouble(course.getPrice()),
+			course.getBanner_image()
+		);
+	}
+
+	/**
+	 * Retrieves a lesson by its ID.
+	 */
+	public Lesson getLessonById(Long lessonId) throws Exception {
+		return courseDao.getLessonById(lessonId);
+	}
+
+	/**
+	 * Updates a lesson's details.
+	 */
+	public boolean updateLesson(Long lessonId, String title, String description) throws Exception {
+		return courseDao.updateLesson(lessonId, title, description) > 0;
+	}
+
+	/**
+	 * Retrieves a lesson video by its ID.
+	 */
+	public LessonVideo getLessonVideoById(Long videoId) throws Exception {
+		return courseDao.getLessonVideoById(videoId);
+	}
+
+	/**
+	 * Updates a lesson video's details.
+	 */
+	public boolean updateLessonVideo(Long videoId, String title, String description, String videoUrl, String thumbnail) throws Exception {
+		LessonVideo existingVideo = courseDao.getLessonVideoById(videoId);
+
+		if (existingVideo == null) {
+			throw new IllegalArgumentException("Video not found for ID: " + videoId);
+		}
+
+		// Keep existing values if new ones are not provided
+		if (videoUrl == null) {
+			videoUrl = existingVideo.getVideoUrl();
+		}
+		if (thumbnail == null) {
+			thumbnail = existingVideo.getThumbnail();
+		}
 	
+		return courseDao.updateLessonVideo(videoId, title, description, videoUrl, thumbnail) > 0;
+	}
+
+	/**
+	 * Handles the update of a lesson video and manages exceptions.
+	 */
+	public void handleUpdateLessonVideo(Long videoId, String title, String description, String videoUrl, String thumbnail, javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws Exception {
+		try {
+			boolean isUpdated = updateLessonVideo(videoId, title, description, videoUrl, thumbnail);
+		} catch (IllegalArgumentException e) {
+			request.setAttribute("error", e.getMessage());
+			request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
+		}
+	}
 	
+	/**
+	 * Deletes a course and all its lessons and videos.
+	 */
+	public boolean deleteCourse(Long courseId) throws SQLException {
+		return courseDao.deleteCourseCascade(courseId);
+	}
+
+	/**
+	 * Deletes a lesson and all its videos.
+	 */
+	public boolean deleteLesson(Long lessonId) throws SQLException {
+		return courseDao.deleteLessonCascade(lessonId);
+	}
+
+	/**
+	 * Deletes a lesson video by its ID.
+	 */
+	public boolean deleteLessonVideo(Long videoId) throws SQLException {
+		return courseDao.deleteLessonVideo(videoId) > 0;
+	}	
 }

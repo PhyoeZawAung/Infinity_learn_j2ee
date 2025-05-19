@@ -11,9 +11,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <!-- CKEditor CDN -->
-<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 <style>
-	/* styles.css */
 /* ===== ROOT VARIABLES ===== */
 :root {
   --primary-color: #6366f1;
@@ -47,15 +46,11 @@ body {
 .form-row {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
   gap: 20px;
   margin-bottom: 1.5rem;
 }
 
 .form-col {
-  padding-right: 15px;
-  padding-left: 15px;
   flex: 1 0 0%;
 }
 
@@ -104,6 +99,10 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
+.btn-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.5);
+}
 
 /* ===== UPLOAD STYLES ===== */
 .drop-zone {
@@ -151,7 +150,7 @@ body {
 }
 
 .ck-editor__editable {
-  min-height: 200px;
+  min-height: 150px;
   border: 1px solid var(--border-color) !important;
   border-radius: 0.5rem !important;
   padding: 1rem !important;
@@ -165,37 +164,12 @@ body {
   display: none;
 }
 
-.was-validated .form-control:invalid ~ .invalid-feedback,
 .was-validated .form-control:invalid ~ .invalid-feedback {
   display: block;
 }
-
-/* ===== RESPONSIVE STYLES ===== */
-@media (max-width: 768px) {
-  .form-container {
-    padding: 1.5rem;
-    margin: 1rem;
-  }
-  
-  .form-row {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .form-col {
-    flex: 0 0 100%;
-    max-width: 100%;
-    padding-right: 0;
-    padding-left: 0;
-  }
-  
-  .drop-zone {
-    padding: 1.5rem;
-  }
-  
-  #imagePreview {
-    max-height: 150px;
-  }
+.drop-zone.is-invalid {
+  border-color: #dc3545;
+  background-color: #fff5f5;
 }
 
 /* ===== CARD STYLES ===== */
@@ -215,128 +189,6 @@ body {
 .card-header h3 {
   margin-bottom: 0;
 }
-
-/* ===== UTILITY CLASSES ===== */
-.text-muted {
-  color: var(--text-muted) !important;
-}
-
-.rounded {
-  border-radius: 0.5rem !important;
-}
-
-.shadow {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
-}
-
-.d-none {
-  display: none !important;
-}
-
-.d-flex {
-  display: flex !important;
-}
-
-.flex-column {
-  flex-direction: column !important;
-}
-.align-items-center {
-  align-items: center !important;
-}
-
-.justify-content-center {
-  justify-content: center !important;
-}
-
-.mb-3 {
-  margin-bottom: 1rem !important;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem !important;
-}
-
-.mt-4 {
-  margin-top: 1.5rem !important;
-}
-
-.py-4 {
-  padding-top: 1.5rem !important;
-  padding-bottom: 1.5rem !important;
-}
-
-.px-3 {
-  padding-left: 1rem !important;
-  padding-right: 1rem !important;
-}
-
-.fa-3x {
-  font-size: 3em !important;
-}
-
-.fw-semibold {
-  font-weight: 600 !important;
-}
-
-.btn-sm {
-  padding: 0.25rem 0.5rem !important;
-  font-size: 0.875rem !important;
-}
-
-.rounded-pill {
-  border-radius: 50rem !important;
-}
-
-.btn-outline-primary {
-  color: var(--primary-color);
-  border-color: var(--primary-color);
-}
-
-.btn-outline-primary:hover {
-  color: #fff;
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-}
-
-.position-relative {
-  position: relative !important;
-}
-
-.position-absolute {
-  position: absolute !important;
-}
-
-.top-0 {
-  top: 0 !important;
-}
-
-.end-0 {
-  right: 0 !important;
-}
-
-.opacity-25 {
-  opacity: 0.25 !important;
-}
-
-.opacity-75 {
-  opacity: 0.75 !important;
-}
-
-.small {
-  font-size: 0.875rem !important;
-}
-
-.me-1 {
-  margin-right: 0.25rem !important;
-}
-
-.me-2 {
-  margin-right: 0.5rem !important;
-}
-
-.mb-0 {
-  margin-bottom: 0 !important;
-}
 </style>
 </head>
 <body>
@@ -354,7 +206,7 @@ body {
             <p class="mb-0 mt-2 opacity-75 small">Fill out the form below to create your new course</p>
           </div>
           <div class="card-body">
-            <form class="needs-validation" method="post" action="<c:url value="/teacher/course/create"/>" enctype="multipart/form-data" novalidate>
+            <form class="needs-validation" method="post" action="<c:url value='/teacher/course/create'/>" enctype="multipart/form-data">
               
               <!-- Title Field -->
               <div class="mb-4">
@@ -366,9 +218,11 @@ body {
               <!-- Description Field with Rich Text Editor -->
               <div class="mb-4">
                 <label for="description" class="form-label">Course Description</label>
-                <textarea class="form-control" id="description" name="description" required></textarea>
+                <div id="editorContainer"></div>
+                <!-- Hidden input to store the actual value for form submission -->
+                <input type="hidden" id="description" name="description">
                 <div class="invalid-feedback">Please provide a course description.</div>
-              </div>
+              </div>              
               
               <!-- Category and Price Fields (Side by Side) -->
               <div class="form-row mb-4">
@@ -409,8 +263,8 @@ body {
 				      <p class="mb-1">Drag & drop your image here or click to browse</p>
 				      <small class="text-muted">(Recommended size: 1200×600 pixels)</small>
 				    </div>
-				    <img id="imagePreview" class="img-fluid rounded" style="max-height: 200px; object-fit: contain;">
-				    <input type="file" id="image" name="banner_image" accept="image/*" class="d-none" required>
+				    <img id="imagePreview" class="img-fluid rounded" style="max-height: 200px; object-fit: contain; display: none;">
+				    <input type="file" id="image" name="banner_image" accept="image/*" class="d-none">
 				  </div>
 				  <div class="invalid-feedback">Please upload a banner image.</div>
 				</div>
@@ -431,52 +285,81 @@ body {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
 <script>
-  // Initialize CKEditor
-  CKEDITOR.replace('description', {
-    toolbar: [
-      { name: 'clipboard', items: ['Undo', 'Redo'] },
-      { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat'] },
-      { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight'] },
-      { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'Smiley'] },
-      { name: 'styles', items: ['Format', 'FontSize'] },
-      { name: 'colors', items: ['TextColor', 'BGColor'] },
-      { name: 'links', items: ['Link', 'Unlink'] },
-      { name: 'tools', items: ['Maximize'] }
-    ],
-    height: '180px',
-    extraPlugins: 'maximize',
-    removePlugins: 'elementspath',
-    resize_enabled: true
-  });
+  let editorInstance;
+
+  // Initialize CKEditor and store the instance
+  ClassicEditor
+    .create(document.querySelector('#editorContainer'), {
+      toolbar: [
+        'heading', '|',
+        'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
+        'blockQuote', 'insertTable', 'undo', 'redo'
+      ]
+    })
+    .then(editor => {
+      editorInstance = editor;
+    })
+    .catch(error => {
+      console.error('CKEditor Error:', error);
+    });
 
   // Form validation
-  (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      var forms = document.getElementsByClassName('needs-validation');
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          // Manually validate CKEditor content
-          var editorContent = CKEDITOR.instances.description.getData();
-          var descriptionField = document.getElementById('description');
-          if (editorContent.trim() === '') {
-            descriptionField.setCustomValidity('Please provide a course description.');
-            document.querySelector('#description + .invalid-feedback').style.display = 'block';
-          } else {
-            descriptionField.setCustomValidity('');
-          }
-          
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })();
+  window.addEventListener('load', function () {
+    const forms = document.getElementsByClassName('needs-validation');
 
-  // Drag and Drop Preview
+    Array.prototype.forEach.call(forms, function (form) {
+      form.addEventListener('submit', function (event) {
+        let isValid = true;
+
+        // ✅ Sync CKEditor content back to textarea before validation
+        if (editorInstance) {
+          document.querySelector('#description').value = editorInstance.getData();
+        }
+
+        const editorData = editorInstance.getData().trim();
+        const bannerImageInput = document.getElementById('image');
+
+        // Validate description (CKEditor)
+        const descriptionField = document.querySelector('#description');
+        const descriptionFeedback = descriptionField.nextElementSibling;
+
+        if (!editorData) {
+          descriptionField.classList.add('is-invalid');
+          descriptionFeedback.style.display = 'block';
+          isValid = false;
+        } else {
+          descriptionField.classList.remove('is-invalid');
+          descriptionFeedback.style.display = 'none';
+        }
+
+        // Validate image
+        const imageFeedback = document.querySelector('#drop-zone + .invalid-feedback');
+        if (!bannerImageInput.files.length) {
+          bannerImageInput.classList.add('is-invalid');
+          imageFeedback.style.display = 'block';
+          isValid = false;
+        } else {
+          bannerImageInput.classList.remove('is-invalid');
+          imageFeedback.style.display = 'none';
+        }
+
+        // Prevent native validation for hidden fields
+        if (!form.checkValidity() || !isValid) {
+          event.preventDefault();
+          event.stopPropagation();
+        } else {
+          // Now safe to show loading state
+          const submitBtn = form.querySelector('button[type="submit"]');
+          submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Creating...';
+          submitBtn.disabled = true;
+        }
+
+        form.classList.add('was-validated');
+      }, false);
+    });
+  });
+
+  // Drag and Drop Logic
   const dropZone = document.getElementById('drop-zone');
   const fileInput = document.getElementById('image');
   const imagePreview = document.getElementById('imagePreview');
@@ -484,21 +367,14 @@ body {
 
   dropZone.addEventListener('click', () => fileInput.click());
 
-  dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-    dropZone.style.transform = "scale(1.02)";
+  ['dragover', 'dragleave', 'drop'].forEach(event => {
+    dropZone.addEventListener(event, (e) => {
+      e.preventDefault();
+      dropZone.classList.toggle('dragover', event === 'dragover');
+    });
   });
 
-  dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-    dropZone.style.transform = "scale(1)";
-  });
   dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    dropZone.style.transform = "scale(1)";
-    
     if (e.dataTransfer.files.length) {
       fileInput.files = e.dataTransfer.files;
       updatePreview(fileInput.files[0]);
@@ -512,68 +388,16 @@ body {
   });
 
   function updatePreview(file) {
-	  const reader = new FileReader();
-	  reader.onload = (e) => {
-	    const img = new Image();
-	    img.src = e.target.result;
-	    
-	    img.onload = () => {
-	      // Calculate new dimensions while maintaining aspect ratio
-	      const maxWidth = 400;  // Maximum width for preview
-	      const maxHeight = 200; // Maximum height for preview
-	      let width = img.width;
-	      let height = img.height;
-	      
-	      if (width > height) {
-	        if (width > maxWidth) {
-	          height *= maxWidth / width;
-	          width = maxWidth;
-	        }
-	      } else {
-	        if (height > maxHeight) {
-	          width *= maxHeight / height;
-	          height = maxHeight;
-	        }
-	      }
-	      
-	      // Create canvas to resize image
-	      const canvas = document.createElement('canvas');
-	      canvas.width = width;
-	      canvas.height = height;
-	      const ctx = canvas.getContext('2d');
-	      ctx.drawImage(img, 0, 0, width, height);
-	      
-	      // Set the preview image
-	      imagePreview.src = canvas.toDataURL('image/jpeg', 0.7);
-	      imagePreview.style.display = 'block';
-	      preview.style.display = 'none';
-	      
-	      // Set original file to hidden input
-	      const dataTransfer = new DataTransfer();
-	      dataTransfer.items.add(file);
-	      fileInput.files = dataTransfer.files;
-	    };
-	  };
-	  reader.readAsDataURL(file);
-	}
-
-  // Button hover effects
-  const submitBtn = document.querySelector('button[type="submit"]');
-  submitBtn.addEventListener('mouseenter', () => {
-    submitBtn.style.transform = "translateY(-2px)";
-    submitBtn.style.boxShadow = "0 5px 15px rgba(99, 102, 241, 0.4)";
-  });
-  submitBtn.addEventListener('mouseleave', () => {
-    submitBtn.style.transform = "translateY(0)";
-    submitBtn.style.boxShadow = "0 2px 10px rgba(99, 102, 241, 0.3)";
-  });
-
-  // Loading state for form submission
-  document.querySelector('form').addEventListener('submit', function(e) {
-    const submitBtn = this.querySelector('button[type="submit"]');
-    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Creating...';
-    submitBtn.disabled = true;
-  });
+    const reader = new FileReader();
+    reader.onload = () => {
+      imagePreview.src = reader.result;
+      imagePreview.style.display = 'block';
+      previewText.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
 </script>
+
+
 </body>
 </html>

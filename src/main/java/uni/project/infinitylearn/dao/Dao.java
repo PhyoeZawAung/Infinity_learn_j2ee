@@ -102,4 +102,49 @@ public class Dao implements DaoInterface {
             conn.close();
         }
     }
+
+    
+    // 1. Delete a course and all its related lessons and videos
+    public boolean deleteCourseCascade(Long courseId) throws SQLException {
+        try {
+            conn.setAutoCommit(false);
+    
+            executeUpdate("DELETE FROM lesson_videos WHERE course_id = ?", courseId);
+            executeUpdate("DELETE FROM lessons WHERE course_id = ?", courseId);
+            int affectedRows = executeUpdate("DELETE FROM course WHERE id = ?", courseId);
+    
+            conn.commit();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            conn.rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            conn.setAutoCommit(true);
+        }
+    }
+
+    // 2. Delete a lesson and all its related videos
+    public boolean deleteLessonCascade(Long lessonId) throws SQLException {
+        try {
+            conn.setAutoCommit(false);
+    
+            executeUpdate("DELETE FROM lesson_videos WHERE lesson_id = ?", lessonId);
+            int affectedRows = executeUpdate("DELETE FROM lessons WHERE id = ?", lessonId);
+    
+            conn.commit();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            conn.rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            conn.setAutoCommit(true);
+        }
+    }
+
+    // 3. Delete a lesson video by its ID
+    public int deleteLessonVideo(Long videoId) throws SQLException {
+        return executeUpdate("DELETE FROM lesson_videos WHERE id = ?", videoId);
+    }    
 }
