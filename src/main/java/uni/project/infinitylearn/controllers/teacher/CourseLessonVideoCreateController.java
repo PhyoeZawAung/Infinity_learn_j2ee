@@ -43,6 +43,8 @@ public class CourseLessonVideoCreateController extends HttpServlet {
         // Handle POST request for video creation
         String title = request.getParameter("title");
         String description = request.getParameter("description");
+        System.out.println("description: " + description);
+        System.out.println("title: " + title);
         Long lessonId = Long.parseLong(request.getParameter("lesson_id"));
         Long courseId = Long.parseLong(request.getParameter("course_id"));
 

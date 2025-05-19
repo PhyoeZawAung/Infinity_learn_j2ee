@@ -125,6 +125,7 @@
         }
 
         const formData = new FormData(form);
+        formData.set('description', editorInstance.getData());
         const uploadProgressEle = document.getElementById('upload-progress');
         uploadProgressEle.parentElement.classList.remove('d-none');
 
