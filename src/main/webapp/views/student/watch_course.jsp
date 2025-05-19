@@ -59,7 +59,7 @@
         <div class="col-md-4">
         <div class="card mb-3 shadow-sm">
             <div class="card-header">
-                <h5 class="mb-0">Lessons</h5>
+                <h5 class="mb-0">Lesson videos</h5>
             </div>
             <div class="card-body">
                 <c:forEach var="relatedVideo" items="${videos}">
@@ -79,7 +79,7 @@
                             <div class="col-md-8">
                             <div class="card-body">
                                 <h6 class="card-title">${relatedVideo.title}</h6>
-                                <p class="card-text text-sm">${relatedVideo.description}</p>
+                                <%-- <p class="card-text text-sm text-truncate" style="max-width: 300px;">${relatedVideo.description}</p> --%>
                             </div>
                             </div>
                         </div>
