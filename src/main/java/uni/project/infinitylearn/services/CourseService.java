@@ -2,6 +2,7 @@ package uni.project.infinitylearn.services;
 
 import uni.project.infinitylearn.dao.CourseDao;
 import uni.project.infinitylearn.listeners.MyContextListener;
+import uni.project.infinitylearn.models.AssignmentQuestion;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
 import uni.project.infinitylearn.models.LessonAssignment;
@@ -144,6 +145,15 @@ public class CourseService {
 		lessonAssignment.setLessonId(lesson_id);
 
 		this.courseDao.createLessonAssignments(lessonAssignment);
+	}
+	public void createCourseLessonAssignmentQuestion(long assignment_id,String question_text,String options,String correct_answer){
+		AssignmentQuestion assignmentQuestion = new AssignmentQuestion();
+		assignmentQuestion.setAssignment_id(assignment_id);
+		assignmentQuestion.setQuestion_text(question_text);
+		assignmentQuestion.setOption(options);
+		assignmentQuestion.setCorrect_answer(correct_answer);
+		System.out.println(assignmentQuestion.getAssignment_id()+assignmentQuestion.getQuestion_text()+assignmentQuestion.getOption()+assignmentQuestion.getCorrect_answer()+"in couseservice");
+		this.courseDao.createCourseLessonAssignmentQuestions(assignmentQuestion);
 	}
 	
 }

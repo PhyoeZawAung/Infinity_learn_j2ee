@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import uni.project.infinitylearn.listeners.*;
+import uni.project.infinitylearn.models.AssignmentQuestion;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
 import uni.project.infinitylearn.models.LessonAssignment;
@@ -149,10 +150,35 @@ public class CourseDao {
 			statement.setString(1, lessonAssignment.getTitle());
 			statement.setString(2, lessonAssignment.getDescription());
 			statement.setString(3, lessonAssignment.getAssignmentUrl());
-			statement.setLong(5, lessonAssignment.getLessonId());
+			statement.setLong(4, lessonAssignment.getLessonId());
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void createCourseLessonAssignmentQuestions(AssignmentQuestion assignmentQuestion){
+		PreparedStatement statement =null;
+		try {
+			statement = conn.prepareStatement(
+				"INSERT INTO assignment_question (assignment_id,question,options,correct_answer) VALUES (? , ? , ? , ?)"
+			);
+			statement.setLong(1 , assignmentQuestion.getAssignment_id());
+			statement.setString(2, assignmentQuestion.getQuestion_text());
+			statement.setString(3, assignmentQuestion.getOption());
+			statement.setString(4, assignmentQuestion.getCorrect_answer());
+			statement.executeUpdate();
+			System.out.println("done creating questions");
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
