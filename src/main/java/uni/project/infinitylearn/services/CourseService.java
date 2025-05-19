@@ -1,6 +1,7 @@
 package uni.project.infinitylearn.services;
 
 import uni.project.infinitylearn.dao.CourseDao;
+import uni.project.infinitylearn.dao.LessonVideoDao;
 import uni.project.infinitylearn.listeners.MyContextListener;
 import uni.project.infinitylearn.models.AssignmentQuestion;
 import uni.project.infinitylearn.models.Course;
@@ -63,6 +64,7 @@ public class CourseService {
 			course.setId(course_res.getLong("id"));
 			course.setTitle(course_res.getString("title"));
 			course.setDescription(course_res.getString("description"));
+			course.setShortDescription(course_res.getString("short_description"));
 			course.setInstructor(course_res.getString("instructor"));
 			course.setIs_published(course_res.getBoolean("is_published"));
 			course.setCategory(course_res.getString("category"));
@@ -84,6 +86,7 @@ public class CourseService {
 			course.setId(res.getLong("id"));
 			course.setTitle(res.getString("title"));
 			course.setDescription(res.getString("description"));
+			course.setShortDescription(res.getString("short_description"));
 			course.setInstructor(res.getString("instructor"));
 			course.setIs_published(res.getBoolean("is_published"));
 			course.setCategory(res.getString("category"));
@@ -106,7 +109,6 @@ public class CourseService {
 		course.setPrice(price);
 		course.setIs_published(is_published);
 		course.setBanner_image(banner_image);
-		//System.out.println("Course: " + course);
 		
 		this.courseDao.createCourse(course);
 		
@@ -155,5 +157,150 @@ public class CourseService {
 		System.out.println(assignmentQuestion.getAssignment_id()+assignmentQuestion.getQuestion_text()+assignmentQuestion.getOption()+assignmentQuestion.getCorrect_answer()+"in couseservice");
 		this.courseDao.createCourseLessonAssignmentQuestions(assignmentQuestion);
 	}
+	public Course getEnrolledCourse(Long userId, Long courseId) throws SQLException {
+		return this.courseDao.getEnrolledCourse(userId, courseId);
+	}
+
+	public Course getEnrolledCourseWithWatchHistory(Long userId, Long courseId) throws SQLException {
+		return this.courseDao.getEnrolledCourseWithWatchHistory(userId, courseId);
+	}
+
+	public int enrollCourse(Long userId, Long courseId) throws SQLException {
+		// crete a video progress entry for the user
+		int enroll_status = this.courseDao.enrollCourse(userId, courseId);
+		if(enroll_status > 0) {
+
+			Course course = this.getEnrolledCourse(userId, courseId);
+
+			for (Lesson lesson : course.getLessons()) {
+				for(LessonVideo lessonVideo : lesson.getLessonVideos()) {
+					this.courseDao.createVideoProgressEntry(userId, courseId, lesson.getId(), lessonVideo.getId());
+				}
+				
+			}
+
+			return enroll_status;
+		}
+		return 0;
+	}
+
+	public List<Course> getEnrolledCourses(Long userId) throws SQLException {
+		return this.courseDao.getEnrolledCourses(userId);
+	}
+
+	public boolean isUserEnrolledInCourse(Long userId, Long courseId) {
+		try {
+			return this.courseDao.isUserEnrolledInCourse(userId, courseId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public LessonVideo getVideo(Long videoId, Long userId) {
+		try {
+			return this.courseDao.getVideo(videoId, userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public List<LessonVideo> getLessonVideos(Long courseId, Long lessonId, Long userId) {
+		
+			return new LessonVideoDao().getLessonVideoByCourseIdAndLessonIdAndUserId(courseId, lessonId, userId);
+		 
+	}
+
+	public int updateVideoProgress(Long userId, Long courseId, Long lessonId, Long videoId, int progress, boolean isCompleted) throws SQLException {
+		return this.courseDao.updateVideoProgress(userId, courseId, lessonId, videoId, progress, isCompleted);
+	}
+
+	public boolean updateCourse(Course course) throws SQLException {
+		return this.courseDao.updateCourse(
+			course.getId(),
+			course.getTitle(),
+			course.getDescription(),
+			course.getInstructor(),
+			course.getCategory(),
+			Double.parseDouble(course.getPrice()),
+			course.getBanner_image()
+		);
+	}
+
+	/**
+	 * Retrieves a lesson by its ID.
+	 */
+	public Lesson getLessonById(Long lessonId) throws Exception {
+		return courseDao.getLessonById(lessonId);
+	}
+
+	/**
+	 * Updates a lesson's details.
+	 */
+	public boolean updateLesson(Long lessonId, String title, String description) throws Exception {
+		return courseDao.updateLesson(lessonId, title, description) > 0;
+	}
+
+	/**
+	 * Retrieves a lesson video by its ID.
+	 */
+	public LessonVideo getLessonVideoById(Long videoId) throws Exception {
+		return courseDao.getLessonVideoById(videoId);
+	}
+
+	/**
+	 * Updates a lesson video's details.
+	 */
+	public boolean updateLessonVideo(Long videoId, String title, String description, String videoUrl, String thumbnail) throws Exception {
+		LessonVideo existingVideo = courseDao.getLessonVideoById(videoId);
+
+		if (existingVideo == null) {
+			throw new IllegalArgumentException("Video not found for ID: " + videoId);
+		}
+
+		// Keep existing values if new ones are not provided
+		if (videoUrl == null) {
+			videoUrl = existingVideo.getVideoUrl();
+		}
+		if (thumbnail == null) {
+			thumbnail = existingVideo.getThumbnail();
+		}
 	
+		return courseDao.updateLessonVideo(videoId, title, description, videoUrl, thumbnail) > 0;
+	}
+
+	/**
+	 * Handles the update of a lesson video and manages exceptions.
+	 */
+	public void handleUpdateLessonVideo(Long videoId, String title, String description, String videoUrl, String thumbnail, javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws Exception {
+		try {
+			boolean isUpdated = updateLessonVideo(videoId, title, description, videoUrl, thumbnail);
+		} catch (IllegalArgumentException e) {
+			request.setAttribute("error", e.getMessage());
+			request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
+		}
+	}
+	
+	/**
+	 * Deletes a course and all its lessons and videos.
+	 */
+	public boolean deleteCourse(Long courseId) throws SQLException {
+		return courseDao.deleteCourseCascade(courseId);
+	}
+
+	/**
+	 * Deletes a lesson and all its videos.
+	 */
+	public boolean deleteLesson(Long lessonId) throws SQLException {
+		return courseDao.deleteLessonCascade(lessonId);
+	}
+
+	/**
+	 * Deletes a lesson video by its ID.
+	 */
+	public boolean deleteLessonVideo(Long videoId) throws SQLException {
+		return courseDao.deleteLessonVideo(videoId) > 0;
+	}	
 }
+

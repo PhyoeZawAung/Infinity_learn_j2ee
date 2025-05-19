@@ -34,7 +34,7 @@
     	<param-name>dbPassword</param-name>
 		<!-- this is the name of the database -->
 		<!-- Do not upload this file to the repository. -->
-    	<param-value></param-value>
+    	<param-value>maria</param-value>
     </context-param>
 <!-- DATABASE -->
 <!-- filters -->
@@ -121,6 +121,19 @@
 			<url-pattern>/FileController/*</url-pattern>
 		</servlet-mapping>
 	<!-- FileController -->
+	<!-- Video Streaming -->
+		<servlet>
+			<description>
+			</description>
+			<display-name>VideoStream</display-name>
+			<servlet-name>VideoStream</servlet-name>
+			<servlet-class>uni.project.infinitylearn.controllers.VideoStream</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>VideoStream</servlet-name>
+			<url-pattern>/video/stream</url-pattern>
+		</servlet-mapping>
+	<!-- Video Streaming -->
 	<!-- DashboardController -->
 		<servlet>
 			<description>
@@ -178,6 +191,32 @@
 	</servlet-mapping>
 <!-- UserRegisterController -->
 
+<!-- GUEST -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>GuestCourseList</display-name>
+		<servlet-name>GuestCourseList</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.guest.CourseListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GuestCourseList</servlet-name>
+		<url-pattern>/guest/course/list</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>GuestCourseDetail</display-name>
+		<servlet-name>GuestCourseDetail</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.guest.CourseDetailController</servlet-class>
+	</servlet>
+			<servlet-mapping>
+		<servlet-name>GuestCourseDetail</servlet-name>
+		<url-pattern>/guest/course/detail</url-pattern>
+	</servlet-mapping>
+<!-- GUEST -->
+
 <!-- TEACHER -->
 
 	<!-- teacher dashboard controller -->
@@ -233,6 +272,30 @@
     	<url-pattern>/teacher/course/create</url-pattern>
     </servlet-mapping>
 
+	<!-- course edit controller -->
+	<servlet>
+		<description>Handles editing of courses</description>
+		<display-name>TeacherCourseEditController</display-name>
+		<servlet-name>TeacherCourseEditController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseEditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseEditController</servlet-name>
+		<url-pattern>/teacher/course/edit</url-pattern>
+	</servlet-mapping>
+
+	<!-- course delete controller -->
+	<servlet>
+		<description>Handles deletion of courses and related lessons and videos</description>
+		<display-name>TeacherCourseDeleteController</display-name>
+		<servlet-name>TeacherCourseDeleteController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseDeleteController</servlet-name>
+		<url-pattern>/teacher/course/delete</url-pattern>
+	</servlet-mapping>
+
 	<!-- course lesson create controller -->
 	<servlet>
     	<description>
@@ -244,6 +307,30 @@
 	<servlet-mapping>
 		<servlet-name>TeacherCourseLessonCreateController</servlet-name>
 		<url-pattern>/teacher/course/lesson/create</url-pattern>
+	</servlet-mapping>
+
+	<!-- course lesson edit controller -->
+	<servlet>
+		<description>Handles editing of lessons</description>
+		<display-name>TeacherCourseLessonEditController</display-name>
+		<servlet-name>TeacherCourseLessonEditController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonEditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonEditController</servlet-name>
+		<url-pattern>/teacher/course/lesson/edit</url-pattern>
+	</servlet-mapping>
+
+	<!-- course lesson delete controller -->
+	<servlet>
+		<description>Handles deletion of a lesson and its videos</description>
+		<display-name>TeacherCourseLessonDeleteController</display-name>
+		<servlet-name>TeacherCourseLessonDeleteController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonDeleteController</servlet-name>
+		<url-pattern>/teacher/course/lesson/delete</url-pattern>
 	</servlet-mapping>
 
 	<!-- course lesson video create controller -->
@@ -260,6 +347,30 @@
 		<url-pattern>/teacher/course/lesson/lesson-video/create</url-pattern>
 	</servlet-mapping>
 
+	<!-- course lesson video edit controller -->
+	<servlet>
+		<description>Handles editing of lesson videos</description>
+		<display-name>TeacherCourseLessonVideoEditController</display-name>
+		<servlet-name>TeacherCourseLessonVideoEditController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonVideoEditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonVideoEditController</servlet-name>
+		<url-pattern>/teacher/course/lesson/lesson-video/edit</url-pattern>
+	</servlet-mapping>
+
+	<!-- course lesson video delete controller -->
+	<servlet>
+		<description>Handles deletion of a single lesson video</description>
+		<display-name>TeacherCourseLessonVideoDeleteController</display-name>
+		<servlet-name>TeacherCourseLessonVideoDeleteController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonVideoDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonVideoDeleteController</servlet-name>
+		<url-pattern>/teacher/course/lesson/lesson-video/delete</url-pattern>
+	</servlet-mapping>
+
 <!-- TEACHER -->
 
 <!-- STUDENT -->
@@ -273,6 +384,66 @@
 		<servlet-mapping>
 		<servlet-name>StudentDashboard</servlet-name>
 		<url-pattern>/student/dashboard</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentCourseEnrollment</display-name>
+		<servlet-name>StudentCourseEnrollment</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.EnrollCourseController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentCourseEnrollment</servlet-name>
+		<url-pattern>/student/enroll</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentEnrolledCourseList</display-name>
+		<servlet-name>StudentEnrolledCourseList</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.EnrolledCourseListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentEnrolledCourseList</servlet-name>
+		<url-pattern>/student/course/enroll/list</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentEnrolledCourseDetail</display-name>
+		<servlet-name>StudentEnrolledCourseDetail</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.EnrolledCourseDetailController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentEnrolledCourseDetail</servlet-name>
+		<url-pattern>/student/course/enroll/detail</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentVideoWatchController</display-name>
+		<servlet-name>StudentVideoWatchController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.VideoWatchController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentVideoWatchController</servlet-name>
+		<url-pattern>student/course/enroll/watch</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>StudentVideoProgressController</display-name>
+		<servlet-name>StudentVideoProgressController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.student.VideoProgressController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentVideoProgressController</servlet-name>
+		<url-pattern>student/course/enroll/update_progress</url-pattern>
 	</servlet-mapping>
 <!-- STUDENT -->
 
