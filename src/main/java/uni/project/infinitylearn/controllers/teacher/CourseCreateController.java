@@ -63,6 +63,7 @@ public class CourseCreateController extends HttpServlet {
 		}
 
 		String title = request.getParameter("title");
+		String shortDescription = request.getParameter("short_description");
 		String description = request.getParameter("description");
 		String category = request.getParameter("category");
 		String price = request.getParameter("price");
@@ -71,9 +72,9 @@ public class CourseCreateController extends HttpServlet {
 		
 		String image = fileUtil.createFile("course/banners", getServletContext(), banner_image);
 
-		String instructorName = loginUser.getFirstName() + " " + loginUser.getLastName();
+		String instructor = String.valueOf(loginUser.getId());
 
-		service.createCourse(title, description, instructorName, category, price, true, image);
+		service.createCourse(title, shortDescription, description, instructor, category, price, true, image);
 
 		response.sendRedirect("/teacher/course/list");
 

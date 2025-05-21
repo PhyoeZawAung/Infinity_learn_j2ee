@@ -43,8 +43,8 @@ public class CourseListController extends HttpServlet {
 		}
 	
 		try {
-			String instructorName = loginUser.getFirstName() + " " + loginUser.getLastName();
-			courses = service.getCoursesByInstructorName(instructorName);
+			String instructor = String.valueOf(loginUser.getId());
+			courses = service.getCoursesByInstructorName(instructor);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

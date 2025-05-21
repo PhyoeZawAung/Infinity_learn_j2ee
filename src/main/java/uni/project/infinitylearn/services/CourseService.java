@@ -97,15 +97,16 @@ public class CourseService {
 		
 	}
 
-	//get courses by instructor name that teachers only see their own courses
-	public List<Course> getCoursesByInstructorName(String instructorName) throws SQLException {
-		return courseDao.getCoursesByInstructorName(instructorName);
+	//get courses by instructor id that teachers only see their own courses
+	public List<Course> getCoursesByInstructorName(String instructor) throws SQLException {
+		return courseDao.getCoursesByInstructorName(instructor);
 	}
 		
 	
-	public void createCourse(String title, String description, String instructor, String category, String price, boolean is_published, String banner_image) {
+	public void createCourse(String title, String shortDescription, String description, String instructor, String category, String price, boolean is_published, String banner_image) {
 		Course course = new Course();
 		course.setTitle(title);
+		course.setShortDescription(shortDescription);
 		course.setDescription(description);
 		course.setInstructor(instructor);
 		course.setCategory(category);

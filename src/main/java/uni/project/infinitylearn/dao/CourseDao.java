@@ -68,19 +68,20 @@ public class CourseDao extends Dao {
 
 	}
 
-	// get course by instructor name that teachers only see their own courses
-	public List<Course> getCoursesByInstructorName(String instructorName) throws SQLException {
+	// get course by instructor id that teachers only see their own courses
+	public List<Course> getCoursesByInstructorName(String instructor) throws SQLException {
 		List<Course> courses = new ArrayList<>();
 		String sql = "SELECT * FROM course WHERE instructor = ?";
 	
 		PreparedStatement statement = conn.prepareStatement(sql);
-		statement.setString(1, instructorName);
+		statement.setString(1, instructor);
 		ResultSet rs = statement.executeQuery();
 	
 		while (rs.next()) {
 			Course course = new Course();
 			course.setId(rs.getLong("id"));
 			course.setTitle(rs.getString("title"));
+			course.setShortDescription(rs.getString("short_description"));
 			course.setDescription(rs.getString("description"));
 			course.setInstructor(rs.getString("instructor"));
 			course.setCategory(rs.getString("category"));
@@ -99,14 +100,15 @@ public class CourseDao extends Dao {
 	public void createCourse(Course course) {
 		PreparedStatement statement = null;
 		try {
-			statement = conn.prepareStatement("INSERT INTO course (title, description, instructor, is_published, category, price, banner_image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			statement = conn.prepareStatement("INSERT INTO course (title, short_description, description, instructor, is_published, category, price, banner_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			statement.setString(1, course.getTitle());
-			statement.setString(2, course.getDescription());
-			statement.setString(3, course.getInstructor());
-			statement.setBoolean(4, course.getIs_published());
-			statement.setString(5, course.getCategory());
-			statement.setString(6, course.getPrice());
-			statement.setString(7, course.getBanner_image());
+			statement.setString(2, course.getShortDescription());
+			statement.setString(3, course.getDescription());
+			statement.setString(4, course.getInstructor());
+			statement.setBoolean(5, course.getIs_published());
+			statement.setString(6, course.getCategory());
+			statement.setString(7, course.getPrice());
+			statement.setString(8, course.getBanner_image());
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
