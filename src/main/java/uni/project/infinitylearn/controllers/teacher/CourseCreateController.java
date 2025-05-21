@@ -74,7 +74,7 @@ public class CourseCreateController extends HttpServlet {
 
 		String instructor = String.valueOf(loginUser.getId());
 
-		service.createCourse(title, shortDescription, description, instructor, category, price, true, image);
+		service.createCourse(title, shortDescription, description, instructor, category, price, "draft", image);
 
 		response.sendRedirect("/teacher/course/list");
 

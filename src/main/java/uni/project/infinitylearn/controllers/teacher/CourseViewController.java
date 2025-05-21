@@ -16,13 +16,15 @@ public class CourseViewController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private CourseService service;
+
     public CourseViewController() {
         super();
         this.service = new CourseService();
     }
 
     // Example method to handle course view
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         // Logic to retrieve course details and lessons
         Long courseId = Long.parseLong(request.getParameter("course_id"));
 
@@ -35,16 +37,57 @@ public class CourseViewController extends HttpServlet {
         }
         request.setAttribute("course", course);
 
+        // ✅ Show rejection reason if exists
+        if (course != null && course.getRejectionReason() != null && !course.getRejectionReason().isEmpty()) {
+            request.setAttribute("error", "This course was previously rejected: " + course.getRejectionReason());
+        }
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/teacher/course_view.jsp");
         dispatcher.forward(request, response);
     }
 
-    // Example method to handle lesson view
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Logic to retrieve lesson details and assignments
-        // Forward to the lesson view page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("lesson_view.jsp");
-        dispatcher.forward(request, response);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("submit_for_review".equals(action)) {
+            Long courseId = Long.parseLong(request.getParameter("course_id"));
+
+            try {
+                Course course = service.getCourseById(courseId);
+                request.setAttribute("course", course);
+
+                // Validate course content
+                if (!service.isValidForReview(course)) {
+                    request.setAttribute("error", "Course must have at least one lesson with at least one video.");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/views/teacher/course_view.jsp");
+                    dispatcher.forward(request, response);
+                    return;
+                }
+
+                // Update course status to 'under_review'
+                service.updateStatus(courseId, "under_review");
+
+                Course updatedCourse = service.getCourseById(courseId);
+                service.saveRejectionReason(courseId, null);
+                request.setAttribute("course", updatedCourse);
+                request.setAttribute("success", "Course submitted for review successfully.");
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/views/teacher/course_view.jsp");
+                dispatcher.forward(request, response);
+            } catch (Exception e) {
+                e.printStackTrace();
+                request.setAttribute("error", "Something went wrong while submitting for review.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/views/teacher/course_view.jsp");
+                dispatcher.forward(request, response);
+            }
+
+        } else {
+            // 🔄 Your original fallback forwarding to lesson view
+            RequestDispatcher dispatcher = request.getRequestDispatcher("lesson_view.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
 }

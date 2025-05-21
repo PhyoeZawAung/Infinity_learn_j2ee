@@ -28,14 +28,15 @@ public class Courses extends Migrator {
 				        instructor VARCHAR(100),
 				        category VARCHAR(100),
 				        price DECIMAL(10, 2) DEFAULT 0.00,
-				        is_published BOOLEAN DEFAULT FALSE,
+                        course_status ENUM('published', 'draft', 'under_review') DEFAULT 'draft',
+                        rejection_reason TEXT,
 						banner_image VARCHAR(255),
 				        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 				        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 				    );
 				""");
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Mastering Java Web Development',
     'Learn Java Servlets, JSP, and web application architecture in depth.',
@@ -43,12 +44,12 @@ VALUES (
     'Alice Johnson',
     'Web Development',
     39.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Advanced SQL Queries',
     'Master complex SQL techniques like subqueries and window functions.',
@@ -56,12 +57,12 @@ VALUES (
     'Bob Smith',
     'Database',
     29.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Spring Boot REST API Masterclass',
     'Learn to build real-world REST APIs with Spring Boot.',
@@ -69,12 +70,12 @@ VALUES (
     'Daniel Kim',
     'Backend',
     49.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Fullstack JavaScript Developer',
     'Become a fullstack JS dev using Node.js, Express, and MongoDB.',
@@ -82,12 +83,12 @@ VALUES (
     'Frank Lee',
     'Fullstack',
     44.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Python for Beginners',
     'Learn Python programming from scratch with real examples.',
@@ -95,12 +96,12 @@ VALUES (
     'Grace Park',
     'Programming',
     0.00,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'HTML & CSS Essentials',
     'Design and build modern web pages with HTML5 and CSS3.',
@@ -108,12 +109,12 @@ VALUES (
     'Ella Rose',
     'Frontend',
     19.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Git & GitHub for Teams',
     'Master version control workflows and collaboration with Git.',
@@ -121,12 +122,12 @@ VALUES (
     'Isabel Martinez',
     'Tools',
     14.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Docker for Java Developers',
     'Containerize and deploy Java applications using Docker.',
@@ -134,12 +135,12 @@ VALUES (
     'Jack Wu',
     'DevOps',
     34.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Responsive Design with Tailwind CSS',
     'Build sleek, responsive websites using Tailwind utility classes.',
@@ -147,12 +148,12 @@ VALUES (
     'Henry Adams',
     'Frontend',
     27.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Data Structures in Java',
     'Understand core data structures with Java implementation.',
@@ -160,7 +161,7 @@ VALUES (
     'Carol White',
     'Programming',
     22.49,
-    TRUE
+    'published'
 );
 """);
 

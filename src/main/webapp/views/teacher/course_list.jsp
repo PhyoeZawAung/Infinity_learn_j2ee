@@ -24,20 +24,6 @@
 			overflow: hidden;
 			transition: all 0.3s ease;
 		}
-
-		.desc-text.collapsed {
-			-webkit-line-clamp: 1;
-			/* show 1 line with ellipsis */
-		}
-
-		.desc-text.expanded {
-			-webkit-line-clamp: unset;
-			/* remove line limit */
-			white-space: normal;
-		}
-		.clickable-row {
-			cursor: pointer;
-		}
 	</style>
 </head>
 
@@ -78,7 +64,7 @@
 						</thead>
 						<tbody>
 							<c:forEach var="course" items="${courses}" varStatus="status">
-								<tr class="text-center clickable-row" title="Click to expand/collapse">
+								<tr class="text-center">
 									<td>${status.index + 1}</td>
 									<td class="text-start">${course.title}</td>
 									<td class="desc-cell text-start">
@@ -90,11 +76,19 @@
 									<td>${course.category}</td>
 									<td><span class="fw-semibold text-success">$${course.price}</span></td>
 									<td>
-										<span
-											class="badge rounded-pill ${course.is_published ? 'bg-success' : 'bg-warning text-dark'}">
-											${course.is_published ? 'Published' : 'Draft'}
-										</span>
+										<c:choose>
+											<c:when test="${course.courseStatus == 'published'}">
+												<span class="badge rounded-pill bg-success">Published</span>
+											</c:when>
+											<c:when test="${course.courseStatus == 'draft'}">
+												<span class="badge rounded-pill bg-warning text-dark">Draft</span>
+											</c:when>
+											<c:when test="${course.courseStatus == 'under_review'}">
+												<span class="badge rounded-pill bg-secondary">Under Review</span>
+											</c:when>
+										</c:choose>
 									</td>
+
 									<td>
 										<img src="<c:url value='/FileController${course.banner_image}'/>"
 											alt="Course Image" class="rounded"

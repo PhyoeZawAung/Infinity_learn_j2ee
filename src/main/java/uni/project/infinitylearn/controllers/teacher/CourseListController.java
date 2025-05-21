@@ -44,7 +44,7 @@ public class CourseListController extends HttpServlet {
 	
 		try {
 			String instructor = String.valueOf(loginUser.getId());
-			courses = service.getCoursesByInstructorName(instructor);
+			courses = service.getCoursesByInstructorId(instructor);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

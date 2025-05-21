@@ -473,6 +473,32 @@
 		<servlet-name>ReviewerDashboard</servlet-name>
 		<url-pattern>/reviewer/dashboard</url-pattern>
 	</servlet-mapping>
+
+	<!-- course list controller -->
+    <servlet>
+    	<description>
+    	</description>
+    	<display-name>ReviewerCourseListController</display-name>
+    	<servlet-name>ReviewerCourseListController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.reviewer.ReviewerCourseListController</servlet-class>
+    </servlet>
+	 <servlet-mapping>
+    	<servlet-name>ReviewerCourseListController</servlet-name>
+    	<url-pattern>/reviewer/course/list</url-pattern>
+    </servlet-mapping>
+
+	<!-- course view controller -->
+	<servlet>
+    	<description>
+    	</description>
+    	<display-name>ReviewerCourseViewController</display-name>
+    	<servlet-name>ReviewerCourseViewController</servlet-name>
+    	<servlet-class>uni.project.infinitylearn.controllers.reviewer.ReviewerCourseViewController</servlet-class>
+    </servlet>
+	<servlet-mapping>
+		<servlet-name>ReviewerCourseViewController</servlet-name>
+		<url-pattern>/reviewer/course/detail</url-pattern>
+	</servlet-mapping>
 <!-- REVIEWER -->
 </web-app>
 	
