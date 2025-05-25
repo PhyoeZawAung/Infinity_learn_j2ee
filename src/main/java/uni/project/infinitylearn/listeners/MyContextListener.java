@@ -3,9 +3,12 @@ package uni.project.infinitylearn.listeners;
 import javax.servlet.ServletContextEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Set;
 
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+
+import org.reflections.Reflections;
 
 import uni.project.infinitylearn.utils.DatabaseUtil;
 
@@ -47,18 +50,20 @@ public class MyContextListener implements ServletContextListener {
 			databaseUtil = new DatabaseUtil(dbName, dbUser, dbPassword);
 			
 			dbConnection = databaseUtil.getConnection();
-			
-			Migrator courseMigrator = new Courses(this.dbConnection);
-			Migrator lessonMigrator = new Lesssons(this.dbConnection);
-			Migrator userMigrator = new Users(this.dbConnection);
-			Migrator courseEnrollmentMigrator = new CourseEnrollment(this.dbConnection);
-			Migrator videoProgressMigrator = new VideoProgress(this.dbConnection);
 
-			courseEnrollmentMigrator.execute();
-			courseMigrator.execute();
-			lessonMigrator.execute();
-			userMigrator.execute();
-			videoProgressMigrator.execute();
+			Reflections reflections = new Reflections("uni.project.infinitylearn.migrations");
+			// Get all classes that are subtypes of Migrator
+			Set<Class<? extends Migrator>> migrators = reflections.getSubTypesOf(Migrator.class);
+
+			// Loop through each class and create an instance of it
+			for (Class<? extends Migrator> migratorClass : migrators) {
+				try {
+					Migrator migrator = migratorClass.getDeclaredConstructor(Connection.class).newInstance(dbConnection);
+					migrator.execute();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 			sce.getServletContext().setAttribute("dbConnection", dbConnection);
 			
 		} catch (ClassNotFoundException | SQLException e) {
