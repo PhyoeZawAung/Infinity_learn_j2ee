@@ -29,11 +29,19 @@ public abstract class Migrator {
 			
 			Statement statement = connection.createStatement();
 			
+			String tableName = queries.get(0).split(" ")[4];
+
+			System.out.println("");
+			System.out.println("#############  "  + tableName + "  #############");
+
+			System.out.println("Executing migration for table: " + tableName);
+
 			for(String query : queries) {
+				System.out.println(query);
+				// Execute the query
 				statement.execute(query);
 			}
 
-			System.out.println("'course' table created successfully.");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
