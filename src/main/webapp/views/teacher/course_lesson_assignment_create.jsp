@@ -18,7 +18,7 @@
             <div class="container">
 
                 <form class="row g-3" method="post" action="<c:url value='/teacher/course/lesson/assignment/create'/>" enctype="multipart/form-data">
-  
+                    <input type="hidden" name="course_id" value= "${param.course_id}" />
                     <input type="hidden" name="lesson_id" value= "${param.lesson_id}" />
                     <div class="col-12">
                         <label for="title" class="form-label">Title</label> <input name="title" type="text"

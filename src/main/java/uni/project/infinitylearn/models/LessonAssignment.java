@@ -1,19 +1,43 @@
 package uni.project.infinitylearn.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LessonAssignment {
     private Long id;
     private String title;
     private String description;
     private String assignmentUrl;
     private Long lessonId;
+    private Long courseId;
     private String createdAt;
     private String updatedAt;
-
+    private List<AssignmentQuestion> questions = new ArrayList<>();
     /**
      * @return Long return the id
      */
     public Long getId() {
         return id;
+    }
+    public List<AssignmentQuestion> getQuestions() {
+        return questions;
+    }
+    public void setQuestions(List<AssignmentQuestion> questions) {
+        this.questions = questions;
+    }
+    /**
+     * 
+     * @return Long return courseId
+     */
+    public Long getCourseId() {
+        return courseId;
+    }
+    /**
+     * 
+     * @param courseId courseId to set
+     */
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     /**

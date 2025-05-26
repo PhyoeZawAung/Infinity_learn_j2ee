@@ -19,7 +19,8 @@
 
                 <form class="row g-3" method="post" action="<c:url value='/teacher/course/lesson/assignment/question/create'/>"
                     enctype="multipart/form-data">
-
+                    <input type="hidden" name="course_id" value="${param.course_id}" />
+                    <input type="hidden" name="lesson_id" value="${param.lesson_id}" />
                     <input type="hidden" name="assignment_id" value="${param.assignment_id}" />
                     <div class="col-12">
                         <label for="question_text" class="form-label">Question Text</label>

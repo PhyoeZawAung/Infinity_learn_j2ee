@@ -14,7 +14,8 @@ public class LessonAssignments extends Migrator {
     public List<String> queries() {
 
         List<String> queries = new ArrayList<>();
-
+        queries.add("DROP TABLE IF EXISTS lesson_assignment;");
+        queries.add("DROP TABLE IF EXISTS assignment_question;");
         queries.add("""
                 CREATE TABLE IF NOT EXISTS lesson_assignment (
                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -22,6 +23,7 @@ public class LessonAssignments extends Migrator {
                     description TEXT,
                     assignment_url VARCHAR(255) NOT NULL,
                     lesson_id BIGINT NOT NULL,
+                    course_id BIGINT NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 );

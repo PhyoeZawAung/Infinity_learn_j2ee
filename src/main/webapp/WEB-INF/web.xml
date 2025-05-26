@@ -18,7 +18,7 @@
     	<param-name>dbName</param-name>
 		<!-- this is the name of the database -->
 		<!-- Do not upload this file to the repository. -->
-    	<param-value>infinitylearnjavaee</param-value>
+    	<param-value>infinity_learns</param-value>
     </context-param>
     
     <context-param>
@@ -34,7 +34,7 @@
     	<param-name>dbPassword</param-name>
 		<!-- this is the name of the database -->
 		<!-- Do not upload this file to the repository. -->
-    	<param-value>maria</param-value>
+    	<param-value></param-value>
     </context-param>
 <!-- DATABASE -->
 <!-- filters -->
@@ -369,6 +369,87 @@
 	<servlet-mapping>
 		<servlet-name>TeacherCourseLessonVideoDeleteController</servlet-name>
 		<url-pattern>/teacher/course/lesson/lesson-video/delete</url-pattern>
+	</servlet-mapping>
+
+	<!-- course assignment create controller -->
+	<servlet>
+		<description>Handles creating of a single lesson assignment</description>
+		<display-name>TeacherCourseLessonAssignmentCreateController</display-name>
+		<servlet-name>TeacherCourseLessonAssignmentCreateController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonAssignmentCreateController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonAssignmentCreateController</servlet-name>
+		<url-pattern>/teacher/course/lesson/assignment/create</url-pattern>
+	</servlet-mapping>
+
+	<!-- course assignment update controller -->
+	<servlet>
+		<description>Handles updating of a single lesson assignment</description>
+		<display-name>TeacherCourseLessonAssignmentEditController</display-name>
+		<servlet-name>TeacherCourseLessonAssignmentEditController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonAssignmentEditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonAssignmentEditController</servlet-name>
+		<url-pattern>/teacher/course/lesson/assignment/edit</url-pattern>
+	</servlet-mapping>
+
+	<!-- course assignment delete controller -->
+	<servlet>
+		<description>Handles deletion of a single lesson assignment</description>
+		<display-name>TeacherCourseLessonAssignmentDeleteController</display-name>
+		<servlet-name>TeacherCourseLessonAssignmentDeleteController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonAssignmentDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonAssignmentDeleteController</servlet-name>
+		<url-pattern>/teacher/course/lesson/assignment/delete</url-pattern>
+	</servlet-mapping>
+	<!-- course assignment question view controller-->
+	<servlet>
+		<description>Handles creating of a single lesson assignment question</description>
+		<display-name>TeacherCourseLessonAssignmentQuestionViewController</display-name>
+		<servlet-name>TeacherCourseLessonAssignmentQuestionViewController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonAssignmentQuestionViewController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonAssignmentQuestionViewController</servlet-name>
+		<url-pattern>/teacher/course/lesson/assignment/question/view</url-pattern>
+	</servlet-mapping>
+	<!-- course assignment question create controller -->
+	<servlet>
+		<description>Handles creating of a single lesson assignment question</description>
+		<display-name>TeacherCourseLessonAssignmentQuestionCreateController</display-name>
+		<servlet-name>TeacherCourseLessonAssignmentQuestionCreateController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonAssignmentQuestionCreateController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonAssignmentQuestionCreateController</servlet-name>
+		<url-pattern>/teacher/course/lesson/assignment/question/create</url-pattern>
+	</servlet-mapping>
+<!-- course lesson assingment question edit controller-->
+	<servlet>
+		<description>Handles updating of a single lesson assignment question</description>
+		<display-name>TeacherCourseLessonAssignmentQuestionEditController</display-name>
+		<servlet-name>TeacherCourseLessonAssignmentQuestionEditController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonAssignmentQuestionEditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonAssignmentQuestionEditController</servlet-name>
+		<url-pattern>/teacher/course/lesson/assignment/question/edit</url-pattern>
+	</servlet-mapping>
+
+	<!-- course lesson assingment question delete controller-->
+	<servlet>
+		<description>Handles deletion of a single lesson assignment question</description>
+		<display-name>TeacherCourseLessonAssignmentQuestionDeleteController</display-name>
+		<servlet-name>TeacherCourseLessonAssignmentQuestionDeleteController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.CourseLessonAssignmentQuestionDeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TeacherCourseLessonAssignmentQuestionDeleteController</servlet-name>
+		<url-pattern>/teacher/course/lesson/assignment/question/delete</url-pattern>
 	</servlet-mapping>
 
 <!-- TEACHER -->
