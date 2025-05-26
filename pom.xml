@@ -39,6 +39,11 @@
   			<artifactId>json</artifactId>
   			<version>20231013</version> <!-- Latest as of 2025 -->
 		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.10.2</version>
+		</dependency>
 
 	</dependencies>
 
