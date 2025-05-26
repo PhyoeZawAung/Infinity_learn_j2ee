@@ -23,7 +23,13 @@ public class CourseEnrollment extends Migrator {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
-            """
+            """,
+        """
+        INSERT INTO course_enrollment (user_id, course_id, progress, status) VALUES
+        (1, 1, 20, 'enrolled'),
+        (2, 1, 100, 'completed'),
+        (1, 2, 0, 'enrolled');
+        """
         );
     }
 }

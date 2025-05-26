@@ -371,6 +371,15 @@
 		<url-pattern>/teacher/course/lesson/lesson-video/delete</url-pattern>
 	</servlet-mapping>
 
+	<!-- StudentProgressController -->
+	<servlet>
+		<servlet-name>StudentProgressController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.teacher.StudentProgressController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentProgressController</servlet-name>
+		<url-pattern>/teacher/course/student-progress</url-pattern>
+	</servlet-mapping>
 <!-- TEACHER -->
 
 <!-- STUDENT -->
@@ -501,4 +510,3 @@
 	</servlet-mapping>
 <!-- REVIEWER -->
 </web-app>
-	

@@ -6,10 +6,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 
 import uni.project.infinitylearn.models.Course;
+import uni.project.infinitylearn.models.User;
 import uni.project.infinitylearn.services.CourseService;
 
 public class CourseViewController extends HttpServlet {
@@ -22,24 +25,30 @@ public class CourseViewController extends HttpServlet {
         this.service = new CourseService();
     }
 
-    // Example method to handle course view
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Logic to retrieve course details and lessons
         Long courseId = Long.parseLong(request.getParameter("course_id"));
-
         Course course = null;
+
         try {
             course = service.getCourseById(courseId);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        request.setAttribute("course", course);
+            request.setAttribute("course", course);
 
-        // ✅ Show rejection reason if exists
-        if (course != null && course.getRejectionReason() != null && !course.getRejectionReason().isEmpty()) {
-            request.setAttribute("error", "This course was previously rejected: " + course.getRejectionReason());
+            if (course != null && course.getRejectionReason() != null && !course.getRejectionReason().isEmpty()) {
+                request.setAttribute("error", "This course was previously rejected: " + course.getRejectionReason());
+            }
+
+            // Fetch enrolled students
+            try {
+                List<User> enrolledStudents = service.getEnrolledStudents(courseId);
+                request.setAttribute("enrolledStudents", enrolledStudents);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                request.setAttribute("studentError", "Failed to load enrolled students.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/teacher/course_view.jsp");

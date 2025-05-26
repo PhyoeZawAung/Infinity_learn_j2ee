@@ -6,10 +6,12 @@ import uni.project.infinitylearn.listeners.MyContextListener;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
 import uni.project.infinitylearn.models.LessonVideo;
+import uni.project.infinitylearn.models.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 
 public class CourseService {
@@ -320,6 +322,11 @@ public class CourseService {
 		return courseDao.deleteLessonVideo(videoId) > 0;
 	}
 
+	public List<User> getEnrolledStudents(Long courseId) throws SQLException {
+		// Assume DAO layer handles actual SQL
+		return courseDao.getEnrolledStudents(courseId);
+	}
+
 	/**
 	 * this is for the reviewer to get all courses with status = 'under_review'
 	 */
@@ -329,4 +336,35 @@ public class CourseService {
 	public List<Course> getCoursesByStatus(String status) throws SQLException {
 		return courseDao.getCoursesByStatus(status);
 	}
+
+	// Returns a course with lessons, videos, and video progress for a specific user (student)
+	public Course getCourseWithLessonsAndVideosAndProgress(Long courseId, Long userId) throws SQLException {
+		Course course = courseDao.getCourseWithLessonsAndVideosAndProgress(courseId, userId);
+
+		// Calculate progress for each lesson
+		if (course != null && course.getLessons() != null) {
+			for (Lesson lesson : course.getLessons()) {
+				int totalVideos = lesson.getLessonVideos() != null ? lesson.getLessonVideos().size() : 0;
+				int completedVideos = 0;
+				if (lesson.getLessonVideos() != null) {
+					for (LessonVideo video : lesson.getLessonVideos()) {
+						if (video.isIsCompleted()) {
+							completedVideos++;
+						}
+					}
+				}
+				int percent = totalVideos > 0 ? (completedVideos * 100 / totalVideos) : 0;
+				lesson.setTotalVideos(totalVideos);
+				lesson.setCompletedVideos(completedVideos);
+				lesson.setProgressPercent(percent);
+			}
+		}
+		return course;
+	}
+
+	// Returns a user by their ID
+	public User getUserById(Long userId) throws SQLException {
+		return courseDao.getUserById(userId);
+	}
+
 }
