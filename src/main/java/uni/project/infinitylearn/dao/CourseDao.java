@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mysql.cj.protocol.Resultset;
 import com.mysql.cj.protocol.x.ResultMessageListener;
@@ -16,6 +18,7 @@ import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
 import uni.project.infinitylearn.models.LessonAssignment;
 import uni.project.infinitylearn.models.LessonVideo;
+import uni.project.infinitylearn.models.User;
 import uni.project.infinitylearn.mappers.CourseMapper;
 import uni.project.infinitylearn.mappers.LessonMapper;
 
@@ -85,18 +88,48 @@ public class CourseDao extends Dao {
 
 	}
 
+	// get course by instructor id that teachers only see their own courses
+	public List<Course> getCoursesByInstructorId(String instructor) throws SQLException {
+		List<Course> courses = new ArrayList<>();
+		String sql = "SELECT * FROM course WHERE instructor = ?";
+
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setString(1, instructor);
+		ResultSet rs = statement.executeQuery();
+
+		while (rs.next()) {
+			Course course = new Course();
+			course.setId(rs.getLong("id"));
+			course.setTitle(rs.getString("title"));
+			course.setShortDescription(rs.getString("short_description"));
+			course.setDescription(rs.getString("description"));
+			course.setInstructor(rs.getString("instructor"));
+			course.setCategory(rs.getString("category"));
+			course.setPrice(rs.getString("price"));
+			course.setCourseStatus(rs.getString("course_status"));
+			course.setBanner_image(rs.getString("banner_image"));
+			courses.add(course);
+		}
+
+		rs.close();
+		statement.close();
+
+		return courses;
+	}
+
 	public void createCourse(Course course) {
 		PreparedStatement statement = null;
 		try {
 			statement = conn.prepareStatement(
-					"INSERT INTO course (title, description, instructor, is_published, category, price, banner_image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO course (title, short_description, description, instructor, course_status, category, price, banner_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			statement.setString(1, course.getTitle());
-			statement.setString(2, course.getDescription());
-			statement.setString(3, course.getInstructor());
-			statement.setBoolean(4, course.getIs_published());
-			statement.setString(5, course.getCategory());
-			statement.setString(6, course.getPrice());
-			statement.setString(7, course.getBanner_image());
+			statement.setString(2, course.getShortDescription());
+			statement.setString(3, course.getDescription());
+			statement.setString(4, course.getInstructor());
+			statement.setString(5, course.getCourseStatus());
+			statement.setString(6, course.getCategory());
+			statement.setString(7, course.getPrice());
+			statement.setString(8, course.getBanner_image());
 
 			statement.executeUpdate();
 		} catch (SQLException e) {
@@ -317,6 +350,29 @@ public class CourseDao extends Dao {
 		return courses;
 	}
 
+	public List<User> getEnrolledStudents(Long courseId) throws SQLException {
+		String sql = """
+				    SELECT users.*
+				    FROM users
+				    INNER JOIN course_enrollment
+				    ON users.id = course_enrollment.user_id
+				    WHERE course_enrollment.course_id = ?
+				""";
+
+		return executeQueryList(sql, rs -> {
+			User user = new User();
+			user.setId(rs.getLong("id"));
+			user.setFirstName(rs.getString("first_name"));
+			user.setLastName(rs.getString("last_name"));
+			user.setEmail(rs.getString("email"));
+			user.setPassword(rs.getString("password")); // optionally skip this for security
+			user.setProfile_image(rs.getString("profile_image"));
+			user.setRole(rs.getString("role"));
+			user.setDescription(rs.getString("description"));
+			return user;
+		}, courseId);
+	}
+
 	public LessonVideo getVideo(Long videoId, Long userId) throws SQLException {
 		System.out.println("getVideoUrl :: videoId :: " + videoId);
 		String sql = """
@@ -354,6 +410,18 @@ public class CourseDao extends Dao {
 		String sql = "UPDATE course SET title = ?, description = ?, instructor = ?, category = ?, price = ?, banner_image = ? WHERE id = ?";
 		int rowsUpdated = executeUpdate(sql, title, description, instructor, category, price, bannerImage, courseId);
 		return rowsUpdated > 0; // Return true if at least one row was updated
+	}
+
+	public boolean updateCourseStatus(Long courseId, String newStatus) throws SQLException {
+		String sql = "UPDATE course SET course_status = ? WHERE id = ?";
+		int rowsUpdated = executeUpdate(sql, newStatus, courseId);
+		return rowsUpdated > 0;
+	}
+
+	public boolean saveRejectionReason(Long courseId, String reason) throws SQLException {
+		String sql = "UPDATE course SET rejection_reason = ? WHERE id = ?";
+		int rowsUpdated = executeUpdate(sql, reason, courseId);
+		return rowsUpdated > 0;
 	}
 
 	public Lesson getLessonById(Long lessonId) throws Exception {
@@ -446,5 +514,161 @@ public class CourseDao extends Dao {
 	public int updateLessonAssignmentQuestion(Long questionId,String question,String options, String correctAnswer) throws Exception{
 		String sql = "UPDATE assignment_question SET question = ?,options = ? ,correct_answer =? WHERE id = ? ";
 		return executeUpdate(sql, question,options,correctAnswer,questionId);
+	}
+	/**
+	 * This is for reviewer to get all courses with status 'under_review'
+	 */
+	public List<Course> getCoursesByStatus(String status) throws SQLException {
+		String sql = "SELECT * FROM course WHERE course_status = ?";
+
+		return executeQueryList(sql, rs -> {
+			Course course = new Course();
+			course.setId(rs.getLong("id"));
+			course.setTitle(rs.getString("title"));
+			course.setShortDescription(rs.getString("short_description"));
+			course.setDescription(rs.getString("description"));
+			course.setInstructor(rs.getString("instructor"));
+			course.setCategory(rs.getString("category"));
+			course.setPrice(rs.getString("price"));
+			course.setCourseStatus(rs.getString("course_status"));
+			course.setBanner_image(rs.getString("banner_image"));
+			return course;
+		}, status);
+	}
+
+	public List<Map<String, Object>> getStudentLessonProgress(Long courseId, Long studentId) throws SQLException {
+		String sql = """
+				    SELECT
+				        vp.lesson_id,
+				        vp.video_id,
+				        vp.progress,
+				        vp.is_completed,
+				        lv.title AS video_title,
+				        l.title AS lesson_title
+				    FROM video_progress vp
+				    JOIN lesson_videos lv ON vp.video_id = lv.id
+				    JOIN lessons l ON vp.lesson_id = l.id
+				    WHERE vp.course_id = ? AND vp.user_id = ?
+				""";
+
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setLong(1, courseId);
+		statement.setLong(2, studentId);
+
+		ResultSet rs = statement.executeQuery();
+
+		List<Map<String, Object>> progressList = new ArrayList<>();
+		while (rs.next()) {
+			Map<String, Object> progressData = new HashMap<>();
+			progressData.put("lessonId", rs.getLong("lesson_id"));
+			progressData.put("lessonTitle", rs.getString("lesson_title"));
+			progressData.put("videoId", rs.getLong("video_id"));
+			progressData.put("videoTitle", rs.getString("video_title"));
+			progressData.put("progress", rs.getInt("progress"));
+			progressData.put("isCompleted", rs.getBoolean("is_completed"));
+
+			progressList.add(progressData);
+		}
+
+		rs.close();
+		statement.close();
+
+		return progressList;
+	}
+
+	// Returns a Course object with lessons, videos, and video progress for a specific user
+	public Course getCourseWithLessonsAndVideosAndProgress(Long courseId, Long userId) throws SQLException {
+		Course course = null;
+
+		// Get course basic info
+		ResultSet courseRes = getCourseById(courseId);
+		if (courseRes.next()) {
+			course = new Course();
+			course.setId(courseRes.getLong("id"));
+			course.setTitle(courseRes.getString("title"));
+			course.setDescription(courseRes.getString("description"));
+			course.setShortDescription(courseRes.getString("short_description"));
+			course.setInstructor(courseRes.getString("instructor"));
+			course.setCourseStatus(courseRes.getString("course_status"));
+			course.setRejectionReason(courseRes.getString("rejection_reason"));
+			course.setCategory(courseRes.getString("category"));
+			course.setPrice(courseRes.getString("price"));
+			course.setBanner_image(courseRes.getString("banner_image"));
+		}
+
+		if (course == null) return null;
+
+		// Get lessons
+		ResultSet lessonsRes = getCourseLessons(courseId);
+		List<Lesson> lessons = new ArrayList<>();
+		while (lessonsRes.next()) {
+			Lesson lesson = new Lesson();
+			lesson.setId(lessonsRes.getLong("id"));
+			lesson.setTitle(lessonsRes.getString("title"));
+			lesson.setDescription(lessonsRes.getString("description"));
+			lesson.setCourseId(lessonsRes.getLong("course_id"));
+
+			// Get videos for this lesson
+			ResultSet videosRes = getCourseLessonVideos(courseId, lesson.getId());
+			List<LessonVideo> lessonVideos = new ArrayList<>();
+			while (videosRes.next()) {
+				LessonVideo video = new LessonVideo();
+				video.setId(videosRes.getLong("id"));
+				video.setTitle(videosRes.getString("title"));
+				video.setDescription(videosRes.getString("description"));
+				video.setVideoUrl(videosRes.getString("video_url"));
+				video.setThumbnail(videosRes.getString("thumbnail"));
+				video.setLessonId(videosRes.getLong("lesson_id"));
+				video.setCourseId(videosRes.getLong("course_id"));
+
+				// Get progress for this video and user
+				String progressSql = "SELECT * FROM video_progress WHERE user_id = ? AND course_id = ? AND lesson_id = ? AND video_id = ?";
+				PreparedStatement progressStmt = conn.prepareStatement(progressSql);
+				progressStmt.setLong(1, userId);
+				progressStmt.setLong(2, courseId);
+				progressStmt.setLong(3, lesson.getId());
+				progressStmt.setLong(4, video.getId());
+				ResultSet progressRes = progressStmt.executeQuery();
+				if (progressRes.next()) {
+					video.setProgress(progressRes.getInt("progress"));
+					video.setIsCompleted(progressRes.getBoolean("is_completed"));
+					// Remove setCompletedAt, as your model does not have this field
+				}
+				progressRes.close();
+				progressStmt.close();
+
+				lessonVideos.add(video);
+			}
+			videosRes.close();
+			lesson.setLessonVideos(lessonVideos);
+			lessons.add(lesson);
+		}
+		lessonsRes.close();
+		course.setLessons(lessons);
+
+		return course;
+	}
+
+	// Returns a User object by ID
+	public User getUserById(Long userId) throws SQLException {
+		String sql = "SELECT * FROM users WHERE id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setLong(1, userId);
+		ResultSet rs = stmt.executeQuery();
+		User user = null;
+		if (rs.next()) {
+			user = new User();
+			user.setId(rs.getLong("id"));
+			user.setFirstName(rs.getString("first_name"));
+			user.setLastName(rs.getString("last_name"));
+			user.setEmail(rs.getString("email"));
+			user.setPassword(rs.getString("password"));
+			user.setProfile_image(rs.getString("profile_image"));
+			user.setRole(rs.getString("role"));
+			user.setDescription(rs.getString("description"));
+		}
+		rs.close();
+		stmt.close();
+		return user;
 	}
 }

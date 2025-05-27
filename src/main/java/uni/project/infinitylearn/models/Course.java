@@ -13,7 +13,8 @@ public class Course {
 	private String category;
 	private String banner_image;
 	private String price;
-	private Boolean is_published;
+	private String courseStatus;
+	private String rejectionReason;
 	private List<Lesson> lessons = new ArrayList<>();
 	private int progress;
 
@@ -60,20 +61,19 @@ public class Course {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-	public Boolean getIs_published() {
-		return is_published;
+	public String getCourseStatus() {
+		return courseStatus;
 	}
-	public void setIs_published(Boolean is_published) {
-		this.is_published = is_published;
+	public void setCourseStatus(String courseStatus) {
+		this.courseStatus = courseStatus;
+	}
+	public String getRejectionReason() {
+		return rejectionReason;
+	}
+	public void setRejectionReason(String rejectionReason) {
+		this.rejectionReason = rejectionReason;
 	}
 	
-
-    /**
-     * @return Boolean return the is_published
-     */
-    public Boolean isIs_published() {
-        return is_published;
-    }
 
     /**
      * @return List<Lesson> return the lessons

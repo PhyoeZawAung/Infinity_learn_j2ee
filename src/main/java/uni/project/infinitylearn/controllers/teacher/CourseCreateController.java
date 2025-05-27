@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.servlet.annotation.MultipartConfig;
 
+import uni.project.infinitylearn.models.User;
 import uni.project.infinitylearn.services.CourseService;
 import uni.project.infinitylearn.utils.FileUtil;
 
@@ -53,8 +54,16 @@ public class CourseCreateController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// Get logged-in user from session
+		User loginUser = (User) request.getSession().getAttribute("auth_user");
+
+		if (loginUser == null) {
+			response.sendRedirect("/login"); // or show an error
+			return;
+		}
+
 		String title = request.getParameter("title");
+		String shortDescription = request.getParameter("short_description");
 		String description = request.getParameter("description");
 		String category = request.getParameter("category");
 		String price = request.getParameter("price");
@@ -62,16 +71,10 @@ public class CourseCreateController extends HttpServlet {
 		Part banner_image = request.getPart("banner_image");
 		
 		String image = fileUtil.createFile("course/banners", getServletContext(), banner_image);
-		
-		// PrintWriter out = response.getWriter();
-		
-		// out.println("title" + title);
-		// out.println("description" + description);
-		// out.println("category" + category);
-		// out.println("price" + price);
-		// out.println("image" + image);
 
-		service.createCourse(title, description,"PZA", category, price,true, image);
+		String instructor = String.valueOf(loginUser.getId());
+
+		service.createCourse(title, shortDescription, description, instructor, category, price, "draft", image);
 
 		response.sendRedirect("/teacher/course/list");
 

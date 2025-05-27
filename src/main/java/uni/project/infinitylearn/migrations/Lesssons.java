@@ -43,6 +43,20 @@ public class Lesssons extends Migrator {
                 );
                 """);
 
+                // Sample lesson insert(s)
+    queries.add("""
+        INSERT INTO lessons (title, description, course_id) VALUES
+        ('Introduction to Java Servlets', 'Overview of Java Servlet technology, lifecycle, and use cases.', 1),
+        ('JSP Basics', 'Understanding JavaServer Pages and their role in web applications.', 1);
+    """);
+
+    // Sample lesson videos insert(s)
+    queries.add("""
+        INSERT INTO lesson_videos (title, description, video_url, thumbnail, course_id, lesson_id) VALUES
+        ('Servlet Lifecycle Explained', 'Detailed explanation of Servlet lifecycle phases.', '/sample/videos/servlet_lifecycle.mp4', '/sample/thumbnails/servlet_lifecycle.jpg', 1, 1),
+        ('JSP Syntax and Directives', 'Basics of JSP syntax and directives usage.', 'https://example.com/videos/jsp_syntax.mp4', 'https://example.com/thumbnails/jsp_syntax.jpg', 1, 2);
+    """);
+
         return queries;
     }
 
