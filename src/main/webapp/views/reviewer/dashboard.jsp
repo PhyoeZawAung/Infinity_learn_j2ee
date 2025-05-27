@@ -21,7 +21,7 @@
 		<h1>Reviewer Dashboard</h1>
 		<ul>
 			<li><a href="<c:url value='/logout'/>" >Logout</a></li>
-			<li><a href="<c:url value='/reviewer/CourseListController'/>">View Course List</a></li>
+			<li><a href="<c:url value='/reviewer/course/list'/>">View Course List</a></li>
 		</ul>    
 	</div>
 

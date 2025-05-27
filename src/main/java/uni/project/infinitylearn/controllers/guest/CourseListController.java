@@ -26,7 +26,7 @@ public class CourseListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         try {
-            List<Course> courses = courseService.getAllCourses();
+            List<Course> courses = courseService.getCoursesByStatus("published");
             request.setAttribute("courses", courses);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
