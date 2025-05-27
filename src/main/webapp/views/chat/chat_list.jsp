@@ -1,25 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Admin Dashboard</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-	crossorigin="anonymous">
-
-<!-- Bootstrap Icons for chat icon -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-	crossorigin="anonymous"></script>
-
+<%@ include file="/layouts/teacher/header.jsp" %>
+<%@ include file="/layouts/teacher/nav.jsp" %>
 <style>
   .conversation-item {
     padding: 12px;
@@ -39,8 +20,6 @@
   }
 </style>
 
-</head>
-<body>
 
 <section>
   <div class="container py-5">
@@ -238,5 +217,4 @@
   </div>
 </section>
 
-</body>
-</html>
+<%@ include file="/layouts/teacher/footer.jsp" %>

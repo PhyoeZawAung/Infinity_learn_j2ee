@@ -1,15 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Student Lesson Progress</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/layouts/teacher/header.jsp" %>
+<%@ include file="/layouts/teacher/nav.jsp" %>
     <div class="container py-5">
         <div class="mb-4">
             <a href="<c:url value='/teacher/course/detail?course_id=${course.id}'/>" class="btn btn-secondary btn-sm">&larr; Back to Course</a>
@@ -109,7 +100,4 @@
             </div>
         </div>
     </div>
-    <!-- Bootstrap JS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<%@ include file="/layouts/teacher/footer.jsp" %>

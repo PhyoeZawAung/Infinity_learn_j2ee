@@ -1,11 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <title>Assignment Questions</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/layouts/teacher/header.jsp" %>
+<%@ include file="/layouts/teacher/nav.jsp" %>
 <div class="container mt-4">
 
     <h3 class="mb-3">Questions for: <span class="text-primary">${assignment.title}</span></h3>
@@ -44,5 +39,4 @@
     </c:forEach>
 
 </div>
-</body>
-</html>
+<%@ include file="/layouts/teacher/footer.jsp" %>

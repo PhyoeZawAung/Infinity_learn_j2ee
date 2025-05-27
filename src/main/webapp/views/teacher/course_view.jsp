@@ -1,16 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-        <!DOCTYPE html>
-        <html lang="en">
-
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Course View</title>
-
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/layouts/teacher/header.jsp" %>
+<%@ include file="/layouts/teacher/nav.jsp" %>
             <style>
                 body {
                     background-color: #f5f7fa;
@@ -162,7 +152,6 @@
                     color: #888;
                 }
             </style>
-        </head>
 
         <body>
             <c:if test="${not empty success}">
@@ -174,11 +163,11 @@
             <div class="container py-5">
                 <div class="card shadow-lg border-0 mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h3 class="mb-0">📚 Course View</h3>
+                        <h3 class="mb-0"><i class="bi bi-book"></i> Course View</h3>
                         <div class="d-flex gap-2 flex-wrap">
                             <a href="<c:url value='/teacher/course/preview?course_id=${course.id}'/>"
                                 class="btn btn-info btn-sm">
-                                👁 Preview
+                                <i class="bi bi-eye-fill"></i> Preview
                             </a>
                             <c:if test="${course.courseStatus == 'draft'}">
                                 <form method="post" action="<c:url value='/teacher/course/detail'/>"
@@ -187,17 +176,17 @@
                                     <input type="hidden" name="action" value="submit_for_review" />
                                     <button type="submit" class="btn btn-warning btn-sm"
                                         onclick="return confirm('Submit this course for review? You won’t be able to edit it afterwards.');">
-                                        🚀 Submit for Review
+                                        <i class="bi bi-rocket-takeoff"></i> Submit for Review
                                     </button>
                                 </form>
                                 <a href="<c:url value='/teacher/course/edit?course_id=${course.id}'/>"
                                     class="btn btn-warning btn-sm">
-                                    ✏ Edit Course
+                                    <i class="bi bi-pencil"></i> Edit Course
                                 </a>
                                 <a href="<c:url value='/teacher/course/delete?course_id=${course.id}'/>"
                                     class="btn btn-danger btn-sm"
                                     onclick="return confirm('Are you sure you want to delete this course and all its lessons and videos?');">
-                                    🗑 Delete Course
+                                    <i class="bi bi-trash"></i> Delete Course
                                 </a>
                             </c:if>
                         </div>
@@ -209,7 +198,7 @@
                                 <button class="nav-link active" id="details-tab" data-bs-toggle="tab"
                                     data-bs-target="#details" type="button" role="tab" aria-controls="details"
                                     aria-selected="true">
-                                    📝 Course Details
+                                    <i class="bi bi-journal-text"></i> Course Details
                                 </button>
                             </li>
                             <c:if test="${not empty enrolledStudents}">
@@ -217,7 +206,7 @@
                                     <button class="nav-link" id="students-tab" data-bs-toggle="tab"
                                         data-bs-target="#students" type="button" role="tab" aria-controls="students"
                                         aria-selected="false">
-                                        👥 Enrolled Students
+                                        <i class="bi bi-people-fill"></i> Enrolled Students
                                     </button>
                                 </li>
                             </c:if>
@@ -225,7 +214,7 @@
                                 <button class="nav-link" id="progress-tab" data-bs-toggle="tab"
                                     data-bs-target="#progress" type="button" role="tab" aria-controls="progress"
                                     aria-selected="false">
-                                    📈 Lesson Progress
+                                    <i class="bi bi-graph-up"></i> Lesson Progress
                                 </button>
                             </li>
                         </ul>
@@ -264,14 +253,14 @@
                                 <c:if test="${course.courseStatus == 'draft'}">
                                     <a href="<c:url value='/teacher/course/lesson/create?course_id=${course.id}'/>"
                                         class="btn btn-outline-success mb-4">
-                                        ➕ Add Lesson
+                                        <i class="bi bi-plus-circle"></i> Add Lesson
                                     </a>
                                 </c:if>
 
                                 <!-- Lessons Section -->
                                 <c:forEach var="lesson" items="${course.lessons}">
                                     <div class="lesson-card">
-                                        <div class="lesson-title">📘 ${lesson.title}</div>
+                                        <div class="lesson-title">${lesson.title}</div>
                                         <p>${lesson.description}</p>
 
                                         <c:choose>
@@ -301,14 +290,14 @@
                                                                         <li>
                                                                             <a class="dropdown-item"
                                                                                 href="<c:url value='/teacher/course/lesson/lesson-video/edit?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>">
-                                                                                ✏ Edit Video
+                                                                                <i class="bi bi-pencil"></i> Edit Video
                                                                             </a>
                                                                         </li>
                                                                         <li>
                                                                             <a class="dropdown-item text-danger"
                                                                                 href="<c:url value='/teacher/course/lesson/lesson-video/delete?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>"
                                                                                 onclick="return confirm('Delete this video?');">
-                                                                                🗑 Delete Video
+                                                                                <i class="bi bi-trash"></i> Delete Video
                                                                             </a>
                                                                         </li>
                                                                     </ul>
@@ -321,7 +310,7 @@
                                                             <!-- Watch Button -->
                                                             <c:if test="${not empty video.videoUrl}">
                                                                 <a href="<c:url value='/FileController${video.videoUrl}'/>"
-                                                                    target="_blank" class="btn-watch">▶ Watch</a>
+                                                                    target="_blank" class="btn-watch"><i class="bi bi-play-fill"></i> Watch</a>
                                                             </c:if>
                                                         </div>
                                                     </c:forEach>
@@ -350,14 +339,14 @@
                                                                     <li>
                                                                         <a class="dropdown-item"
                                                                             href="<c:url value='/teacher/course/lesson/assignment/edit?course_id=${course.id}&lesson_id=${lesson.id}&assignment_id=${assignment.id}'/>">
-                                                                            ✏ Edit Assignment
+                                                                            <i class="bi bi-pencil"></i> Edit Assignment
                                                                         </a>
                                                                     </li>
                                                                     <li>
                                                                         <a class="dropdown-item text-danger"
                                                                             href="<c:url value='/teacher/course/lesson/assignment/delete?course_id=${course.id}&lesson_id=${lesson.id}&assignment_id=${assignment.id}'/>"
                                                                             onclick="return confirm('Delete this assignment?');">
-                                                                            🗑 Delete Assignment
+                                                                            <i class="bi bi-trash"></i> Delete Assignment
                                                                         </a>
                                                                     </li>
                                                                 </ul>
@@ -372,7 +361,7 @@
                                                             <!-- Assignment Download / View Link -->
                                                             <a href="<c:url value='/teacher/course/lesson/assignment/question/view?course_id=${course.id}&lesson_id=${lesson.id}&assignment_id=${assignment.id}'/>"
                                                                 class="btn btn-outline-primary mt-3">
-                                                                📄 Assignment Questions
+                                                                <i class="bi bi-book"></i> Assignment Questions
                                                             </a>
 
                                                         </div>
@@ -387,16 +376,16 @@
                                         <c:if test="${course.courseStatus == 'draft'}">
                                             <div class="lesson-footer text-end">
                                                 <a href="<c:url value='/teacher/course/lesson/assignment/create?course_id=${course.id}&lesson_id=${lesson.id}'/>"
-                                                    class="btn btn-sm btn-outline-success">➕ Add Assignment</a>
+                                                    class="btn btn-sm btn-outline-success"><i class="bi bi-plus-circle"></i> Add Assignment</a>
                                                 <a href="<c:url value='/teacher/course/lesson/lesson-video/create?course_id=${course.id}&lesson_id=${lesson.id}'/>"
-                                                    class="btn btn-sm btn-outline-success">➕ Add Video</a>
+                                                    class="btn btn-sm btn-outline-success"><i class="bi bi-plus-circle"></i> Add Video</a>
                                                 <!-- Edit Button -->
                                                 <a href="<c:url value='/teacher/course/lesson/edit?course_id=${course.id}&lesson_id=${lesson.id}'/>"
-                                                    class="btn btn-sm btn-outline-success">✏ Edit Lesson</a>
+                                                    class="btn btn-sm btn-outline-success"><i class="bi bi-pencil"></i> Edit Lesson</a>
                                                 <a href="<c:url value='/teacher/course/lesson/delete?course_id=${course.id}&lesson_id=${lesson.id}'/>"
                                                     class="btn btn-sm btn-outline-danger"
                                                     onclick="return confirm('Are you sure you want to delete this lesson and all its videos?');">
-                                                    🗑 Delete Lesson
+                                                    <i class="bi bi-trash"></i> Delete Lesson
                                                 </a>
                                             </div>
                                         </c:if>
@@ -406,7 +395,7 @@
                             <!-- Student List Tab -->
                             <c:if test="${not empty enrolledStudents}">
                                 <div class="tab-pane fade" id="students" role="tabpanel" aria-labelledby="students-tab">
-                                    <h5 class="mb-3">📋 Enrolled Students (${enrolledStudents.size()})</h5>
+                                    <h5 class="mb-3"><i class="bi bi-people-fill"></i> Enrolled Students (${enrolledStudents.size()})</h5>
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-hover align-middle">
                                             <thead class="table-light">
@@ -426,7 +415,7 @@
                                                         <td>
                                                             <a href="<c:url value='/teacher/course/student-progress?course_id=${course.id}&student_id=${student.id}'/>"
                                                                class="btn btn-sm btn-outline-primary">
-                                                                📊 View Progress
+                                                                <i class="bi bi-graph-up"></i> View Progress
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -438,7 +427,7 @@
                             </c:if>
                             <div class="tab-pane fade" id="progress" role="tabpanel" aria-labelledby="progress-tab">
                                 <div id="progress-content">
-                                    <h5 class="mb-3">📈 Lesson Progress for <span id="progress-student-name"></span></h5>
+                                    <h5 class="mb-3"><i class="bi bi-graph-up"></i> Lesson Progress for <span id="progress-student-name"></span></h5>
                                     <!-- Progress details will be loaded here -->
                                 </div>
                             </div>
@@ -450,6 +439,4 @@
                 </div>
             </div>
 
-        </body>
-
-        </html>
+<%@ include file="/layouts/teacher/footer.jsp" %>

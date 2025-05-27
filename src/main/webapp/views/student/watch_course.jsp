@@ -1,25 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Sign In</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-	crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.22.0/video-js.min.css" rel="stylesheet">
-
-    <!-- City -->
-<!-- <link href="digitaltheatre/videojs-theme-dt/dist/theme/index.css" rel="stylesheet"> -->
-
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<%@ include file="/layouts/student/header.jsp" %>
+<%@ include file="/layouts/student/nav.jsp" %>
 <style>
     .video-wrapper {
       max-width: 860px;
@@ -33,8 +14,6 @@
       background-color: #f0f8ff;
     }
   </style>
-</head>
-<body>
     <div class="container py-5">
     <div class="row">
         <div class="col-md-8">
@@ -195,5 +174,4 @@
         //document.querySelector('#video_description').innerHTML = videoDescription;
     }
 </script>
-</body>
-</html>
+<%@ include file="/layouts/student/footer.jsp" %>

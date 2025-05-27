@@ -1,13 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-        <!DOCTYPE html>
-        <html lang="en">
-
-        <head>
-            <meta charset="UTF-8">
-            <title>Course Review - ${course.title}</title>
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-            <style>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/layouts/reviewer/header.jsp" %>
+<%@ include file="/layouts/reviewer/nav.jsp" %>
+<style>
                 body {
                     background-color: #f9f9f9;
                 }
@@ -196,5 +190,4 @@
                 document.getElementById("rejectSubmitBtn").classList.remove("d-none");
             }
         </script>
-
-        </html>
+<%@ include file="/layouts/reviewer/footer.jsp" %>
