@@ -671,4 +671,37 @@ public class CourseDao extends Dao {
 		stmt.close();
 		return user;
 	}
+
+	public int getEnrolledStudentCount(Long courseId) throws SQLException {
+		String sql = "SELECT COUNT(*) FROM course_enrollment WHERE course_id = ?";
+		return executeQuery(sql, rs -> {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			return 0;
+		}, courseId);
+	}
+
+	public User getInstructorByCourseId(Long courseId) {
+		String sql = """
+				select * from users
+				join course on course.instructor = users.id
+				where course.id = ?
+				""";
+
+		return executeQuery(sql, rs -> {
+			User user = new User();
+            if (rs.next()) {
+                user.setId(rs.getLong("id"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+				user.setProfile_image(rs.getString("profile_image"));
+                user.setEmail(rs.getString("email"));
+                // user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                return user;
+            }
+            return null;
+		}, courseId);
+	}
 }

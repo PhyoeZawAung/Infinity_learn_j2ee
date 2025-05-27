@@ -1,86 +1,170 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-	crossorigin="anonymous"></script>
-</head>
-<body>
-	<!-- Page Content -->
-<div class="container">
+<%@ include file="/layouts/guest/header.jsp" %>
+        <style>
+            .course-card {
+                height: 100%;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                border: none;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .course-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
 
-  <!-- Page Heading -->
-  <h1 class="my-4">Course List
-  </h1>
+            .course-thumbnail {
+                height: 200px;
+                object-fit: cover;
+            }
 
-  <div class="row">
-  	<c:forEach var="course" items="${ courses }">
-		<div class="col-lg-4 col-sm-6 mb-4">
-			<div class="card h-100">
-				<a href="<c:url value='/guest/course/detail?id=${course.id}' />">
-					<c:if test="${not empty course.banner_image}">
-						<img class="card-img-top" src="<c:url value='/FileController${course.banner_image}' />" alt="">
-					</c:if>
-					<c:if test="${empty course.banner_image}">
-						<img class="card-img-top" src="https://placehold.co/700x400" alt="">
-					</c:if>
-				</a>
-				<div class="card-body">
-					<h4 class="card-title">
-						<a href="<c:url value='/guest/course/detail?id=${course.id}' />">${course.title}</a>
-					</h4>
-					<p class="card-text">${course.shortDescription}</p>
-				</div>
-				<div class="card-footer">
-				<div class="d-flex flex-column">
-					<small class="text-muted">Instructor: ${course.instructor}</small>
-					<small class="text-muted">Category: ${course.category}</small>
-					<small class="text-muted">Price: ${course.price}</small>
-				</div>
+            .category-badge {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: rgba(255,255,255,0.9);
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+            }
+
+            .course-stats {
+                font-size: 0.9rem;
+                color: #6c757d;
+            }
+
+            .search-box {
+                border-radius: 50px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .filter-section {
+                background: #f8f9fa;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 30px;
+            }
+        </style>
+
+        <div class="container py-5">
+            <!-- Search and Filter Section -->
+            <div class="filter-section mb-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control search-box" placeholder="Search courses..." th:value="${searchQuery}">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" th:value="${selectedCategory}">
+                            <option value="">All Categories</option>
+                            <option th:each="category : ${categories}" 
+                                    th:value="${category.id}"
+                                    th:text="${category.name}"
+                                    th:selected="${category.id == selectedCategory}">Category</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" th:value="${selectedSort}">
+                            <option value="newest" th:selected="${selectedSort == 'newest'}">Newest First</option>
+                            <option value="oldest" th:selected="${selectedSort == 'oldest'}">Oldest First</option>
+                            <option value="popular" th:selected="${selectedSort == 'popular'}">Most Popular</option>
+                            <option value="rating" th:selected="${selectedSort == 'rating'}">Highest Rated</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Grid -->
+            <div class="row g-4">
+                <!-- Course Card -->
+				<c:forEach items="${courses}" var="course">
+					<div class="col-md-6 col-lg-4">
+					<div class="card course-card">
+						<c:if test="${course.banner_image == null}">
+							<img src="https://placehold.co/600x400?text=No+Image" 
+								 class="card-img-top course-thumbnail" 
+								 alt="${course.title}">
+						</c:if>
+						<c:if test="${course.banner_image != null}">
+                        <img src="/FileController/${course.banner_image}" 
+                             class="card-img-top course-thumbnail" 
+                             alt="${course.title}">
+                        </c:if>
+                        <span class="category-badge">${course.category}</span>
+                        <div class="card-body">
+                            <h5 class="card-title">${course.title}</h5>
+                            <p class="card-text text-truncate">
+                                ${course.shortDescription}
+                            </p>
+                            <div class="course-stats d-flex justify-content-between align-items-center mb-3">
+                                <%-- <span>
+                                    <i class="fas fa-users"></i>
+                                    <span th:text="${course.enrollmentCount + ' students'}">100 students</span>
+                                </span>
+                                <span>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <span th:text="${course.rating + ' (' + course.reviewCount + ')'}">4.5 (50)</span>
+                                </span> --%>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="/guest/course/detail?id=${course.id}" 
+                                   class="btn btn-primary">View Course</a>
+                    
+                            </div>
+                        </div>
+                    </div>
+					</div>
 					
-				</div>
-			</div>
-    	</div>
-	</c:forEach>
-  </div>
-  <!-- /.row -->
+				</c:forEach>
+               
+			   <c:if test="${empty courses}">
+					 <div class="empty-state">
+                        <i class="fas fa-books fa-3x mb-3 text-muted"></i>
+                        <h3>No Courses Found</h3>
+                        <p class="text-muted">Try adjusting your search or filter criteria</p>
+                    </div>
+			   </c:if>
 
-  <!-- Pagination -->
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
-      </a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">1</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">2</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#">3</a>
-    </li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-      </a>
-    </li>
-  </ul>
+               
+            </div>
 
-</div>
-</body>
-</html>
+            <!-- Pagination -->
+            <%-- <nav th:if="${totalPages > 1}" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/guest/courses(page=${currentPage - 1}, category=${selectedCategory}, search=${searchQuery}, sort=${selectedSort})}">&laquo;</a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                        th:classappend="${currentPage == i ? 'active' : ''}">
+                        <a class="page-link" th:href="@{/guest/courses(page=${i}, category=${selectedCategory}, search=${searchQuery}, sort=${selectedSort})}" th:text="${i + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/guest/courses(page=${currentPage + 1}, category=${selectedCategory}, search=${searchQuery}, sort=${selectedSort})}">&raquo;</a>
+                    </li>
+                </ul>
+            </nav> --%>
+        </div>
+    </div>
+
+        <%-- <script>
+            // Search functionality
+            document.querySelector('.search-box').addEventListener('input', function(e) {
+                updateFilters();
+            });
+
+            // Filter functionality
+            document.querySelectorAll('.form-select').forEach(select => {
+                select.addEventListener('change', function(e) {
+                    updateFilters();
+                });
+            });
+
+            function updateFilters() {
+                const search = document.querySelector('.search-box').value;
+                const category = document.querySelector('select:nth-of-type(1)').value;
+                const sort = document.querySelector('select:nth-of-type(2)').value;
+                
+                window.location.href = `/guest/courses?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
+            }
+        </script> --%>
+<%@ include file="/layouts/guest/footer.jsp" %>

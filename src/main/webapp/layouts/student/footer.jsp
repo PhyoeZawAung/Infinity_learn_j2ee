@@ -17,8 +17,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-    <script src="/layouts/teacher/scripts.js"></script>
-    <script src="/layouts/teacher/dashboard.js"></script>
+    <script src="/layouts/student/scripts.js"></script>
+    <script src="/layouts/student/dashboard.js"></script>
 </body>
 
 </html>
