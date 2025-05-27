@@ -18,6 +18,7 @@ import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
 import uni.project.infinitylearn.models.LessonAssignment;
 import uni.project.infinitylearn.models.LessonVideo;
+import uni.project.infinitylearn.models.TeacherDetails;
 import uni.project.infinitylearn.models.User;
 import uni.project.infinitylearn.mappers.CourseMapper;
 import uni.project.infinitylearn.mappers.LessonMapper;
@@ -27,6 +28,55 @@ public class CourseDao extends Dao {
 
 	public CourseDao() {
 		this.conn = MyContextListener.getConnection();
+	}
+
+	//update user info
+	public int updateUser(Long userId,String firstName,String lastName,String profileImage) throws SQLException {
+		String sql = "UPDATE users SET first_name = ? , last_name = ? , profile_image = ? WHERE id = ?";
+		return executeUpdate(sql, firstName,lastName,profileImage,userId);
+	}
+
+	public void isSaveOrUpdateTeacherDetails(String title,Long year, String expertise,String bio,Long userId ) throws SQLException{
+		 String checkSql = "SELECT COUNT(*) FROM teacher_detail WHERE user_id = ?";
+    PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+    checkStmt.setLong(1, userId);
+    ResultSet rs = checkStmt.executeQuery();
+
+    boolean exists = false;
+    if (rs.next()) {
+        exists = rs.getInt(1) > 0;
+    }
+    rs.close();
+    checkStmt.close();
+
+    if (exists) {
+        // Update existing teacher detail
+        String updateSql = "UPDATE teacher_detail SET professional_title = ?, years_of_experience = ?, area_of_expertise = ?, biography = ? WHERE user_id = ?";
+        PreparedStatement updateStmt = conn.prepareStatement(updateSql);
+        updateStmt.setString(1, title);
+        updateStmt.setLong(2, year);
+        updateStmt.setString(3, expertise);
+        updateStmt.setString(4, bio);
+        updateStmt.setLong(5, userId);
+        updateStmt.executeUpdate();
+        updateStmt.close();
+    } else {
+        // Insert new teacher detail
+        String insertSql = "INSERT INTO teacher_detail (user_id, professional_title, years_of_experience, area_of_expertise, biography) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement insertStmt = conn.prepareStatement(insertSql);
+        insertStmt.setLong(1, userId);
+        insertStmt.setString(2, title);
+        insertStmt.setLong(3, year);
+        insertStmt.setString(4, expertise);
+        insertStmt.setString(5, bio);
+        insertStmt.executeUpdate();
+        insertStmt.close();
+    }
+	}
+
+	public int updateUserPassword(Long userId,String newPassword) throws SQLException{
+		String sql = "UPDATE users SET password =? WHERE id = ?";
+		return executeUpdate(sql, newPassword,userId);
 	}
 
 	public ResultSet getCourseById(Long id) throws SQLException {
@@ -301,6 +351,24 @@ public class CourseDao extends Dao {
 			return null;
 		}, questionId);
 	}
+	public TeacherDetails getTeacherDetailByUserId(long userId){
+		String sql = """
+				select * from teacher_detail where user_id = ?
+				""";
+				return executeQuery(sql, rs -> {
+					TeacherDetails teacherDetails = new TeacherDetails();
+					if (rs.next()){
+						teacherDetails.setId(rs.getLong("id"));
+						teacherDetails.setUserId(rs.getLong("user_id"));
+						teacherDetails.setProfessionalTitle(rs.getString("professional_title"));
+						teacherDetails.setYearOfExperience(rs.getLong("years_of_experience"));
+						teacherDetails.setAreaOfExpertise(rs.getString("area_of_expertise"));
+						teacherDetails.setBiography(rs.getString("biography"));
+						return teacherDetails;
+					}
+					return null;
+				},userId );
+	}
 
 	public Course getEnrolledCourse(Long userId, Long courseId) {
 		String sql = """
@@ -404,6 +472,8 @@ public class CourseDao extends Dao {
 		String sql = "UPDATE video_progress SET progress = ?, is_completed = ? WHERE user_id = ? AND course_id = ? AND lesson_id = ? AND video_id = ?";
 		return executeUpdate(sql, progress, isCompleted, userId, courseId, lessonId, videoId);
 	}
+
+	
 
 	public boolean updateCourse(Long courseId, String title, String description, String instructor, String category,
 			double price, String bannerImage) throws SQLException {

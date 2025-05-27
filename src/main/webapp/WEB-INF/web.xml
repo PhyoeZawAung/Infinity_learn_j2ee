@@ -177,6 +177,48 @@
 	</servlet-mapping>
 <!-- LogoutController -->
 
+<!-- profileviewController -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>ProfileViewController</display-name>
+		<servlet-name>ProfileViewController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.ProfileViewController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProfileViewController</servlet-name>
+		<url-pattern>/profile/view</url-pattern>
+	</servlet-mapping>
+<!-- profileviewController -->
+
+<!-- profileEditController -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>ProfileEditController</display-name>
+		<servlet-name>ProfileEditController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.ProfileEditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProfileEditController</servlet-name>
+		<url-pattern>/profile/edit</url-pattern>
+	</servlet-mapping>
+<!-- profileviewController -->
+
+<!-- profilepasswordchangeController -->
+	<servlet>
+		<description>
+		</description>
+		<display-name>ProfilePasswordChangeController</display-name>
+		<servlet-name>ProfilePasswordChangeController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.ProfilePasswordChangeController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProfilePasswordChangeController</servlet-name>
+		<url-pattern>/profile/password/change</url-pattern>
+	</servlet-mapping>
+<!-- profilepasswordchangeController -->
+
 <!-- UserRegisterController -->
 	<servlet>
 		<description>

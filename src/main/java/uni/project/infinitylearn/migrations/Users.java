@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Users extends Migrator {
-    
+
     public Users(Connection connection) {
         super(connection);
     }
@@ -15,6 +15,7 @@ public class Users extends Migrator {
         List<String> queries = new ArrayList<>();
 
         queries.add("DROP TABLE IF EXISTS users");
+        queries.add("DROP TABLE IF EXISTS teacher_detail");
 
         queries.add("""
                     CREATE TABLE users (
@@ -28,6 +29,18 @@ public class Users extends Migrator {
                         description TEXT
                     );
                 """);
+                queries.add("""
+                CREATE TABLE IF NOT EXISTS teacher_detail (
+                id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                user_id BIGINT NOT NULL, -- FK to User table
+                professional_title VARCHAR(100),
+                years_of_experience INT,
+                area_of_expertise TEXT,
+                biography TEXT, -- optional: for short intro or background
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+""");
 
             // four user for each role
         queries.add("""

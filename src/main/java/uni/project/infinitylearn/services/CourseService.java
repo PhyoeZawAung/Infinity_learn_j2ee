@@ -8,6 +8,7 @@ import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
 import uni.project.infinitylearn.models.LessonAssignment;
 import uni.project.infinitylearn.models.LessonVideo;
+import uni.project.infinitylearn.models.TeacherDetails;
 import uni.project.infinitylearn.models.User;
 
 import java.sql.ResultSet;
@@ -25,6 +26,17 @@ public class CourseService {
 
 	public CourseService() {
 		this.courseDao = new CourseDao();
+	}
+//update user info 
+public boolean updateUser(Long userId,String firstName, String lastName,String profileImage) throws Exception{
+		return courseDao.updateUser(userId,firstName,lastName,profileImage)>0;
+	}
+public void isSaveOrUpdateTeacherDetails(String title,Long year, String expertise,String bio,Long userId) throws SQLException{
+	courseDao.isSaveOrUpdateTeacherDetails(title,year,expertise,bio,userId);
+}
+
+	public boolean updateUserPassword(Long userId,String newPassword) throws Exception{
+		return courseDao.updateUserPassword(userId,newPassword)>0;
 	}
 
 	public Course getCourseById(Long id) throws SQLException {
@@ -205,6 +217,10 @@ public class CourseService {
 		return this.courseDao.getAssignmentQuestionById(questionId);
 	}
 
+	public TeacherDetails getTeacherDetailByUserId(Long userId){
+		return this.courseDao.getTeacherDetailByUserId(userId);
+	}
+
 	public Course getEnrolledCourse(Long userId, Long courseId) throws SQLException {
 		return this.courseDao.getEnrolledCourse(userId, courseId);
 	}
@@ -316,6 +332,8 @@ public class CourseService {
 	public boolean updateLesson(Long lessonId, String title, String description) throws Exception {
 		return courseDao.updateLesson(lessonId, title, description) > 0;
 	}
+
+	
 
 	/**
 	 * Retrieves a lesson video by its ID.
