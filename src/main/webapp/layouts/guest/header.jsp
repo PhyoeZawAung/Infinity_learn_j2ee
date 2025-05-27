@@ -398,12 +398,11 @@
                         
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form action="/logout" method="post" style="margin: 0;">
-                                <button type="submit" class="dropdown-item">
-                                    <i class="bi bi-box-arrow-right"></i>
+                            <a href="/logout" class="dropdown-item">
+                            <i class="bi bi-box-arrow-right"></i>
                                     Logout
-                                </button>
-                            </form>
+                            </a>
+                            
                         </li>
                     </ul>
                 </div>

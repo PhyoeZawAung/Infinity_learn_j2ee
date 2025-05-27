@@ -23,7 +23,7 @@
                 <div class="card shadow-lg border-0">
                     <div class="card-header text-white d-flex justify-content-between align-items-center"
                         style="background-color:#6366f1;">
-                        <h3 class="mb-0 fw-semibold">🧐 Course Review</h3>
+                        <h3 class="mb-0 fw-semibold"><i class="bi bi-search"></i> Course Review</h3>
                         <!-- Remove Add Course button for reviewer -->
                         <!-- <a href="<c:url value='/teacher/course/create'/>" class="btn btn-outline-light">
                 ➕ Add Course

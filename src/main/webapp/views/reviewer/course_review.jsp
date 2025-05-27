@@ -44,7 +44,7 @@
             <div class="container py-5">
                 <div class="card shadow-sm mb-4">
                     <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">📘 Reviewing Course: ${course.title}</h4>
+                        <h4 class="mb-0"><i class="bi bi-journal-text"></i> Reviewing Course: ${course.title}</h4>
                     </div>
                     <div class="card-body">
                         <div class="row mb-4">
@@ -74,7 +74,7 @@
 
                         <c:forEach var="lesson" items="${course.lessons}">
                             <div class="lesson-box">
-                                <h5>📗 ${lesson.title}</h5>
+                                <h5><i class="bi bi-book"></i> ${lesson.title}</h5>
                                 <p>${lesson.description}</p>
 
                                 <c:choose>
@@ -109,7 +109,7 @@
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title"
-                                                                            id="videoModalLabel-${video.id}">🎬
+                                                                            id="videoModalLabel-${video.id}"><i class="bi bi-camera-video"></i>
                                                                             ${video.title}</h5>
                                                                         <button type="button" class="btn-close"
                                                                             data-bs-dismiss="modal"
@@ -139,7 +139,7 @@
 
                                 <!-- Reviewer Comment Input -->
                                 <div class="review-comment">
-                                    <label for="comment-${lesson.id}" class="form-label">📝 Reviewer Comments for this
+                                    <label for="comment-${lesson.id}" class="form-label"><i class="bi bi-pencil"></i> Reviewer Comments for this
                                         lesson:</label>
                                     <textarea class="form-control" id="comment-${lesson.id}" name="comments" rows="3"
                                         placeholder="Write feedback for this lesson (clarity, completeness, errors, etc.)..."></textarea>
@@ -161,11 +161,11 @@
                                 </div>
 
                                 <button type="button" class="btn btn-success me-2" onclick="submitReview('approve')">
-                                    ✅ Approve to Publish
+                                    <i class="bi bi-check-square"></i> Approve to Publish
                                 </button>
 
                                 <button type="button" class="btn btn-danger" onclick="showRejectBox()">
-                                    ❌ Reject
+                                    <i class="bi bi-x-lg"></i> Reject
                                 </button>
 
                                 <button type="button" id="rejectSubmitBtn" class="btn btn-danger d-none"

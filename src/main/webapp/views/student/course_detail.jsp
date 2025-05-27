@@ -106,7 +106,7 @@
     <div class="container py-5">
         <div class="card shadow-lg border-0 mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="mb-0">📚 Course View</h3>
+                <h3 class="mb-0"><i class="bi bi-book"></i> Course View</h3>
             </div>
             <div class="card-body bg-white">
                 <h2>${course.title}</h2>
@@ -124,7 +124,7 @@
                 <!-- Lessons Section -->
                 <c:forEach var="lesson" items="${course.lessons}">
                     <div class="lesson-card">
-                        <div class="lesson-title">📘 ${lesson.title}</div>
+                        <div class="lesson-title"><i class="bi bi-journal-text"></i> ${lesson.title}</div>
                         <p>${lesson.description}</p>
 
                         <c:choose>
@@ -142,10 +142,10 @@
                                                 </c:if>
                                                 <c:if test="${not video.isCompleted}">
                                                     <c:if test="${video.progress == 0}">
-                                                        <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-success">▶ Watch</a>
+                                                        <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-success"><i class="bi bi-play-fill"></i> Watch</a>
                                                     </c:if>
                                                     <c:if test="${video.progress > 0}">
-                                                        <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-primary">▶ Continue</a>
+                                                        <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-primary"><i class="bi bi-play-fill"></i> Continue</a>
                                                     </c:if>
                                                     
                                                 </c:if> 

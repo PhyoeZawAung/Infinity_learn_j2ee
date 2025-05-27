@@ -11,7 +11,7 @@
 
     <!-- Back to Course View Button -->
     <a href="<c:url value='/teacher/course/detail?course_id=${course_id}'/>"
-       class="btn btn-secondary mb-3 float-end">🔙 Back to Course</a>
+       class="btn btn-secondary mb-3 float-end"><i class="bi bi-arrow-left"></i> Back to Course</a>
 
     <div class="clearfix"></div>
 
