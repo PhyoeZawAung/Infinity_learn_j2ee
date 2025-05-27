@@ -16,7 +16,7 @@ public class FileUtil {
 		// save in user directory
 		String userDir = System.getProperty("user.dir");
 		
-		String fileLocation = userDir + File.separator + "uploads";
+		String fileLocation = userDir + File.separator + "uploads" ;
 		
 		// prepare the directory
 		File uploadDir = new File(fileLocation, folder);

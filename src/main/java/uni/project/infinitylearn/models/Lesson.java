@@ -12,6 +12,10 @@ public class Lesson {
     private String updatedAt;
     private List<LessonVideo> lessonVideos = new ArrayList<>();
     private List<LessonAssignment> assignments = new ArrayList<>();
+    private int totalVideos;
+    private int completedVideos;
+    private int progressPercent;
+
     /**
      * @return Long return the id
      */
@@ -96,9 +100,6 @@ public class Lesson {
         this.updatedAt = updatedAt;
     }
 
-
-  
-
     /**
      * @return List<LessonAssignment> return the assignments
      */
@@ -113,7 +114,6 @@ public class Lesson {
         this.assignments = assignments;
     }
 
-
     /**
      * @return List<LessonVideo> return the lessonVideos
      */
@@ -126,6 +126,30 @@ public class Lesson {
      */
     public void setLessonVideos(List<LessonVideo> lessonVideos) {
         this.lessonVideos = lessonVideos;
+    }
+
+    public int getTotalVideos() {
+        return totalVideos;
+    }
+
+    public void setTotalVideos(int totalVideos) {
+        this.totalVideos = totalVideos;
+    }
+
+    public int getCompletedVideos() {
+        return completedVideos;
+    }
+
+    public void setCompletedVideos(int completedVideos) {
+        this.completedVideos = completedVideos;
+    }
+
+    public int getProgressPercent() {
+        return progressPercent;
+    }
+
+    public void setProgressPercent(int progressPercent) {
+        this.progressPercent = progressPercent;
     }
 
 }

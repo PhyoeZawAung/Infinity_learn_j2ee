@@ -16,7 +16,7 @@ public class CourseMapper {
 			course.setDescription(rs.getString("description"));
 			course.setShortDescription(rs.getString("short_description"));
 			course.setInstructor(rs.getString("instructor"));
-			course.setIs_published(rs.getBoolean("is_published"));
+			course.setCourseStatus(rs.getString("course_status"));
 			course.setCategory(rs.getString("category"));
 			course.setPrice(rs.getString("price"));
 			course.setBanner_image(rs.getString("banner_image"));
@@ -31,7 +31,7 @@ public class CourseMapper {
 		course.setDescription(rs.getString("description"));
 		course.setShortDescription(rs.getString("short_description"));
 		course.setInstructor(rs.getString("instructor"));
-		course.setIs_published(rs.getBoolean("is_published"));
+		course.setCourseStatus(rs.getString("course_status"));
 		course.setCategory(rs.getString("category"));
 		course.setPrice(rs.getString("price"));
 		course.setBanner_image(rs.getString("banner_image"));
@@ -46,7 +46,7 @@ public class CourseMapper {
 		course.setDescription(rs.getString("description"));
 		course.setShortDescription(rs.getString("short_description"));
 		course.setInstructor(rs.getString("instructor"));
-		course.setIs_published(rs.getBoolean("is_published"));
+		course.setCourseStatus(rs.getString("course_status"));
 		course.setCategory(rs.getString("category"));
 		course.setPrice(rs.getString("price"));
 		course.setBanner_image(rs.getString("banner_image"));
@@ -62,7 +62,7 @@ public class CourseMapper {
 		course.setDescription(rs.getString("description"));
 		course.setShortDescription(rs.getString("short_description"));
 		course.setInstructor(rs.getString("instructor"));
-		course.setIs_published(rs.getBoolean("is_published"));
+		course.setCourseStatus(rs.getString("course_status"));
 		course.setCategory(rs.getString("category"));
 		course.setPrice(rs.getString("price"));
 		course.setBanner_image(rs.getString("banner_image"));

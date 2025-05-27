@@ -17,38 +17,40 @@ public class Courses extends Migrator {
 
 		List<String> queries = new ArrayList();
 
-		queries.add("DROP TABLE IF EXISTS course;");
+
+        queries.add("DROP TABLE IF EXISTS course;");
 
 		queries.add("""
-				    CREATE TABLE course (
-				        id INT AUTO_INCREMENT PRIMARY KEY,
+				    CREATE TABLE IF NOT EXISTS course (
+				        id BIGINT AUTO_INCREMENT PRIMARY KEY,
 				        title VARCHAR(255) NOT NULL,
 						short_description TEXT,
 				        description MEDIUMTEXT,
 				        instructor VARCHAR(100),
 				        category VARCHAR(100),
 				        price DECIMAL(10, 2) DEFAULT 0.00,
-				        is_published BOOLEAN DEFAULT FALSE,
+                        course_status ENUM('published', 'draft', 'under_review') DEFAULT 'draft',
+                        rejection_reason TEXT,
 						banner_image VARCHAR(255),
 				        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 				        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 				    );
 				""");
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Mastering Java Web Development',
     'Learn Java Servlets, JSP, and web application architecture in depth.',
     '<h2>Course Overview</h2><p>Welcome to <strong>Mastering Java Web Development</strong>, a comprehensive and hands-on course designed for aspiring backend developers who want to build powerful, secure, and scalable web applications using Java EE technologies. This course is perfect for students and professionals who want to move beyond the basics and master enterprise-level development skills.</p><p>Throughout this course, we will start with the fundamentals of the Java Servlet API and gradually move into advanced topics such as JSP (JavaServer Pages), JSTL, Filters, Listeners, and full-stack integration using MVC architecture. We’ll explore key design patterns and best practices that are commonly used in real-world Java web applications.</p><ul><li>How to set up a dynamic web project using Apache Tomcat and Maven</li><li>Session management using cookies and HttpSession</li><li>Creating reusable JSP components and integrating JSTL</li><li>Using JDBC for database interaction</li></ul><p>Each module includes coding exercises, project scenarios, and downloadable resources. You will have access to the full source code of a complete Java web application, which you can use as a reference or starting point. By the end of the course, you will be ready to build and deploy full-scale Java web apps.</p>',
-    'Alice Johnson',
+    '3',
     'Web Development',
     39.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Advanced SQL Queries',
     'Master complex SQL techniques like subqueries and window functions.',
@@ -56,12 +58,12 @@ VALUES (
     'Bob Smith',
     'Database',
     29.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Spring Boot REST API Masterclass',
     'Learn to build real-world REST APIs with Spring Boot.',
@@ -69,12 +71,12 @@ VALUES (
     'Daniel Kim',
     'Backend',
     49.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Fullstack JavaScript Developer',
     'Become a fullstack JS dev using Node.js, Express, and MongoDB.',
@@ -82,12 +84,12 @@ VALUES (
     'Frank Lee',
     'Fullstack',
     44.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Python for Beginners',
     'Learn Python programming from scratch with real examples.',
@@ -95,12 +97,12 @@ VALUES (
     'Grace Park',
     'Programming',
     0.00,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'HTML & CSS Essentials',
     'Design and build modern web pages with HTML5 and CSS3.',
@@ -108,12 +110,12 @@ VALUES (
     'Ella Rose',
     'Frontend',
     19.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Git & GitHub for Teams',
     'Master version control workflows and collaboration with Git.',
@@ -121,12 +123,12 @@ VALUES (
     'Isabel Martinez',
     'Tools',
     14.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Docker for Java Developers',
     'Containerize and deploy Java applications using Docker.',
@@ -134,12 +136,12 @@ VALUES (
     'Jack Wu',
     'DevOps',
     34.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Responsive Design with Tailwind CSS',
     'Build sleek, responsive websites using Tailwind utility classes.',
@@ -147,12 +149,12 @@ VALUES (
     'Henry Adams',
     'Frontend',
     27.99,
-    TRUE
+    'published'
 );
 """);
 
 queries.add("""
-INSERT INTO course (title, short_description, description, instructor, category, price, is_published)
+INSERT INTO course (title, short_description, description, instructor, category, price, course_status)
 VALUES (
     'Data Structures in Java',
     'Understand core data structures with Java implementation.',
@@ -160,7 +162,7 @@ VALUES (
     'Carol White',
     'Programming',
     22.49,
-    TRUE
+    'published'
 );
 """);
 

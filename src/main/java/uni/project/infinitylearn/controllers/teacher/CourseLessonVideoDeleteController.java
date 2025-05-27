@@ -1,7 +1,5 @@
 package uni.project.infinitylearn.controllers.teacher;
-
 import uni.project.infinitylearn.dao.CourseDao;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;

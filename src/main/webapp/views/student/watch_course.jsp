@@ -13,7 +13,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.22.0/video-js.min.css" rel="stylesheet">
 
     <!-- City -->
-<link href="digitaltheatre/videojs-theme-dt/dist/theme/index.css" rel="stylesheet">
+<!-- <link href="digitaltheatre/videojs-theme-dt/dist/theme/index.css" rel="stylesheet"> -->
 
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
