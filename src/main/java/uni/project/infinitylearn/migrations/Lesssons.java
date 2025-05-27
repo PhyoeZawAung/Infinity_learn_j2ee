@@ -19,7 +19,7 @@ public class Lesssons extends Migrator {
         queries.add("DROP TABLE IF EXISTS lesson_videos;");
 
         queries.add("""
-                CREATE TABLE lessons (
+                CREATE TABLE IF NOT EXISTS lessons (
                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
                     title VARCHAR(255) NOT NULL,
                     description TEXT,
@@ -30,7 +30,7 @@ public class Lesssons extends Migrator {
                 """);
                 
         queries.add("""
-                CREATE TABLE lesson_videos (
+                CREATE TABLE IF NOT EXISTS lesson_videos (
                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
                     title VARCHAR(255) NOT NULL,
                     description TEXT,

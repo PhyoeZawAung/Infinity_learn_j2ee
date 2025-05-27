@@ -3,14 +3,19 @@ package uni.project.infinitylearn.services;
 import uni.project.infinitylearn.dao.CourseDao;
 import uni.project.infinitylearn.dao.LessonVideoDao;
 import uni.project.infinitylearn.listeners.MyContextListener;
+import uni.project.infinitylearn.models.AssignmentQuestion;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
+import uni.project.infinitylearn.models.LessonAssignment;
 import uni.project.infinitylearn.models.LessonVideo;
 import uni.project.infinitylearn.models.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import com.mysql.cj.protocol.Resultset;
+
 import java.util.Map;
 import java.util.ArrayList;
 
@@ -39,8 +44,9 @@ public class CourseService {
 
 			ResultSet lesson_videos_res = this.courseDao.getCourseLessonVideos(id, lesson.getId());
 			List<LessonVideo> lessonVideos = new ArrayList();
-
-			while (lesson_videos_res.next()) {
+			ResultSet lesson_assignment_res = this.courseDao.getCourseLessonAssignments(id,lesson.getId());
+			List<LessonAssignment> lessonAssignments =new ArrayList<>();
+			while(lesson_videos_res.next()) {
 				LessonVideo lessonVideo = new LessonVideo();
 				lessonVideo.setId(lesson_videos_res.getLong("id"));
 				lessonVideo.setTitle(lesson_videos_res.getString("title"));
@@ -54,6 +60,18 @@ public class CourseService {
 			}
 
 			lesson.setLessonVideos(lessonVideos);
+			while (lesson_assignment_res.next()){
+				LessonAssignment lessonAssignment = new LessonAssignment();
+				lessonAssignment.setId(lesson_assignment_res.getLong("id"));
+				lessonAssignment.setTitle(lesson_assignment_res.getString("title"));
+				lessonAssignment.setDescription(lesson_assignment_res.getString("description"));
+				lessonAssignment.setAssignmentUrl(lesson_assignment_res.getString("assignment_url"));
+				lessonAssignment.setLessonId(lesson_assignment_res.getLong("lesson_id"));
+				lessonAssignment.setCourseId(lesson_assignment_res.getLong("course_id"));
+
+				lessonAssignments.add(lessonAssignment);
+			}
+			lesson.setAssignments(lessonAssignments);
 			lessons.add(lesson);
 
 		}
@@ -75,9 +93,28 @@ public class CourseService {
 		return course;
 
 	}
+	
+	public LessonAssignment getLessonAssignmentByAssignmentId(Long assignmentId) throws Exception{
+		LessonAssignment assignment = new LessonAssignment();
+		List<AssignmentQuestion> que = new ArrayList();
+		LessonAssignment assignmentres = this.courseDao.getLessonAssignmentById(assignmentId);
+		ResultSet assignmentQuestionResultset = this.courseDao.getAssignmentQuestionsByAssignmentId(assignmentId);
+		while (assignmentQuestionResultset.next()) {
+			AssignmentQuestion assQues = new AssignmentQuestion();
+			assQues.setId(assignmentQuestionResultset.getLong("id"));
+			assQues.setAssignment_id(assignmentQuestionResultset.getLong("assignment_id"));
+			assQues.setQuestion_text(assignmentQuestionResultset.getString("question"));
+			assQues.setOption(assignmentQuestionResultset.getString("options"));
+			assQues.setCorrect_answer(assignmentQuestionResultset.getString("correct_answer"));
+			que.add(assQues);
+		}
+		assignment.setTitle(assignmentres.getTitle());
+		assignment.setQuestions(que);
+		return assignment;
+	}
 
-	public List<Course> getAllCourses() throws SQLException {
-
+	public List<Course> getAllCourses() throws SQLException{
+		
 		List<Course> courses = new ArrayList();
 		ResultSet res = this.courseDao.getAllCourses();
 
@@ -144,6 +181,28 @@ public class CourseService {
 
 		this.courseDao.createCourseLessonVideo(lessonVideo);
 
+	}
+	public void createCourseLessonAssignment(String title, String description,String assignment_url, Long lesson_id , Long course_id){
+		LessonAssignment lessonAssignment = new LessonAssignment();
+		lessonAssignment.setTitle(title);
+		lessonAssignment.setDescription(description);
+		lessonAssignment.setAssignmentUrl(assignment_url);
+		lessonAssignment.setLessonId(lesson_id);
+		lessonAssignment.setCourseId(course_id);
+		this.courseDao.createLessonAssignments(lessonAssignment);
+	}
+	public void createCourseLessonAssignmentQuestion(long assignment_id,String question_text,String options,String correct_answer){
+		AssignmentQuestion assignmentQuestion = new AssignmentQuestion();
+		assignmentQuestion.setAssignment_id(assignment_id);
+		assignmentQuestion.setQuestion_text(question_text);
+		assignmentQuestion.setOption(options);
+		assignmentQuestion.setCorrect_answer(correct_answer);
+		System.out.println(assignmentQuestion.getAssignment_id()+assignmentQuestion.getQuestion_text()+assignmentQuestion.getOption()+assignmentQuestion.getCorrect_answer()+"in couseservice");
+		this.courseDao.createCourseLessonAssignmentQuestions(assignmentQuestion);
+	}
+
+	public AssignmentQuestion getAssignmentQuestionById(Long questionId){
+		return this.courseDao.getAssignmentQuestionById(questionId);
 	}
 
 	public Course getEnrolledCourse(Long userId, Long courseId) throws SQLException {
@@ -286,7 +345,29 @@ public class CourseService {
 
 		return courseDao.updateLessonVideo(videoId, title, description, videoUrl, thumbnail) > 0;
 	}
+	
+	public boolean updateLessonAssignment(Long assignment_id, String title , String description,String assignment_url)throws Exception {
+		LessonAssignment existingAssignment = courseDao.getLessonAssignmentById(assignment_id);
+		if (existingAssignment == null ){
+			throw new IllegalArgumentException("Assignment not found for Id"+assignment_id);
+		}
+		if (assignment_url == null ){
+			assignment_url = existingAssignment.getAssignmentUrl();
+		}
+		return courseDao.updateLessonAssignment(assignment_id,title,description,assignment_url) > 0;
+	}
 
+	public LessonAssignment getLessonAssignmentById(Long assignmentId) throws Exception {
+		return courseDao.getLessonAssignmentById(assignmentId);
+	}
+
+	public boolean updateLessonAssignmentQuestion(Long questionId,String question_text,String options,String correctAnswer) throws Exception{
+		AssignmentQuestion existingQuestion = courseDao.getAssignmentQuestionById(questionId);
+		if (existingQuestion == null ){
+			throw new IllegalArgumentException("AssignmentQuestion not found for Id "+questionId);
+		}
+		return courseDao.updateLessonAssignmentQuestion(questionId,question_text,options,correctAnswer) >0;
+	}
 	/**
 	 * Handles the update of a lesson video and manages exceptions.
 	 */
@@ -368,3 +449,4 @@ public class CourseService {
 	}
 
 }
+

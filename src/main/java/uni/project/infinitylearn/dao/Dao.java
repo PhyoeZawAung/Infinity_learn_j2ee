@@ -147,4 +147,10 @@ public class Dao implements DaoInterface {
     public int deleteLessonVideo(Long videoId) throws SQLException {
         return executeUpdate("DELETE FROM lesson_videos WHERE id = ?", videoId);
     }    
+    public int deleteLessonAssignment(Long assignmentId) throws SQLException{
+        return executeUpdate("DELETE FROM lesson_assignment WHERE id = ?",assignmentId);
+    }
+    public int deleteLessonAssignmentQuestion(Long questionId) throws SQLException {
+        return executeUpdate("DELETE FROM assignment_question WHERE id = ?" , questionId);
+    }
 }

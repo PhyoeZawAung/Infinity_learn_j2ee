@@ -9,9 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mysql.cj.protocol.Resultset;
+import com.mysql.cj.protocol.x.ResultMessageListener;
+
 import uni.project.infinitylearn.listeners.*;
+import uni.project.infinitylearn.models.AssignmentQuestion;
 import uni.project.infinitylearn.models.Course;
 import uni.project.infinitylearn.models.Lesson;
+import uni.project.infinitylearn.models.LessonAssignment;
 import uni.project.infinitylearn.models.LessonVideo;
 import uni.project.infinitylearn.models.User;
 import uni.project.infinitylearn.mappers.CourseMapper;
@@ -60,6 +65,17 @@ public class CourseDao extends Dao {
 		ResultSet res = statement.executeQuery();
 
 		return res;
+	}
+
+	public ResultSet getCourseLessonAssignments(Long courseId, long lessonId) throws SQLException {
+		PreparedStatement statement = conn
+				.prepareStatement("SELECT * FROM lesson_assignment WHERE course_id = ? and lesson_id = ?");
+		statement.setLong(1, courseId);
+		statement.setLong(2, lessonId);
+
+		ResultSet res = statement.executeQuery();
+		return res;
+
 	}
 
 	public ResultSet getAllCourses() throws SQLException {
@@ -177,6 +193,55 @@ public class CourseDao extends Dao {
 		}
 	}
 
+	public void createLessonAssignments(LessonAssignment lessonAssignment) {
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(
+					"INSERT INTO lesson_assignment (title, description, assignment_url, lesson_id,course_id) VALUES (?, ?, ?, ?, ?)");
+			statement.setString(1, lessonAssignment.getTitle());
+			statement.setString(2, lessonAssignment.getDescription());
+			statement.setString(3, lessonAssignment.getAssignmentUrl());
+			statement.setLong(4, lessonAssignment.getLessonId());
+			statement.setLong(5, lessonAssignment.getCourseId());
+			System.out.println("creating assignment done");
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void createCourseLessonAssignmentQuestions(AssignmentQuestion assignmentQuestion) {
+		PreparedStatement statement = null;
+		try {
+			statement = conn.prepareStatement(
+					"INSERT INTO assignment_question (assignment_id,question,options,correct_answer) VALUES (? , ? , ? , ?)");
+			statement.setLong(1, assignmentQuestion.getAssignment_id());
+			statement.setString(2, assignmentQuestion.getQuestion_text());
+			statement.setString(3, assignmentQuestion.getOption());
+			statement.setString(4, assignmentQuestion.getCorrect_answer());
+			statement.executeUpdate();
+			System.out.println("done creating questions");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	// check if user is enrolled in course
 	public boolean isUserEnrolledInCourse(Long userId, Long courseId) throws SQLException {
 		String sql = "SELECT * FROM course_enrollment WHERE user_id = ? AND course_id = ?";
@@ -216,6 +281,25 @@ public class CourseDao extends Dao {
 			}
 			return course;
 		}, userId, courseId);
+	}
+
+	// return single assignmentQuestion for edit
+	public AssignmentQuestion getAssignmentQuestionById(Long questionId) {
+		String sql = """
+				select * from assignment_question where id = ?
+				""";
+		return executeQuery(sql, rs -> {
+			AssignmentQuestion assque = new AssignmentQuestion();
+			if (rs.next()) {
+				assque.setAssignment_id(rs.getLong("assignment_id"));
+				assque.setQuestion_text(rs.getString("question"));
+				assque.setOption(rs.getString("options"));
+				assque.setId(rs.getLong("id"));
+				assque.setCorrect_answer(rs.getString("correct_answer"));
+				return assque;
+			}
+			return null;
+		}, questionId);
 	}
 
 	public Course getEnrolledCourse(Long userId, Long courseId) {
@@ -388,6 +472,49 @@ public class CourseDao extends Dao {
 		return executeUpdate(sql, title, description, videoUrl, thumbnail, videoId);
 	}
 
+	public LessonAssignment getLessonAssignmentById(Long assignmentId) throws Exception {
+		String sql = "SELECT * FROM lesson_assignment WHERE id = ?"; // Use 'id' instead of 'Assignment_id'
+		return executeQuery(sql, rs -> {
+			if (rs.next()) {
+				LessonAssignment assignment = new LessonAssignment();
+				assignment.setId(rs.getLong("id")); // Correct column name
+				assignment.setTitle(rs.getString("title"));
+				assignment.setDescription(rs.getString("description"));
+				assignment.setAssignmentUrl(rs.getString("assignment_url"));
+				assignment.setLessonId(rs.getLong("lesson_id"));
+				assignment.setCourseId(rs.getLong("course_id"));
+				return assignment;
+			}
+			return null;
+		}, assignmentId);
+	}
+
+	public int updateLessonAssignment(Long assignment_id, String title, String description, String assignment_url)
+			throws Exception {
+		String sql = "UPDATE lesson_assignment SET title = ?, description = ? ,assignment_url = ? WHERE id = ?";
+		System.out.println("DAO - SQL: " + sql);
+		System.out
+				.println("DAO - Parameters: " + title + "," + description + "," + assignment_url + "," + assignment_id);
+		return executeUpdate(sql, title, description, assignment_url, assignment_id);
+	}
+
+	public ResultSet getAssignmentQuestionsByAssignmentId(Long assignmentId) {
+		PreparedStatement statement;
+		try {
+			statement = conn.prepareStatement("SELECT * FROM assignment_question WHERE assignment_id=?");
+			statement.setLong(1, assignmentId);
+			ResultSet res = statement.executeQuery();
+			return res;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public int updateLessonAssignmentQuestion(Long questionId,String question,String options, String correctAnswer) throws Exception{
+		String sql = "UPDATE assignment_question SET question = ?,options = ? ,correct_answer =? WHERE id = ? ";
+		return executeUpdate(sql, question,options,correctAnswer,questionId);
+	}
 	/**
 	 * This is for reviewer to get all courses with status 'under_review'
 	 */

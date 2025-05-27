@@ -17,11 +17,12 @@ public class Courses extends Migrator {
 
 		List<String> queries = new ArrayList();
 
-		queries.add("DROP TABLE IF EXISTS course;");
+
+        queries.add("DROP TABLE IF EXISTS course;");
 
 		queries.add("""
-				    CREATE TABLE course (
-				        id INT AUTO_INCREMENT PRIMARY KEY,
+				    CREATE TABLE IF NOT EXISTS course (
+				        id BIGINT AUTO_INCREMENT PRIMARY KEY,
 				        title VARCHAR(255) NOT NULL,
 						short_description TEXT,
 				        description MEDIUMTEXT,

@@ -331,9 +331,63 @@
                                                 <p class="no-videos">No videos available for this lesson.</p>
                                             </c:otherwise>
                                         </c:choose>
+                                        <c:choose>
+                                            <c:when test="${not empty lesson.assignments}">
+                                                <div class="assignment-grid">
+                                                    <c:forEach var="assignment" items="${lesson.assignments}">
+                                                        <div class="assignment-card position-relative">
 
+                                                            <!-- Dropdown Menu for Assignment Actions -->
+                                                            <div
+                                                                class="dropdown assignment-actions position-absolute top-0 end-0 m-2">
+                                                                <button class="btn btn-sm btn-light dropdown-toggle shadow"
+                                                                    type="button" id="assignmentActions${assignment.id}"
+                                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    Actions
+                                                                </button>
+                                                                <ul class="dropdown-menu"
+                                                                    aria-labelledby="assignmentActions${assignment.id}">
+                                                                    <li>
+                                                                        <a class="dropdown-item"
+                                                                            href="<c:url value='/teacher/course/lesson/assignment/edit?course_id=${course.id}&lesson_id=${lesson.id}&assignment_id=${assignment.id}'/>">
+                                                                            ✏ Edit Assignment
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a class="dropdown-item text-danger"
+                                                                            href="<c:url value='/teacher/course/lesson/assignment/delete?course_id=${course.id}&lesson_id=${lesson.id}&assignment_id=${assignment.id}'/>"
+                                                                            onclick="return confirm('Delete this assignment?');">
+                                                                            🗑 Delete Assignment
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+
+                                                            <!-- Assignment Title -->
+                                                            <div class="assignment-title fw-bold">${assignment.title}</div>
+
+                                                            <!-- Assignment Description -->
+                                                            <div class="assignment-description">${assignment.description}</div>
+
+                                                            <!-- Assignment Download / View Link -->
+                                                            <a href="<c:url value='/teacher/course/lesson/assignment/question/view?course_id=${course.id}&lesson_id=${lesson.id}&assignment_id=${assignment.id}'/>"
+                                                                class="btn btn-outline-primary mt-3">
+                                                                📄 Assignment Questions
+                                                            </a>
+
+                                                        </div>
+                                                    </c:forEach>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <p class="no-videos">No assignments available for this lesson.</p>
+                                            </c:otherwise>
+                                        </c:choose>
+                                
                                         <c:if test="${course.courseStatus == 'draft'}">
                                             <div class="lesson-footer text-end">
+                                                <a href="<c:url value='/teacher/course/lesson/assignment/create?course_id=${course.id}&lesson_id=${lesson.id}'/>"
+                                                    class="btn btn-sm btn-outline-success">➕ Add Assignment</a>
                                                 <a href="<c:url value='/teacher/course/lesson/lesson-video/create?course_id=${course.id}&lesson_id=${lesson.id}'/>"
                                                     class="btn btn-sm btn-outline-success">➕ Add Video</a>
                                                 <!-- Edit Button -->
