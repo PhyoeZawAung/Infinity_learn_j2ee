@@ -1,86 +1,201 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Admin Dashboard</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-	crossorigin="anonymous"></script>
+<title>Chat - Admin Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+    crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+.chat-container {
+    max-width: 800px;
+    margin: auto;
+    height: 90vh;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    padding: 15px 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.chat-message {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.chat-message.sent {
+    flex-direction: row-reverse;
+}
+
+.chat-message .avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 10px;
+}
+
+.chat-bubble {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    position: relative;
+}
+
+.chat-bubble.sent {
+    background-color: #d1e7dd;
+    text-align: right;
+}
+
+.chat-bubble.received {
+    background-color: #ffffff;
+    text-align: left;
+}
+
+.chat-bubble .name {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.chat-bubble .time {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 5px;
+}
+
+.chat-form {
+    padding: 10px 15px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.chat-input-group textarea {
+    flex-grow: 1;
+    resize: none;
+    border-radius: 20px;
+    padding: 10px 16px;
+    font-size: 15px;
+    border: 1px solid #ced4da;
+    background-color: #f1f3f5;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.chat-input-group textarea:focus {
+    background-color: #fff;
+    border-color: #007bff;
+    outline: none;
+}
+
+.send-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-btn:hover {
+    background-color: #0056b3;
+}
+</style>
+
+<script>
+// Auto-grow textarea
+function autoResize(el) {
+    el.style.height = "auto";
+    el.style.height = (el.scrollHeight) + "px";
+}
+</script>
 </head>
 <body>
-	<section>
-  <div class="container py-5">
 
-    <div class="row">
+<section class="py-5">
+    <div class="chat-container shadow-sm">
 
-      <div class="">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            Conversation: ${conversation.title}
+        </div>
 
-        <ul class="list-unstyled">
-        <c:forEach items="${conversation.messages}" var="message">
-          <c:if test="${message.sender.id == auth_user.id}">
-                <li class="d-flex justify-content-between mb-4">
-            <div class="card w-100">
-              <div class="card-header d-flex justify-content-between p-3">
-                <p class="fw-bold mb-0">${message.sender.firstName} ${message.sender.lastName}</p>
-                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 13 mins ago</p>
-              </div>
-              <div class="card-body">
-                <p class="mb-0">
-                  ${message.message}
-                </p>
-              </div>
-            </div>
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-              class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
-          </li>
-          </c:if>
-          <c:if test="${message.sender.id != auth_user.id}">
-            <li class="d-flex justify-content-between mb-4">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-              class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-            <div class="card w-100">
-              <div class="card-header d-flex justify-content-between p-3">
-                <p class="fw-bold mb-0">${message.sender.firstName} ${message.sender.lastName}</p>
-                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
-              </div>
-              <div class="card-body">
-                <p class="mb-0">
-                  ${message.message}
-                </p>
-              </div>
-            </div>
-          </li>
-          </c:if>
+        <!-- Messages -->
+        <div class="chat-messages">
+            <c:forEach items="${conversation.messages}" var="message">
+                <c:choose>
+                    <c:when test="${message.sender.id == auth_user.id}">
+                        <div class="chat-message sent">
+                            <img src="${message.sender.profile_image != null ? message.sender.profile_image : 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp'}"
+                                 class="avatar" alt="avatar">
+                            <div class="chat-bubble sent">
+                                <div class="name">${message.sender.firstName} ${message.sender.lastName}</div>
+                                <div>${message.message}</div>
+                                <div class="time">13 mins ago</div>
+                            </div>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="chat-message received">
+                            <img src="${message.sender.profile_image != null ? message.sender.profile_image : 'https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp'}"
+                                 class="avatar" alt="avatar">
+                            <div class="chat-bubble received">
+                                <div class="name">${message.sender.firstName} ${message.sender.lastName}</div>
+                                <div>${message.message}</div>
+                                <div class="time">10 mins ago</div>
+                            </div>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </div>
 
-        </c:forEach>
-         
-          <li class="bg-white mb-3">
-          <form action="/chat" method="post">
-            <input type="hidden" name="conversation_id" value="${param.conversation_id}">
-            <div data-mdb-input-init class="form-outline">
-                <textarea class="form-control bg-body-tertiary" id="textAreaExample2" rows="4" name="message"></textarea>
-                <label class="form-label" for="textAreaExample2">Message</label>
-              </div>
-              <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-rounded float-end">Send</button>
-          </form>
-          </li>
-          
-        </ul>
-
-      </div>
+        <!-- Form -->
+        <div class="chat-form">
+            <form action="/chat" method="post">
+                <input type="hidden" name="conversation_id" value="${param.conversation_id}">
+                <div class="chat-input-group">
+                    <textarea class="form-control" rows="1" name="message" placeholder="Type a message..."
+                        oninput="autoResize(this)"></textarea>
+                    <button type="submit" class="send-btn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </form>
+        </div>
 
     </div>
-
-  </div>
 </section>
 
 </body>

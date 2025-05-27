@@ -23,6 +23,7 @@
 		<ul>
 			<li><a href="<c:url value='/logout'/>" >Logout</a></li>
 			<li><a href="<c:url value='/admin/CourseListController'/>">View Course List</a></li>
+			<li><a href="<c:url value='/chat/list'/>">Chat</a></li>
 		</ul>
 		
 
