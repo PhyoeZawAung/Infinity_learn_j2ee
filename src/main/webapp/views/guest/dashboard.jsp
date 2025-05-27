@@ -988,7 +988,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="/apply-teacher" class="teacher-btn">
+                                    <a href="/guest/apply-teacher" class="teacher-btn">
                                         <i class="bi bi-person-plus"></i>
                                         Apply as Teacher
                                     </a>

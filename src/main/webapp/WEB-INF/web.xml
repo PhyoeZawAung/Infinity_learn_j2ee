@@ -18,7 +18,7 @@
     	<param-name>dbName</param-name>
 		<!-- this is the name of the database -->
 		<!-- Do not upload this file to the repository. -->
-    	<param-value>infinity_learns</param-value>
+    	<param-value>infinitylearnjavaee</param-value>
     </context-param>
     
     <context-param>
@@ -306,18 +306,6 @@
 	<servlet>
 		<description>
 		</description>
-		<display-name>ApplyTeacherController</display-name>
-		<servlet-name>ApplyTeacherController</servlet-name>
-		<servlet-class>uni.project.infinitylearn.controllers.guest.ApplyTeacherController</servlet-class>
-	</servlet>
-			<servlet-mapping>
-		<servlet-name>ApplyTeacherController</servlet-name>
-		<url-pattern>/apply-teacher</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<description>
-		</description>
 		<display-name>GuestCourseList</display-name>
 		<servlet-name>GuestCourseList</servlet-name>
 		<servlet-class>uni.project.infinitylearn.controllers.guest.CourseListController</servlet-class>
@@ -334,12 +322,22 @@
 		<servlet-name>GuestCourseDetail</servlet-name>
 		<servlet-class>uni.project.infinitylearn.controllers.guest.CourseDetailController</servlet-class>
 	</servlet>
-			<servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>GuestCourseDetail</servlet-name>
 		<url-pattern>/guest/course/detail</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<display-name>ApplyTeacherController</display-name>
+		<servlet-name>ApplyTeacherController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.guest.ApplyTeacherController</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<display-name>ApplyTeacherController</display-name>
+		<servlet-name>ApplyTeacherController</servlet-name>
+		<url-pattern>/guest/apply-teacher</url-pattern>
+	</servlet-mapping>
 <!-- GUEST -->
 
 <!-- TEACHER -->
@@ -674,6 +672,38 @@
 		<servlet-name>AdminDashboard</servlet-name>
 		<url-pattern>/admin/dashboard</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>AdminApplyTeacherController</display-name>
+		<servlet-name>AdminApplyTeacherController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.admin.AdminApplyTeacherController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminApplyTeacherController</servlet-name>
+		<url-pattern>/admin/admin-apply-teacher</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<display-name>CvViewController</display-name>
+		<servlet-name>CvViewController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.admin.CvViewController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CvViewController</servlet-name>
+		<url-pattern>/admin/resume-view</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<display-name>FileViewController</display-name>
+		<servlet-name>FileViewController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.admin.FileViewController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileViewController</servlet-name>
+		<url-pattern>/uploads-view</url-pattern>
+	</servlet-mapping>
 <!-- ADMIN -->
 
 <!-- REVIEWER -->
@@ -715,4 +745,21 @@
 		<url-pattern>/reviewer/course/detail</url-pattern>
 	</servlet-mapping>
 <!-- REVIEWER -->
+
+<!-- Teacher Application Actions -->
+	<servlet>
+		<display-name>TeacherApplicationActionController</display-name>
+		<servlet-name>TeacherApplicationActionController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.admin.TeacherApplicationActionController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>TeacherApplicationActionController</servlet-name>
+		<url-pattern>/admin/teacher-applications/approve</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>TeacherApplicationActionController</servlet-name>
+		<url-pattern>/admin/teacher-applications/reject</url-pattern>
+	</servlet-mapping>
 </web-app>

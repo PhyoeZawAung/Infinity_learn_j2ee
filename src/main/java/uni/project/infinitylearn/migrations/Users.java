@@ -23,6 +23,7 @@ public class Users extends Migrator {
                         last_name VARCHAR(255) NOT NULL,
                         email VARCHAR(255) NOT NULL UNIQUE,
                         password VARCHAR(255) NOT NULL,
+                        phone VARCHAR(50),
                         profile_image VARCHAR(255),
                         role ENUM('admin', 'student', 'teacher', 'reviewer') DEFAULT 'student',
                         description TEXT
