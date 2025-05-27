@@ -37,7 +37,14 @@ public class NavigationFilter implements Filter {
         //     active = "notifications";
         } else if(url.contains("/chat")) {
             active = "chat";
-        } 
+        } else if(url.contains("/apply-teacher")) {
+            active = "apply-teacher";
+        } else if(url.contains("/contact")) {
+            active = "contact";
+        } else if(url.contains("/about")) {
+            active = "about";
+        } else if(url.contains("/index")) {
+            active = "index";}
         // else if(url.contains("/help")) {
         //     active = "help";
         // }

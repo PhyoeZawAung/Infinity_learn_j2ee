@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Dynamic Infinity Symbol -->
+    <path d="M128 256C128 205 170 163 221 163C272 163 314 205 314 256C314 307 356 349 407 349C458 349 500 307 500 256C500 205 458 163 407 163C356 163 314 205 314 256C314 307 272 349 221 349C170 349 128 307 128 256Z"
+          stroke="#0061f2"
+          stroke-width="32"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+    
+    <!-- Accent Elements -->
+    <circle cx="256" cy="256" r="240" stroke="#0061f2" stroke-width="8" stroke-opacity="0.1"/>
+    <circle cx="256" cy="256" r="200" stroke="#0061f2" stroke-width="8" stroke-opacity="0.1"/>
+    
+    <!-- Motion Lines -->
+    <path d="M128 256L108 276M128 256L108 236" 
+          stroke="#0061f2" 
+          stroke-width="16" 
+          stroke-linecap="round"/>
+    <path d="M500 256L480 276M500 256L480 236" 
+          stroke="#0061f2" 
+          stroke-width="16" 
+          stroke-linecap="round"/>
+</svg> 

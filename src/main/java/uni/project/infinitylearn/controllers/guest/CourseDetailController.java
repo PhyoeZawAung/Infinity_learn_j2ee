@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import uni.project.infinitylearn.models.Course;
+import uni.project.infinitylearn.models.User;
 import uni.project.infinitylearn.services.CourseService;
 
 public class CourseDetailController extends HttpServlet {
@@ -43,7 +44,15 @@ public class CourseDetailController extends HttpServlet {
             return;
         }
 
+            // enrolled student count
+            int enrolledCount = courseService.getEnrolledStudentCount(course.getId());
+
+            User instructor = courseService.getInstructorByCourseId(course.getId());
+            
+            request.setAttribute("enrolledCount", enrolledCount);
             request.setAttribute("course", course);
+            request.setAttribute("instructor", instructor);
+
             // Implement logic to fetch course details and forward to the JSP page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/views/guest/course_detail.jsp");
             dispatcher.forward(request, response);

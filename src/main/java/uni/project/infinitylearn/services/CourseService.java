@@ -448,5 +448,13 @@ public class CourseService {
 		return courseDao.getUserById(userId);
 	}
 
+	public int getEnrolledStudentCount(Long courseId) throws SQLException {
+		return courseDao.getEnrolledStudentCount(courseId);
+	}
+
+	public User getInstructorByCourseId(Long courseId) throws SQLException {
+		return courseDao.getInstructorByCourseId(courseId);
+	}
+
 }
 

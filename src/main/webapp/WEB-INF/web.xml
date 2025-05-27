@@ -270,6 +270,54 @@
 	<servlet>
 		<description>
 		</description>
+		<display-name>GuestIndexController</display-name>
+		<servlet-name>GuestIndexController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.guest.IndexController</servlet-class>
+	</servlet>
+			<servlet-mapping>
+		<servlet-name>GuestIndexController</servlet-name>
+		<url-pattern>/index</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>ContactUsController</display-name>
+		<servlet-name>ContactUsController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.guest.ContactUsController</servlet-class>
+	</servlet>
+			<servlet-mapping>
+		<servlet-name>ContactUsController</servlet-name>
+		<url-pattern>/contact-us</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>AboutController</display-name>
+		<servlet-name>AboutController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.guest.AboutController</servlet-class>
+	</servlet>
+			<servlet-mapping>
+		<servlet-name>AboutController</servlet-name>
+		<url-pattern>/about</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
+		<display-name>ApplyTeacherController</display-name>
+		<servlet-name>ApplyTeacherController</servlet-name>
+		<servlet-class>uni.project.infinitylearn.controllers.guest.ApplyTeacherController</servlet-class>
+	</servlet>
+			<servlet-mapping>
+		<servlet-name>ApplyTeacherController</servlet-name>
+		<url-pattern>/apply-teacher</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description>
+		</description>
 		<display-name>GuestCourseList</display-name>
 		<servlet-name>GuestCourseList</servlet-name>
 		<servlet-class>uni.project.infinitylearn.controllers.guest.CourseListController</servlet-class>
@@ -290,6 +338,8 @@
 		<servlet-name>GuestCourseDetail</servlet-name>
 		<url-pattern>/guest/course/detail</url-pattern>
 	</servlet-mapping>
+
+
 <!-- GUEST -->
 
 <!-- TEACHER -->
