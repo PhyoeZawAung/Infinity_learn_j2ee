@@ -41,7 +41,7 @@ VALUES (
     'Mastering Java Web Development',
     'Learn Java Servlets, JSP, and web application architecture in depth.',
     '<h2>Course Overview</h2><p>Welcome to <strong>Mastering Java Web Development</strong>, a comprehensive and hands-on course designed for aspiring backend developers who want to build powerful, secure, and scalable web applications using Java EE technologies. This course is perfect for students and professionals who want to move beyond the basics and master enterprise-level development skills.</p><p>Throughout this course, we will start with the fundamentals of the Java Servlet API and gradually move into advanced topics such as JSP (JavaServer Pages), JSTL, Filters, Listeners, and full-stack integration using MVC architecture. We’ll explore key design patterns and best practices that are commonly used in real-world Java web applications.</p><ul><li>How to set up a dynamic web project using Apache Tomcat and Maven</li><li>Session management using cookies and HttpSession</li><li>Creating reusable JSP components and integrating JSTL</li><li>Using JDBC for database interaction</li></ul><p>Each module includes coding exercises, project scenarios, and downloadable resources. You will have access to the full source code of a complete Java web application, which you can use as a reference or starting point. By the end of the course, you will be ready to build and deploy full-scale Java web apps.</p>',
-    'Alice Johnson',
+    '3',
     'Web Development',
     39.99,
     'published'
