@@ -1,55 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Video Lesson</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-    <style>
-        body {
-            background: #f9f6f2;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        .card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-            background: #fffdfb;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: #444;
-        }
-
-        .form-control {
-            border-radius: 10px;
-            background-color: #fefefe;
-        }
-
-        .btn-primary {
-            background-color: #c79e7e;
-            border-color: #c79e7e;
-        }
-
-        .btn-primary:hover {
-            background-color: #b98d6d;
-            border-color: #b98d6d;
-        }
-        .card-header {
-            background-color: transparent;
-        }
-        .ck-editor__editable_inline {
-            min-height: 300px !important;
-        }
-    </style>
-</head>
-<body>
+<%@ include file="/layouts/teacher/header.jsp" %>
+<%@ include file="/layouts/teacher/nav.jsp" %>
     <div class="container my-5">
         <div class="card p-4 mx-auto" style="max-width: 1100px;">
             <div class="card-header text-center">
@@ -190,5 +141,4 @@
 	        }
 	    });
     </script>
-</body>
-</html>
+<%@ include file="/layouts/teacher/footer.jsp" %>

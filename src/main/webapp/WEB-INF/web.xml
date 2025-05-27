@@ -59,6 +59,13 @@
     	<filter-name>GuestFilter</filter-name>
     	<filter-class>uni.project.infinitylearn.filters.GuestFilter</filter-class>
     </filter>
+	<filter>
+    	<description>
+    	</description>
+    	<display-name>NavigationFilter</display-name>
+    	<filter-name>NavigationFilter</filter-name>
+    	<filter-class>uni.project.infinitylearn.filters.NavigationFilter</filter-class>
+    </filter>
     <filter-mapping>
     	<filter-name>AuthenticationFilter</filter-name>
     	<url-pattern>/teacher/*</url-pattern>
@@ -112,6 +119,10 @@
 	<filter-mapping>
     	<filter-name>AuthenticationFilter</filter-name>
     	<url-pattern>/chat/*</url-pattern>
+    </filter-mapping>
+	<filter-mapping>
+    	<filter-name>NavigationFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
     </filter-mapping>
 <!-- filters -->
 

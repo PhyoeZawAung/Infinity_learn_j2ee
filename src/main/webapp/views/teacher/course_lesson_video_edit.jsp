@@ -1,14 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Video Lesson</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<%@ include file="/layouts/teacher/header.jsp" %>
+<%@ include file="/layouts/teacher/nav.jsp" %>
     <style>
         body {
             background: #fff8e6;
@@ -50,7 +42,7 @@
             min-height: 300px !important;
         }
     </style>
-</head>
+
 <body>
     <div class="container my-5">
         <div class="card p-4 mx-auto" style="max-width: 1100px;">
@@ -183,5 +175,4 @@
         }
     });
     </script>
-</body>
-</html>
+<%@ include file="/layouts/teacher/footer.jsp" %>
