@@ -34,7 +34,7 @@
     	<param-name>dbPassword</param-name>
 		<!-- this is the name of the database -->
 		<!-- Do not upload this file to the repository. -->
-    	<param-value>maria</param-value>
+    	<param-value></param-value>
     </context-param>
 <!-- DATABASE -->
 <!-- filters -->
@@ -104,6 +104,15 @@
     	<filter-name>GuestFilter</filter-name>
     	<url-pattern>/register</url-pattern>
     </filter-mapping>
+
+	<filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/chat</url-pattern>
+    </filter-mapping>
+	<filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/chat/*</url-pattern>
+    </filter-mapping>
 <!-- filters -->
 
 
@@ -147,6 +156,61 @@
 			<url-pattern>/dashboard</url-pattern>
 		</servlet-mapping>
 	<!-- DashboardController -->
+	<!-- ChatController -->
+		<servlet>
+			<description>
+			</description>
+			<display-name>NewChatController</display-name>
+			<servlet-name>NewChatController</servlet-name>
+			<servlet-class>uni.project.infinitylearn.controllers.chat.NewChatController</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>NewChatController</servlet-name>
+			<url-pattern>/chat/new</url-pattern>
+		</servlet-mapping>
+	<!-- ChatController -->
+
+	<!-- ChatListController -->
+		<servlet>
+			<description>
+			</description>
+			<display-name>ChatListController</display-name>
+			<servlet-name>ChatListController</servlet-name>
+			<servlet-class>uni.project.infinitylearn.controllers.chat.ChatListController</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>ChatListController</servlet-name>
+			<url-pattern>/chat/list</url-pattern>
+		</servlet-mapping>
+	<!-- ChatListController -->
+	<!-- ChatController -->
+		<servlet>
+			<description>
+			</description>
+			<display-name>ChatController</display-name>
+			<servlet-name>ChatController</servlet-name>
+			<servlet-class>uni.project.infinitylearn.controllers.chat.ChatController</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>ChatController</servlet-name>
+			<url-pattern>/chat</url-pattern>
+		</servlet-mapping>
+	<!-- ChatController -->
+	NewConversationController
+	<!-- ChatController -->
+		<servlet>
+			<description>
+			</description>
+			<display-name>NewConversationController</display-name>
+			<servlet-name>NewConversationController</servlet-name>
+			<servlet-class>uni.project.infinitylearn.controllers.chat.NewConversationController</servlet-class>
+		</servlet>
+		<servlet-mapping>
+			<servlet-name>NewConversationController</servlet-name>
+			<url-pattern>/chat/create_new_conversation</url-pattern>
+		</servlet-mapping>
+	<!-- ChatController -->
+
 <!-- GENERAL CONTROLLERS -->
 
 <!-- LoginController -->
