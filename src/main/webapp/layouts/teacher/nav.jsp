@@ -21,15 +21,15 @@
                             </a>
                         </c:if>
                         <c:if test="${auth_user.role == 'reviewer'}">
-                            <a class="nav-link ${active_nav == 'course' ? 'active': ''}" href="/reviewer/course/list">
+                            <%-- <a class="nav-link ${active_nav == 'course' ? 'active': ''}" href="/reviewer/course/list">
                                 <div class="sb-nav-link-icon"><i class="bi bi-folder"></i></div>
                                 Courses
-                            </a>
+                            </a> --%>
                         </c:if>
                         <c:if test="${auth_user.role == 'admin'}">
-                            <a class="nav-link ${active_nav == 'course' ? 'active': ''}" href="/admin/course/list">
+                            <a class="nav-link ${active_nav == 'course' ? 'active': ''}" href="/admin/admin-apply-teacher">
                                 <div class="sb-nav-link-icon"><i class="bi bi-folder"></i></div>
-                                Courses
+                                Applications
                             </a>
                         </c:if>
 

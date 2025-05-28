@@ -45,9 +45,9 @@ public class NavigationFilter implements Filter {
             active = "about";
         } else if(url.contains("/index")) {
             active = "index";}
-        // else if(url.contains("/help")) {
-        //     active = "help";
-        // }
+        else if(url.contains("/admin-apply-teacher")) {
+            active = "application";
+        }
 
         req.setAttribute("active_nav", active);
         chain.doFilter(request, response);

@@ -8,9 +8,9 @@
                             <div class="sb-nav-link-icon"><i class="bi bi-columns-gap"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link ${active_nav == 'course' ? 'active': ''}" href="/teacher/course/list">
+                        <a class="nav-link ${active_nav == 'application' ? 'active': ''}" href="/admin/admin-apply-teacher">
                             <div class="sb-nav-link-icon"><i class="bi bi-folder"></i></div>
-                            Courses
+                            Applications
                         </a>
     
                         <a class="nav-link ${active_nav == 'chat' ? 'active': ''}" href="/chat/list">
