@@ -27,8 +27,8 @@ public class TeacherProfiles extends Migrator {
                 course_outline TEXT,
                 resume_file VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                -- FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             );
         """);
 

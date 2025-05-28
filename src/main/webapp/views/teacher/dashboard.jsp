@@ -93,5 +93,5 @@
 
                         </div>
 
-                    </div>
-<%@ include file="/layouts/teacher/footer.jsp" %>
+			</div>
+			<%@ include file="/layouts/teacher/footer.jsp" %>

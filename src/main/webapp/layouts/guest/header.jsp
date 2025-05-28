@@ -376,8 +376,13 @@
                 <c:if test="${not empty auth_user}">
                 <div class="profile-dropdown">
                     <button class="profile-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="${auth_user.profile_image != null ? auth_user.profile_image : '/images/default-profile.png'}"
+                        <c:if test="${not empty auth_user.profile_image}">
+                            <img src="/FileController${auth_user.profile_image}" alt="Profile" class="profile-img">
+                        </c:if>
+                        <c:if test="${empty auth_user.profile_image}">
+                        <img src="/resources/images/default_profile.jpg"
                              alt="Profile" class="profile-img">
+                        </c:if>
                         <span >${auth_user.firstName} ${auth_user.lastName}</span> 
                         <i class="bi bi-chevron-down"></i>
                     </button>
@@ -390,7 +395,7 @@
                         </li>
                        
                         <li>
-                            <a class="dropdown-item" href="/profile">
+                            <a class="dropdown-item" href="/profile/view">
                                 <i class="bi bi-person"></i>
                                 My Profile
                             </a>
