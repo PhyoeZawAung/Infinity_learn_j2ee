@@ -391,30 +391,33 @@ public class CourseDao extends Dao {
 
 	// get all enrolled courses for a student
 	public List<Course> getEnrolledCourses(Long userId) throws SQLException {
-		String sql = """
-				Select * from course
-				inner join course_enrollment on course.id = course_enrollment.course_id
-				where course_enrollment.user_id = ?
-				""";
-		List<Course> courses = executeQueryList(sql, rs -> CourseMapper.mapCourseWithProgress(rs), userId);
+		List<Course> courses = new ArrayList<>();
+		String sql = "SELECT c.*, CONCAT(u.first_name, ' ', u.last_name) as instructor_name " +
+					"FROM course c " +
+					"JOIN course_enrollment ce ON c.id = ce.course_id " +
+					"JOIN users u ON c.instructor = u.id " +
+					"WHERE ce.user_id = ?";
 
-		// for(Course course :courses) {
-		// List<Lesson> lessons = new ArrayList<>();
-		// lessons = executeQueryList("SELECT * FROM lessons WHERE course_id = ?", rs ->
-		// LessonMapper.mapLesson(rs)
-		// , course.getId());
+		PreparedStatement statement = conn.prepareStatement(sql);
+		statement.setLong(1, userId);
+		ResultSet rs = statement.executeQuery();
 
-		// for(Lesson lesson : lessons) {
-		// List<LessonVideo> lessonVideos = new ArrayList<>();
-		// lessonVideos = executeQueryList("SELECT * FROM lesson_videos WHERE course_id
-		// = ? and lesson_id = ?", rs ->
-		// LessonMapper.mapLessonVideo(rs)
-		// , course.getId(), lesson.getId());
+		while (rs.next()) {
+			Course course = new Course();
+			course.setId(rs.getLong("id"));
+			course.setTitle(rs.getString("title"));
+			course.setShortDescription(rs.getString("short_description"));
+			course.setDescription(rs.getString("description"));
+			course.setInstructor(rs.getString("instructor_name")); // Now using instructor_name instead of ID
+			course.setCategory(rs.getString("category"));
+			course.setPrice(rs.getString("price"));
+			course.setBanner_image(rs.getString("banner_image"));
+			courses.add(course);
+		}
 
-		// lesson.setLessonVideos(lessonVideos);
-		// }
-		// course.setLessons(lessons);
-		// }
+		rs.close();
+		statement.close();
+
 		return courses;
 	}
 
@@ -772,6 +775,23 @@ public class CourseDao extends Dao {
                 return user;
             }
             return null;
+		}, courseId);
+	}
+
+	public User getCourseInstructor(Long courseId) throws SQLException {
+		String sql = "SELECT * FROM users WHERE id = (SELECT instructor FROM course WHERE id = ?)";
+		return executeQuery(sql, rs -> {
+			if (rs.next()) {
+				User user = new User();
+				user.setId(rs.getLong("id"));
+				user.setFirstName(rs.getString("first_name"));
+				user.setLastName(rs.getString("last_name"));
+				user.setEmail(rs.getString("email"));
+				user.setProfile_image(rs.getString("profile_image"));
+				user.setRole(rs.getString("role"));
+				return user;
+			}
+			return null;
 		}, courseId);
 	}
 }

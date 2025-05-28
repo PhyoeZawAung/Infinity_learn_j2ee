@@ -39,8 +39,11 @@ public class EnrolledCourseDetailController extends HttpServlet{
 
         try {
             Course course = this.courseService.getEnrolledCourseWithWatchHistory(userId, courseId);
+
+            User instructor = this.courseService.getCourseInstructor(courseId);
+
             request.setAttribute("course", course);
-            
+            request.setAttribute("instructor", instructor);
             RequestDispatcher rd = request.getRequestDispatcher("/views/student/course_detail.jsp");
 
             rd.forward(request, response);
