@@ -1,6 +1,7 @@
 package uni.project.infinitylearn.controllers.teacher;
 
 import uni.project.infinitylearn.models.Course;
+import uni.project.infinitylearn.models.User;
 import uni.project.infinitylearn.services.CourseService;
 import uni.project.infinitylearn.utils.FileUtil;
 
@@ -58,10 +59,17 @@ public class CourseEditController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get logged-in user from session
+        User loginUser = (User) request.getSession().getAttribute("auth_user");
+
+        if (loginUser == null) {
+            response.sendRedirect("/login");
+            return;
+        }
+
         String courseIdParam = request.getParameter("courseId");
         String title = request.getParameter("courseTitle");
         String description = request.getParameter("courseDescription");
-        String instructor = request.getParameter("instructor");
         String category = request.getParameter("category");
         String priceParam = request.getParameter("price");
         String existingBannerImage = request.getParameter("existingBannerImage");
@@ -92,7 +100,7 @@ public class CourseEditController extends HttpServlet {
             course.setId(courseId);
             course.setTitle(title);
             course.setDescription(description);
-            course.setInstructor(instructor);
+            course.setInstructor(String.valueOf(loginUser.getId()));
             course.setCategory(category);
             course.setPrice(String.valueOf(price));
             course.setBanner_image(bannerImage);
