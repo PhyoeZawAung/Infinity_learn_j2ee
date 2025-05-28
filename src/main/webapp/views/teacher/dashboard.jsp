@@ -1,97 +1,115 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/layouts/teacher/header.jsp" %>
 <%@ include file="/layouts/teacher/nav.jsp" %>
-	<div class="container">
-                        <!-- Write your content here -->
-                        <h1 class="mt-4">Dashboard</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-                        <form class="row mb-4 justify-content-end">
-                            <div class="col-3">
-                                <select id="inputState" class="form-select">
-                                    <option selected>2023</option>
-                                    <option>2024</option>
-                                    <option>2025</option>
-                                </select>
-                            </div>
-                        </form>
-                        <div class="row">
-                            <div class="col-xl-4 col-md-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">Students</div>
-                                    <div class="card-body">
+<style>
+    .dashboard-container {
+        padding: 2rem 0;
+    }
 
-                                        <div class="row">
-                                            <div class="col-8">Total</div>
-                                            <div class="col-4 text-end">2000</div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-8">Certified</div>
-                                            <div class="col-4 text-end">500</div>
-                                        </div>
-                                        <hr>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small stretched-link" href="#">View Details</a>
-                                        <div class="small"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-8 col-md-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Students Per Month
-                                    </div>
-                                    <div class="card-body"><canvas id="student-chart" width="100%" height="40"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-md-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">Courses</div>
-                                    <div class="card-body">
+    .dashboard-header {
+        background-color: #2563eb;
+        color: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-                                        <div class="row">
-                                            <div class="col-8">Total</div>
-                                            <div class="col-4 text-end">20</div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-8">Reviewed</div>
-                                            <div class="col-4 text-end">5</div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-8">Under Reviewed</div>
-                                            <div class="col-4 text-end">5</div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-8">Draft</div>
-                                            <div class="col-4 text-end">10</div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small stretched-link" href="#">View Details</a>
-                                        <div class="small"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-8 col-md-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Courses Per Month
-                                    </div>
-                                    <div class="card-body"><canvas id="course-chart" width="100%" height="40"></canvas>
-                                    </div>
-                                </div>
-                            </div>
+    .dashboard-header h1 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 600;
+    }
 
-                        </div>
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
 
-			</div>
-			<%@ include file="/layouts/teacher/footer.jsp" %>
+    .dashboard-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        color: inherit;
+    }
+
+    .dashboard-card i {
+        font-size: 2rem;
+        color: #2563eb;
+    }
+
+    .dashboard-card-content h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #1e293b;
+    }
+
+    .dashboard-card-content p {
+        margin: 0.5rem 0 0;
+        color: #64748b;
+        font-size: 0.875rem;
+    }
+
+    .logout-card {
+        background-color: #fee2e2;
+    }
+
+    .logout-card i {
+        color: #dc2626;
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1><i class="bi bi-person-workspace"></i> Teacher Dashboard</h1>
+    </div>
+
+    <div class="dashboard-grid">
+        <a href="<c:url value='/teacher/course/list'/>" class="dashboard-card">
+            <i class="bi bi-book"></i>
+            <div class="dashboard-card-content">
+                <h3>My Courses</h3>
+                <p>Manage your courses and content</p>
+            </div>
+        </a>
+
+        <a href="<c:url value='/teacher/course/create'/>" class="dashboard-card">
+            <i class="bi bi-plus-circle"></i>
+            <div class="dashboard-card-content">
+                <h3>Create Course</h3>
+                <p>Add a new course to the platform</p>
+            </div>
+        </a>
+
+        <a href="<c:url value='/chat/list'/>" class="dashboard-card">
+            <i class="bi bi-chat-dots"></i>
+            <div class="dashboard-card-content">
+                <h3>Chat System</h3>
+                <p>Communicate with students and staff</p>
+            </div>
+        </a>
+
+        <a href="<c:url value='/logout'/>" class="dashboard-card logout-card">
+            <i class="bi bi-box-arrow-right"></i>
+            <div class="dashboard-card-content">
+                <h3>Logout</h3>
+                <p>Sign out from your account</p>
+            </div>
+        </a>
+    </div>
+</div>
+<%@ include file="/layouts/teacher/footer.jsp" %>

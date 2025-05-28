@@ -1,169 +1,256 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/layouts/student/header.jsp" %>
 <%@ include file="/layouts/student/nav.jsp" %>
-    <style>
-        body {
-            background-color: #f5f7fa;
-        }
+<style>
+    body {
+        background-color: #f8fafc;
+    }
 
-        .card-header {
-            background-color: #2eb872;
-            color: white;
-        }
+    .page-header {
+        background-color: #2563eb;
+        color: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        .btn-custom {
-            background-color: #2eb872;
-            color: white;
-        }
+    .page-header h1 {
+        margin: 0;
+        font-size: 1.75rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
 
-        .btn-custom:hover {
-            background-color: #249b60;
-        }
+    .course-info {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        .course-banner {
-            max-width: 200px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 0.5rem;
-        }
+    .course-banner {
+        width: 100%;
+        max-width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        .lesson-card {
-            border: 1px solid #dee2e6;
-            border-radius: 0.75rem;
-            background-color: #ffffff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-            padding: 1rem;
-            margin-bottom: 2rem;
-        }
+    .course-meta {
+        display: flex;
+        gap: 1rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+    }
 
-        .lesson-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
+    .meta-item {
+        background: #f1f5f9;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+        color: #475569;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
 
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1rem;
-        }
+    .meta-item i {
+        color: #2563eb;
+    }
 
-        .video-card {
-            background: #f9f9f9;
-            border-radius: 0.5rem;
-            border: 1px solid #ddd;
-            padding: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            transition: box-shadow 0.2s;
-        }
+    .lesson-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
 
-        .video-card:hover {
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
+    .lesson-card:hover {
+        transform: translateY(-2px);
+    }
 
-        .lesson-video-thumbnail {
-            width: 100%;
-            height: 130px;
-            object-fit: cover;
-            border-radius: 0.375rem;
-            margin-bottom: 0.5rem;
-        }
+    .lesson-title {
+        color: #1e293b;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
 
-        .video-title {
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
+    .lesson-title i {
+        color: #2563eb;
+    }
 
-        .btn-watch {
-            font-size: 0.8rem;
-            padding: 6px 12px;
-            background-color: #198754;
-            color: white;
-            border-radius: 0.3rem;
-            text-align: center;
-            text-decoration: none;
-        }
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
 
-        .btn-watch:hover {
-            background-color: #157347;
-            color: white;
-        }
+    .video-card {
+        background: #f8fafc;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        transition: all 0.2s ease;
+    }
 
-        .lesson-footer {
-            margin-top: 1rem;
-        }
+    .video-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        .no-videos {
-            font-style: italic;
-            color: #888;
-        }
-    </style>
+    .video-thumbnail {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+    }
 
-    <div class="container py-5">
-        <div class="card shadow-lg border-0 mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h3 class="mb-0"><i class="bi bi-book"></i> Course View</h3>
-            </div>
-            <div class="card-body bg-white">
-                <h2>${course.title}</h2>
-                <p class="lead">${course.description}</p>
-                <div class="row gy-3 mb-4">
-                    <div class="col-md-6">
-                        <p><strong>Course ID:</strong> ${course.id}</p>
-                        <p><strong>Category:</strong> ${course.category}</p>
+    .video-content {
+        padding: 1rem;
+    }
+
+    .video-title {
+        color: #1e293b;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+    }
+
+    .btn-watch {
+        background-color: #2563eb;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-watch:hover {
+        background-color: #1d4ed8;
+        color: white;
+    }
+
+    .btn-watch.completed {
+        background-color: #059669;
+    }
+
+    .btn-watch.completed:hover {
+        background-color: #047857;
+    }
+
+    .btn-watch.continue {
+        background-color: #7c3aed;
+    }
+
+    .btn-watch.continue:hover {
+        background-color: #6d28d9;
+    }
+
+    .no-videos {
+        color: #64748b;
+        font-style: italic;
+        text-align: center;
+        padding: 2rem;
+        background: #f8fafc;
+        border-radius: 0.5rem;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="page-header">
+        <h1>
+            <i class="bi bi-book"></i>
+            Course Details
+        </h1>
+    </div>
+
+    <div class="course-info">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h2 class="mb-3">${course.title}</h2>
+                <p class="lead text-muted mb-4">${course.description}</p>
+                <div class="course-meta">
+                    <div class="meta-item">
+                        <i class="bi bi-bookmark"></i>
+                        <span>Category: ${course.category}</span>
                     </div>
-                    <div class="col-md-6 text-center">
-                        <p><strong>Lessons Available:</strong> ${course.lessons.size()}</p>
-                        <img src="<c:url value='/FileController${course.banner_image}'/>" alt="Course Banner" class="course-banner">
+                    <div class="meta-item">
+                        <i class="bi bi-collection-play"></i>
+                        <span>${course.lessons.size()} Lessons</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="bi bi-person"></i>
+                        <span>Instructor: ${instructor.firstName} ${instructor.lastName}</span>
                     </div>
                 </div>
-                <!-- Lessons Section -->
-                <c:forEach var="lesson" items="${course.lessons}">
-                    <div class="lesson-card">
-                        <div class="lesson-title"><i class="bi bi-journal-text"></i> ${lesson.title}</div>
-                        <p>${lesson.description}</p>
-
-                        <c:choose>
-                            <c:when test="${not empty lesson.lessonVideos}">
-                                <div class="video-grid">
-                                    <c:forEach var="video" items="${lesson.lessonVideos}">
-                                        <div class="video-card">
-                                            <c:if test="${not empty video.thumbnail}">
-                                                <img src="<c:url value='/FileController${video.thumbnail}'/>" class="lesson-video-thumbnail" alt="Video Thumbnail">
-                                            </c:if>
-                                            <div class="video-title">${video.title}</div>
-                                            <c:if test="${not empty video.videoUrl}">
-                                                <c:if test="${video.isCompleted}">
-                                                    <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-danger">Watched</a>
-                                                </c:if>
-                                                <c:if test="${not video.isCompleted}">
-                                                    <c:if test="${video.progress == 0}">
-                                                        <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-success"><i class="bi bi-play-fill"></i> Watch</a>
-                                                    </c:if>
-                                                    <c:if test="${video.progress > 0}">
-                                                        <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn btn-primary"><i class="bi bi-play-fill"></i> Continue</a>
-                                                    </c:if>
-                                                    
-                                                </c:if> 
-                                            </c:if>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <p class="no-videos">No videos available for this lesson.</p>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-                </c:forEach>
             </div>
-            <div class="card-footer text-end small text-muted">
-                Last updated: <%= new java.util.Date() %>
+            <div class="col-md-4 text-center">
+                <img src="<c:url value='/FileController${course.banner_image}'/>" alt="Course Banner" class="course-banner">
             </div>
         </div>
     </div>
+
+    <c:forEach var="lesson" items="${course.lessons}">
+        <div class="lesson-card">
+            <div class="lesson-title">
+                <i class="bi bi-journal-text"></i>
+                ${lesson.title}
+            </div>
+            <p class="text-muted mb-4">${lesson.description}</p>
+
+            <c:choose>
+                <c:when test="${not empty lesson.lessonVideos}">
+                    <div class="video-grid">
+                        <c:forEach var="video" items="${lesson.lessonVideos}">
+                            <div class="video-card">
+                                <c:if test="${not empty video.thumbnail}">
+                                    <img src="<c:url value='/FileController${video.thumbnail}'/>" class="video-thumbnail" alt="Video Thumbnail">
+                                </c:if>
+                                <div class="video-content">
+                                    <div class="video-title">${video.title}</div>
+                                    <c:if test="${not empty video.videoUrl}">
+                                        <c:if test="${video.isCompleted}">
+                                            <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn-watch completed">
+                                                <i class="bi bi-check-circle"></i> Watched
+                                            </a>
+                                        </c:if>
+                                        <c:if test="${not video.isCompleted}">
+                                            <c:if test="${video.progress == 0}">
+                                                <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn-watch">
+                                                    <i class="bi bi-play-fill"></i> Watch
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${video.progress > 0}">
+                                                <a href="<c:url value='/student/course/enroll/watch?course_id=${course.id}&lesson_id=${lesson.id}&video_id=${video.id}'/>" target="_blank" class="btn-watch continue">
+                                                    <i class="bi bi-play-fill"></i> Continue
+                                                </a>
+                                            </c:if>
+                                        </c:if>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <p class="no-videos">No videos available for this lesson.</p>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </c:forEach>
+</div>
+
 <%@ include file="/layouts/student/footer.jsp" %>

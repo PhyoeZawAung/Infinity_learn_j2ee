@@ -474,5 +474,9 @@ public void isSaveOrUpdateTeacherDetails(String title,Long year, String expertis
 		return courseDao.getInstructorByCourseId(courseId);
 	}
 
+	public User getCourseInstructor(Long courseId) throws SQLException {
+		return courseDao.getCourseInstructor(courseId);
+	}
+
 }
 
